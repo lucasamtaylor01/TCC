@@ -1,4 +1,4 @@
-using DifferentialEquations, ModelingToolkit, Plots, BenchmarkTools
+using DifferentialEquations, ModelingToolkit, Plots, BenchmarkTools, Sundials
 
 @independent_variables t
 @variables x(t)=0.1 y1(t)=0.01 y2(t)=0.01 y3(t)=0.01
@@ -16,9 +16,9 @@ eqs = [
 
 tspan = (0.0, 1.0)
 prob = ODEProblem(sys, [], tspan)
-solucao_deterministico = solve(prob, Tsit5(), reltol=1e-6)
+solucao_deterministico = solve(prob, Tsit5(), reltol=1e-6, abstol=1e-7, saveat=1e-3)
 
-# Centraliza y2
+
 y2_vals = solucao_deterministico[3, :]
 y2_centered = y2_vals .- mean(y2_vals)
 plot(solucao_deterministico.t, y2_vals)
