@@ -1,4 +1,4 @@
-using DifferentialEquations, ModelingToolkit, Plots, BenchmarkTools
+using DifferentialEquations, ModelingToolkit, Plots
 
 @independent_variables t
 @variables x(t)=0.1 y1(t)=0.01 y2(t)=0.01 y3(t)=0.01
