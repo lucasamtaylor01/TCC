@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 using DifferentialEquations, ModelingToolkit, Plots, BenchmarkTools, Sundials
+=======
+using DifferentialEquations, ModelingToolkit, Plots
+>>>>>>> 268b12396ba343992d39f3f750afb01bdfdcaa83
 
 @independent_variables t
 @variables x(t)=0.1 y1(t)=0.01 y2(t)=0.01 y3(t)=0.01
