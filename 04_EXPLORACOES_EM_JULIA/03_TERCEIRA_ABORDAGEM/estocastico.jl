@@ -1,24 +1,16 @@
-# Sistema estocástico
-
 using DifferentialEquations, Plots
 
-sigma = 0.9
+sigma = 8.880502080440465
 x0 = 0.1
 tspan = (0.0, 1.0)
 
 f1(X, p, t) = X - X^3
-f2(X, p, t) = sigma
+f2(X, p, t) = p
 
-W = WienerProcess(0.0, 0.0, 0.0)
-prob = SDEProblem(f1, f2, x0, tspan, noise=W)
-sola = solve(prob, EM(), dt=0.01)
+W = WienerProcess(0.0, 0.0)
+prob = SDEProblem(f1, f2, x0, tspan, sigma; noise = W)
+solucao_estocastico = solve(prob, EM(), dt = 1e-3)
 
-plot(sola.t, sola.u;
-     label = "X(t)",
-     xlabel = "Tempo",
-     ylabel = "X",
-     title = "Modelo estocástico",
-     size = (960, 540),
-     color = :red,
-     linewidth = 1.5)
-
+df = DataFrame(t = solucao_estocastico.t, x = solucao_estocastico.u)
+cd(@__DIR__)  
+CSV.write("data/estocastico.csv", df)
