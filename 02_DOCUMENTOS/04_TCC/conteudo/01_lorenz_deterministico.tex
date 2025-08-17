@@ -1,0 +1,47 @@
+\chapter{O modelo de Lorenz}
+
+\section{Motivação e apresentação}
+Edward Norton Lorenz (1917-2008) foi um importante matemático e meteorologista responsável pela publicação de vários artigos e desenvolvimento de modelos na área de previsão do tempo e outros fenômenos geofísicos. Dentre eles, o mais famoso foi o modelo Lorenz 63, conhecido popularmente pelo ``efeito borboleta'' que foi um marco de grande relevância para simulações matemáticas computacionais.
+
+Em 1980, Lorenz publica um artigo intitulado ``\textit{Attractor Sets and Quasi-Geostrophic Equilibrium }'' \citep{Lorenz1980}. Nele, Lorenz apresenta a construção e a simulação de dois modelos distintos: o primeiro, é formado a partir das equações primitivas (PE) com nove EDOs (equações diferenciais ordinárias), derivado das equações de águas rasas com topografia e forçamento, enquanto o segundo é um modelo quasi-geostrófico (QG) com 3 EDOs, obtido ao descartar as variáveis associadas ao escoamento divergente $x$ e seus termos correspondentes. O modelo PE contém tanto ondas gravitacionais rápidas (que se dissipam) quanto oscilações quasi-geostróficas lentas, enquanto o modelo QG mantém apenas estas últimas, em um quadro simplificado para atmosfera de latitudes médias.
+
+Enquanto o primeiro modelo, modelo PE, é apresentado como:
+\begin{equation}
+\left\{
+\begin{aligned}
+    a_i\frac{dx_i}{d\tau} &= a_ib_ix_ix_k - c(a_i - a_k)x_iy_k  + c(a_i - a_j)y_ix_k -2c^2y_iy_k - \nu_0a_i^2x_i + a_iy_i - a_iz_i \\
+    a_i\frac{dy_i}{d\tau} &= -a_ib_kx_iy_k - a_ib_iy_ix_k + c(a_k - a_i)y_iy_k - a_ix_i - \nu_0a_i^2y_i \\
+    \frac{dz_i}{d\tau} &= -b_kx_i(z_k - h_k) - b_i(z_i - h_i)x_k + cy_i(z_k - h_k) - c(z_i - h_i)y_k + g_0a_ix_i - \kappa_0a_iz_i + F_i
+\end{aligned}
+\right.
+\label{eq:modelo_lorenz_deterministico_pe}
+\end{equation}
+
+
+O segundo, modelo QG, é dado por:
+\begin{equation}
+     (a_i g_0 + 1)\,\frac{dy_i}{d\tau} 
+     = g_0 c (a_k - a_j) y_j y_k 
+     - a_i (a_i g_0 \nu_0 + \kappa_0) y_i 
+     - c h_k y_j + c h_j y_k + F_i,
+     \label{eq:modelo_lorenz_deterministico_qg}
+\end{equation}
+
+onde,
+\begin{itemize}
+    \item $x_i$ representam os modos divergentes do escoamento (associados às ondas de gravidade);
+    \item $y_i$ representam os modos rotacionais (vorticidade), associados às oscilações quasi-geostróficas;
+    \item $z_i$ são variáveis auxiliares acopladas ao sistema;
+    \item $a_i$ são inteiros que representam os números de onda zonais;
+    \item $b_i$ são constantes ligadas à estrutura vertical dos modos;
+    \item $c = \sqrt{3/4}$ é um fator geométrico derivado da ortogonalidade dos modos;
+    \item $g_0$ é um parâmetro que mede a intensidade da força de gradiente de pressão;
+    \item $\nu_0$ é o coeficiente de difusão (viscosidade);
+    \item $\kappa_0$ é o coeficiente de amortecimento térmico;
+    \item $h_i$ representam a topografia;
+    \item $F_i$ são termos de forçamento externo.
+\end{itemize}
+
+\section{Propriedades e características}
+
+\section{Simulações}

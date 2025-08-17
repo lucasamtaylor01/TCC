@@ -91,8 +91,8 @@
 % Estes comandos definem o título e autoria do trabalho e devem sempre ser
 % definidos, pois além de serem utilizados para criar a capa, também são
 % armazenados nos metadados do PDF. O subtítulo é opcional.
-\title{Título do trabalho}[um subtítulo]
-\translatedtitle{Title of the document}[a subtitle]
+\title{Uma abordagem estocástica do Modelo de Lorenz 80}
+\translatedtitle{A stochastic approach for the Lorenz 80 model}
 
 \author{Lucas Amaral Taylor}
 
@@ -100,7 +100,7 @@
 \def\dra{Dr\kern-.04em.\kern-.11emª\kern.07em}
 
 % Para TCCs, este comando define o supervisor
-\orientador{Prof Breno Raphaldini Ferreira da Silva}
+\orientador{Prof. Dr. Breno Raphaldini Ferreira da Silva}
 
 
 \banca{
@@ -254,31 +254,6 @@ texto texto texto texto. Texto opcional.
 \bgroup
 \raggedbottom
 
-%%%%% Listas criadas manualmente
-
-%\chapter*{Lista de abreviaturas}
-\disablenewpage{\chapter*{Lista de abreviaturas}}
-
-\begin{tabular}{rl}
-   CFT & Transformada contínua de Fourier (\emph{Continuous Fourier Transform})\\
-   DFT & Transformada discreta de Fourier (\emph{Discrete Fourier Transform})\\
-  EIIP & Potencial de interação elétron-íon (\emph{Electron-Ion Interaction Potentials})\\
-  STFT & Transformada de Fourier de tempo reduzido (\emph{Short-Time Fourier Transform})\\
-  ABNT & Associação Brasileira de Normas Técnicas\\
-   URL & Localizador Uniforme de Recursos (\emph{Uniform Resource Locator})\\
-   IME & Instituto de Matemática e Estatística\\
-   USP & Universidade de São Paulo
-\end{tabular}
-
-%\chapter*{Lista de símbolos}
-\disablenewpage{\chapter*{Lista de símbolos}}
-
-\begin{tabular}{rl}
-  $\omega$ & Frequência angular\\
-    $\psi$ & Função de análise \emph{wavelet}\\
-    $\Psi$ & Transformada de Fourier de $\psi$\\
-\end{tabular}
-
 % Quebra de página manual
 \clearpage
 
@@ -339,12 +314,8 @@ texto texto texto texto. Texto opcional.
 \pagestyle{unnumberedchapter}
 \input{conteudo/00-exemplo-introducao}
 \pagestyle{mainmatter}
-\input{conteudo/01-exemplo-normas-ime}
-\input{conteudo/02-exemplo-usando-o-modelo}
-\input{conteudo/03-exemplo-latex}
-\input{conteudo/04-exemplo-tutorial}
-\input{conteudo/05-exemplo-exemplos}
-
+\input{conteudo/01_lorenz_deterministico}
+\input{conteudo/02_mori_zwanzig}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% APÊNDICES E ANEXOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -396,9 +367,6 @@ texto texto texto texto. Texto opcional.
 % só há anexos, sem apêndices, provavelmente não é necessário.
 \addappheadtotoc
 
-\input{conteudo/anexo-exemplo-imegoodies}
-\par
-\input{conteudo/anexo-exemplo-pseudocodigo}
 \par
 
 
