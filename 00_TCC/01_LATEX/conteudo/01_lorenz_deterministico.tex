@@ -1,36 +1,66 @@
 \chapter{O modelo de Lorenz 80 determinístico} \label{cap:ch01_lorenz_deterministico}
 
 \section{Introdução} \label{sec:ch01_introducao}
-Este capítulo tem como objetivo apresentar o modelo determinístico Lorenz 80 (L80). Para isso, iniciamos, na seção \ref{sec:ch01_geofisica}, com uma introdução aos conceitos básicos de geofísica, buscando familiarizar o leitor com os fundamentos desta área. Na sequência, na seção \ref{sec:ch01_apresentacao_do_modelo}, contextualizamos o modelo, abordando os trabalhos que o antecederam e as motivações que levaram à sua formulação.
+Este capítulo tem como objetivo apresentar o modelo determinístico Lorenz 80. Para isso, começamos, na seção \ref{sec:ch01_geofisica}, com uma introdução aos conceitos básicos de geofísica, a fim de familiarizar o leitor com os fundamentos dessa área. Em seguida, na seção \ref{sec:ch01_apresentacao_do_modelo}, contextualizamos o modelo, discutindo os trabalhos que o precederam e as motivações por trás de sua formulação.
 
-A construção do modelo é detalhada na seção \ref{sec:ch01_construcao_do_modelo}, seguida pela apresentação de suas principais propriedades e características na seção \ref{sec:ch01_prop_do_modelo}. Por fim, na seção \ref{sec:ch01_simulacoes_deterministico}, são exibidas simulações computacionais realizadas com o modelo, acompanhadas da análise gráfica dos resultados.
-
+Na seção \ref{sec:ch01_agua_rasa}, introduzimos o modelo de água rasa, que serve de base para o desenvolvimento do Lorenz 80. A construção deste é detalhada na seção \ref{sec:ch01_construcao_do_modelo}, seguida pela apresentação de suas principais propriedades e características, na seção \ref{sec:ch01_prop_do_modelo}. Por fim, a seção \ref{sec:ch01_simulacoes_deterministico} traz simulações computacionais realizadas com o modelo, acompanhadas de uma análise gráfica dos resultados.
 
 \section{Breves considerações sobre geofísica} \label{sec:ch01_geofisica}
 
-Nesta seção, reunimos um breve glossário com os principais conceitos de geofísica que servem de base para a compreensão do modelo de Lorenz 80 (L80). Como esse modelo se apoia no modelo de água rasa, também apresentaremos os fundamentos desse modelo.
-
-\subsection{Glossário} \label{subsec:ch01_glossario}
-Segue abaixo a definição de alguns conceitos de geofísica fundamentais para o modelo estudado:
+Nesta seção, reunimos um breve glossário com os principais conceitos de geofísica que servem de base para a compreensão do modelo de Lorenz 80. Segue abaixo a definição de alguns conceitos de geofísica fundamentais para o modelo estudado:
 \begin{itemize}
     \item \textbf{Quasi-geostrófico.}
     \item \textbf{Parâmetro de Coriolis.}
     \item \textbf{Equilíbrio hidrostático.}
+    \item \textbf{Estratificação.}
+    \item \textbf{Momento.}
+    \item \textbf{Conservação de massa.}
 \end{itemize}
 
-
-\subsection{O modelo de água rasa} \label{subsec:ch01_agua_rasa}
-O modelo de água rasa 
 \section{Motivação e apresentação do modelo} \label{sec:ch01_apresentacao_do_modelo}
 
-Edward Norton Lorenz (1917-2008) foi um importante matemático e meteorologista responsável pela publicação de vários artigos e desenvolvimento de modelos na área de previsão do tempo e outros fenômenos geofísicos. Dentre eles, o mais famoso foi o modelo Lorenz 63, conhecido popularmente pelo ``efeito borboleta'' que foi um marco de grande relevância para simulações matemáticas computacionais.
+Edward Norton Lorenz (1917-2008) foi um importante matemático e meteorologista responsável pela publicação de vários artigos e desenvolvimento de modelos na área de previsão do tempo e outros fenômenos geofísicos.
+
+Dentre eles, o mais famoso foi o modelo Lorenz 63, conhecido popularmente pelo ``efeito borboleta'' que foi um marco de grande relevância para simulações matemáticas computacionais. 
 
 Em 1980, Lorenz publica o artigo intitulado ``\textit{Attractor Sets and Quasi-Geostrophic Equilibrium }'' \citep{Lorenz1980}. Nele, Lorenz apresenta a construção e a simulação de dois modelos distintos: o primeiro, é formado a partir das equações primitivas (PE) com nove EDOs (equações diferenciais ordinárias), derivado das equações de águas rasas com topografia e forçamento, enquanto o segundo é um modelo quasi-geostrófico (QG) com 3 EDOs, obtido ao descartar as variáveis associadas ao escoamento divergente $x$ e seus termos correspondentes. O modelo PE contém tanto ondas gravitacionais rápidas quanto oscilações quasi-geostróficas lentas, enquanto o modelo QG mantém apenas estas últimas, em um quadro simplificado para atmosfera de latitudes médias.
 
-O artigo 
 
-\section{Construção do modelo} \label{sec:ch01_construcao_do_modelo}
-Como dito anteriormente, o modelo é construído a partir das equações de água-rasa com algumas particularidades descritas a seguir.
+\section{O modelo de água-rasa} \label{sec:ch01_agua_rasa}
+O modelo de água rasa descreve um fluido de densidade constante, em equilíbrio hidrostático, que pode ou não estar em rotação. Nele, a escala horizontal é significativamente maior que a profundidade. Esse fluido possui superfície livre e é limitado pelas bordas. No caso considerado, adotamos a versão de uma única camada, o que é vantajoso por permitir a desconsideração dos efeitos de estratificação. \citep{Vallis2017}.
+
+Matematicamente, para a construção do modelo de água-rasa, consideramos a equação do equilíbrio hidrostático, dada por:
+\begin{equation}
+    \frac{\partial p}{\partial z} = - \rho_0g, \label{eq:equilibrio_hidrostatico}
+\end{equation}
+
+onde:
+\begin{itemize}
+    \item $p$: pressão do fluido,
+    \item $z$: coordenada vertical (positiva para cima),
+    \item $\rho_0$: densidade constante do fluido,
+    \item $g$: aceleração da gravidade.
+\end{itemize}
+
+A partir das manipulações envolvendo os conceitos de momento e conservação de massa, detalhado em \citet{Vallis2017}, obtemos as equações que descrevem o modelo: 
+\begin{align}
+	\frac{\partial V}{\partial t} + (V \cdot \nabla)V + f \mathbf{k} \times V & = -g \nabla z \label{eq:agua-rasa-1} \\
+	\frac{\partial z}{\partial t} + \nabla \cdot (z V)                        & = 0 \label{eq:agua-rasa-2}    
+\end{align}
+
+Onde:
+\begin{itemize}
+    \item $t$: tempo;
+    \item $\mathbf{r}$: vetor de posição inicial;
+	\item $V(t,r)$: Velocidade horizontal;
+	\item $z(t,r)$: altura da superfície;
+	\item $f$: parâmetro de Coriolis;
+	\item $g$: aceleração da gravidade;
+	\item $\mathbf{k}$: vetor da vertical.
+\end{itemize}
+
+\section{Construção dos modelos} \label{sec:ch01_construcao_do_modelo}
+Nesta seção, apresentaremos a construção dos modelos apresentados no artigo \citet{Lorenz1980}. Como dito anteriormente, o modelo é construído a partir das equações de água-rasa com algumas particularidades descritas a seguir. 
 
 Consideremos um fluido homogêneo e incompressível, ou seja, com densidade constante em todo o volume e volume invariável mesmo sob variações de pressão. O escoamento é predominantemente horizontal, descrito por uma velocidade $V(t, \mathbf{r})$ independente da altura, onde $\mathbf{r}$ representa o vetor de posição inicial.
 
@@ -44,7 +74,7 @@ associada a movimentos de pequena escala: o termo $\nu$ representa o coeficiente
 A partir da descrição acima, podemos construir o seguinte diagrama:
 \begin{figure}[H]
 	\centering
-	\begin{tikzpicture}[scale=1.5] 
+	\begin{tikzpicture}[scale=1] 
 				
 		% Superfície livre
 		\draw[above] (0,4) to[out=0,in=180] (1,4.2) 
@@ -213,5 +243,18 @@ Na construção do modelo QG, começamos desprezando todos os termos não linear
 \section{Propriedades} \label{sec:ch01_prop_do_modelo}
 
 \section{Simulações} \label{sec:ch01_simulacoes_deterministico}
-\subsection{Escolha de parâmetros} \label{subsec:ch01_escolha_parametros}
-\subsection{Gráficos} \label{subsec:ch01_graficos_simulacao}
+Nesta seção, apresentaremos o resultados das simulações computacionais dos dois modelos construídos ao longo do capítulo. Os gráficos foram gerados a partir de simulações computacionais realizadas em Julia, principalmente, com o auxílio da biblioteca \textit{SciML: Differentiable Modeling and Simulation Combined with Machine Learning} \citep{Rackauckas2017}.
+
+O có
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/evolucao_temporal_01.png}
+  \caption{Simulação do modelo PE (1 dia).\label{fig:lorenz80_pe_1}}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.85\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/evolucao_temporal_10.png}
+  \caption{Simulação do modelo PE (10 dias)\label{fig:lorenz80_pe_2}}
+\end{figure}
+
