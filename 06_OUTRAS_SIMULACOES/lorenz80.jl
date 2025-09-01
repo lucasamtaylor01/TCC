@@ -1,48 +1,39 @@
-using DifferentialEquations, ModelingToolkit, Plots
+using DifferentialEquations, ModelingToolkit, CSV, DataFrames
 
 @parameters t
 @variables x[1:3](t) y[1:3](t) z[1:3](t)
 D = Differential(t)
 
-vector_a = [1.0, 1.0, 3.0]
-vector_b = [
-    0.5 * (vector_a[1] - vector_a[2] - vector_a[3]),
-    0.5 * (vector_a[2] - vector_a[3] - vector_a[1]),
-    0.5 * (vector_a[3] - vector_a[1] - vector_a[2])
-]
+a = [1.0, 1.0, 3.0]
+b = [0.5 * (a[1] - a[2] - a[3]), 0.5 * (a[2] - a[3] - a[1]), 0.5 * (a[3] - a[1] - a[2])]
 c = sqrt(3/4)
-vector_h = [-1.0, 0.0, 0.0]
-vector_f = [0.1, 0.0, 0.0]
+h = [-1.0, 0.0, 0.0]
+f = [0.1, 0.0, 0.0]
 g_0, kappa_0, nu_0 = 8.0, 1/48, 1/48
 
 eqs = [
     D(x[i]) ~ (
-        vector_a[i]*vector_b[i]*x[(i % 3) + 1]*x[((i+1) % 3) + 1]
-        - c*(vector_a[i]-vector_a[((i+1) % 3) + 1])*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
-        + c*(vector_a[i]-vector_a[((i+1) % 3) + 1])*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
-        - c*(vector_a[i]-vector_a[(i % 3) + 1])*y[(i % 3) + 1]*x[((i+1) % 3) + 1]
+        a[i]*b[i]*x[(i % 3) + 1]*x[((i+1) % 3) + 1]
+        - c*(a[i]-a[((i+1) % 3) + 1])*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
         - 2*c^2*y[i]*y[((i+1) % 3) + 1]
-        - nu_0*vector_a[i]^2*x[i]
-        + vector_a[i]*y[i] - vector_a[i]*z[i]
-    ) / vector_a[i] for i in 1:3
+        - nu_0*a[i]^2*x[i]
+        + a[i]*y[i] - a[i]*z[i]
+    ) / a[i] for i in 1:3
 ]
-
 append!(eqs, [
     D(y[i]) ~ (
-        -vector_a[((i+1) % 3) + 1]*vector_b[((i+1) % 3) + 1]*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
-        - vector_a[(i % 3) + 1]*vector_b[(i % 3) + 1]*y[(i % 3) + 1]*x[((i+1) % 3) + 1]
-        + c*(vector_a[((i+1) % 3) + 1]-vector_a[(i % 3) + 1])*y[(i % 3) + 1]*y[((i+1) % 3) + 1]
-        - vector_a[i]*x[i] - nu_0*vector_a[i]^2*y[i]
-    ) / vector_a[i] for i in 1:3
+        -a[((i+1) % 3) + 1]*b[((i+1) % 3) + 1]*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
+        - a[(i % 3) + 1]*b[(i % 3) + 1]*y[(i % 3) + 1]*x[((i+1) % 3) + 1]
+        - a[i]*x[i] - nu_0*a[i]^2*y[i]
+    ) / a[i] for i in 1:3
 ])
-
 append!(eqs, [
     D(z[i]) ~ (
-        -vector_b[((i+1) % 3) + 1]*x[(i % 3) + 1]*(z[((i+1) % 3) + 1]-vector_h[((i+1) % 3) + 1])
-        - vector_b[(i % 3) + 1]*(z[(i % 3) + 1]-vector_h[(i % 3) + 1])*x[((i+1) % 3) + 1]
-        + c*y[(i % 3) + 1]*(z[((i+1) % 3) + 1]-vector_h[((i+1) % 3) + 1])
-        - c*(z[(i % 3) + 1]-vector_h[(i % 3) + 1])*y[((i+1) % 3) + 1]
-        + g_0*vector_a[i]*x[i] - kappa_0*vector_a[i]*z[i] + vector_f[i]
+        -b[((i+1) % 3) + 1]*x[(i % 3) + 1]*(z[((i+1) % 3) + 1]-h[((i+1) % 3) + 1])
+        - b[(i % 3) + 1]*(z[(i % 3) + 1]-h[(i % 3) + 1])*x[((i+1) % 3) + 1]
+        + c*y[(i % 3) + 1]*(z[((i+1) % 3) + 1]-h[((i+1) % 3) + 1])
+        - c*(z[(i % 3) + 1]-h[(i % 3) + 1])*y[((i+1) % 3) + 1]
+        + g_0*a[i]*x[i] - kappa_0*a[i]*z[i] + f[i]
     ) for i in 1:3
 ])
 
@@ -50,17 +41,13 @@ append!(eqs, [
 
 x0, y0, z0 = [0.1, 0.0, 0.0], [0.1, 0.0, 0.0], [0.1, 0.0, 0.0]
 u0 = vcat(x0, y0, z0)
-tspan = (0.0, 8*1.0)
+tspan = (0.0, 80.0)
 
-prob = ODEProblem(sys, u0, tspan)
-sol = solve(prob, RK4(); abstol=1e-6, reltol=1e-8, saveat=0.01)
+sol = solve(ODEProblem(sys, u0, tspan), Tsit5(); abstol=1e-6, reltol=1e-8, saveat=0.01)
 
-td = sol.t ./ 8
 U = Array(sol)
-X, Y, Z = U[1:3, :]', U[4:6, :]', U[7:9, :]'
+df = DataFrame(time = sol.t, x1 = U[1,:], x2 = U[2,:], x3 = U[3,:], y1 = U[4,:], y2 = U[5,:], y3 = U[6,:],z1 = U[7,:], z2 = U[8,:], z3 = U[9,:])
 
-plot(td, X[:,1], label="x1", color=:green, lw=1.5)
-plot!(td, Y[:,1], label="y1", color=:blue, lw=1.5)
-plot!(td, Z[:,1], label="z1", color=:red, lw=1.5)
-xlabel!("t (dias)")
-title!("Evolução temporal (10 dias)")
+cd(@__DIR__)  
+isdir("data") || mkdir("data")
+CSV.write("data/solucao.csv", df)
