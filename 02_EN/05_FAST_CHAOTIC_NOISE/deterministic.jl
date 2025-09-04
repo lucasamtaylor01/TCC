@@ -16,11 +16,11 @@ eqs = [
 
 tspan = (0.0, 1.0)
 prob = ODEProblem(sys, [], tspan)
-solucao_deterministico = solve(prob, Tsit5(), reltol=1e-6, abstol=1e-7, saveat=1e-3)
+deterministic_solution = solve(prob, Tsit5(), reltol=1e-6, abstol=1e-7, saveat=1e-3)
 
-x_vals = solucao_deterministico[x]
-y2_vals = solucao_deterministico[y2]
+x_vals = deterministic_solution[x]
+y2_vals = deterministic_solution[y2]
 
-df = DataFrame(t = solucao_deterministico.t, y2 = y2_vals, x = x_vals)
+df = DataFrame(t = deterministic_solution.t, y2 = y2_vals, x = x_vals)
 cd(@__DIR__)  
-CSV.write("data/deterministico.csv", df)
+CSV.write("data/deterministic.csv", df)

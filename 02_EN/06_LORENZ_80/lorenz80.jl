@@ -32,7 +32,7 @@ append!(eqs, [
         -b[((i+1) % 3) + 1]*x[(i % 3) + 1]*(z[((i+1) % 3) + 1]-h[((i+1) % 3) + 1])
         - b[(i % 3) + 1]*(z[(i % 3) + 1]-h[(i % 3) + 1])*x[((i+1) % 3) + 1]
         + c*y[(i % 3) + 1]*(z[((i+1) % 3) + 1]-h[((i+1) % 3) + 1])
-        - c*(z[(i % 3) + 1]-h[(i % 3) + 1])*y[((i+1) % 3) + 1]
+        - c*(z[(i % 3) + 1]-h[(i+1) % 3 + 1])*y[((i+1) % 3) + 1]
         + g_0*a[i]*x[i] - kappa_0*a[i]*z[i] + f[i]
     ) for i in 1:3
 ])
@@ -41,13 +41,13 @@ append!(eqs, [
 
 x0, y0, z0 = [0.1, 0.0, 0.0], [0.1, 0.0, 0.0], [0.1, 0.0, 0.0]
 u0 = vcat(x0, y0, z0)
-tspan = (0.0, 80.0)
+tspan = (0.0, 8*1.0)
 
 sol = solve(ODEProblem(sys, u0, tspan), Tsit5(); abstol=1e-6, reltol=1e-8, saveat=0.01)
 
 U = Array(sol)
-df = DataFrame(time = sol.t, x1 = U[1,:], x2 = U[2,:], x3 = U[3,:], y1 = U[4,:], y2 = U[5,:], y3 = U[6,:],z1 = U[7,:], z2 = U[8,:], z3 = U[9,:])
+df = DataFrame(time = sol.t, x1 = U[1,:], x2 = U[2,:], x3 = U[3,:], y1 = U[4,:], y2 = U[5,:], y3 = U[6,:], z1 = U[7,:], z2 = U[8,:], z3 = U[9,:])
 
 cd(@__DIR__)  
 isdir("data") || mkdir("data")
-CSV.write("data/solucao.csv", df)
+CSV.write("data/solution.csv", df)
