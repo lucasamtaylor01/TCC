@@ -1,0 +1,90 @@
+\section{Prolegômenos}
+
+\begin{frame}{EDOs como EDPs lineares}
+	
+	A partir do sistema de EDO:
+	\begin{equation*}
+		\frac{d}{dt} \phi(x,t) = R(\phi(x,t)), \quad \phi(x,0) = x
+	\end{equation*}
+	
+	Define-se o Operador de Liouville:
+	\begin{equation*}
+		L = \sum_i R_i(x) \frac{\partial}{\partial x_i}
+	\end{equation*}
+	
+	Assim, temos o sistema equivalente de EDP:
+	\begin{equation*}
+		u_t = Lu, \quad u(x,0) = g(x), \quad u(x,t) = g(\phi(x,t))
+	\end{equation*}
+	
+\end{frame}
+%--------------------------------------------------------
+
+\begin{frame}{Notação de semigrupo}
+	\begin{itemize}
+		\item Usada para representar soluções de EDPs de forma compacta.
+		\item Exemplo: equação do calor
+		      \begin{equation*}
+		      	v_t - \frac{1}{2}\Delta v = 0, \quad v(x,0) = \phi(x)
+		      \end{equation*}
+		\item Solução escrita como:
+		      \begin{equation*}
+		      	v(t) = e^{\frac{1}{2}t\Delta} \phi
+		      \end{equation*}
+		\item Propriedade: $e^{(t+s)\Delta} = e^{t\Delta} e^{s\Delta}$
+	\end{itemize}
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Aplicando ao Operador de Liouville}
+	\begin{itemize}
+		\item Solução da EDP:
+		      \begin{equation*}
+		      	e^{tL}g(x) = g(\phi(x,t))
+		      \end{equation*}
+		\item $g$ comuta com a evolução do sistema.
+		\item Relação de comutação:
+		      \begin{equation*}
+		      	Le^{tL} = e^{tL}L
+		      \end{equation*}
+		\item Para matrizes: fórmula de Dyson:
+		      \begin{equation*}
+		      	\exp(t(A+B)) = \exp(tA) + \int_0^t \exp((t-s)(A+B)) B \exp(sA)\, ds
+		      \end{equation*}
+	\end{itemize}
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Produto interno hermitiano}
+	\begin{itemize}
+		\item Produto interno unidimensional:
+		      \begin{equation*}
+		      	\langle u, v \rangle = \int_{-\infty}^{+\infty} \frac{e^{-x^2/2}}{\sqrt{2\pi}} u(x)v(x)\, dx
+		      \end{equation*}
+		\item Ortogonalidade: $\langle p_n, p_m \rangle = 0$ se $n \neq m$
+		\item Normalização: $\langle p_n, p_n \rangle = 1$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Extensão $n$-dimensional}
+	\begin{itemize}
+		\item Produto interno generalizado:
+		      \begin{equation*}
+		      	\langle u, v \rangle = \int \cdots \int (2\pi)^{-n/2} e^{-\sum \frac{x_i^2}{2}} u(x)v(x)\, dx
+		      \end{equation*}
+		\item Possibilidade de definir polinômios ortonormais em $q$, $p$ com densidade $e^{-H/T}$
+	\end{itemize}
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Projeção e Mori-Zwanzig}
+	\begin{itemize}
+		\item Espaço $\Gamma$ $n$-dimensional com densidade de probabilidade.
+		\item Divide-se $x$ em $\hat{x}$ (resolvidas) e $\tilde{x}$ (não resolvidas).
+		\item Projeção ortogonal: $\mathbb{P}g = \mathbb{E}[g \mid \hat{x}]$
+		\item Subespaço gerado por polinômios hermitianos em $\hat{x}$.
+	\end{itemize}
+\end{frame}

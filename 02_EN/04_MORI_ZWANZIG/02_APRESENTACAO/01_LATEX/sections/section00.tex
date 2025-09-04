@@ -1,0 +1,43 @@
+\section{Introdução} % Seções são adicionadas para organizar sua apresentação em blocos discretos, todas as seções e subseções são automaticamente exibidas no índice como uma visão geral da apresentação, mas NÃO são exibidas como slides separados.
+
+%----------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{Objetivo}
+	\begin{enumerate}
+		\item O artigo de \cite{Chekroun2021} busca \textbf{simplificar o modelo de Lorenz 80 (L80)} preservando seu comportamento.
+		              
+		\item Para isso, utiliza-se o \textbf{método de Mori-Zwanzig (MZ)}, uma abordagem físico-estatística adequada a sistemas como o L80.
+		              
+		\item Dada sua importância, realizaremos esta apresentação para:
+		      \begin{itemize}
+		      	\item Apoiar a compreensão da aplicação ao L80.
+		      	\item Oferecer uma base teórica sólida para possíveis explorações posteriores.
+		      \end{itemize}
+	\end{enumerate}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\begin{frame}\frametitle{Introdução}
+	\begin{itemize}
+		\item O método MZ foi desenvolvido por Hajime Mori e Robert W. Zwanzig na segunda metade do século XX.
+		          
+		\item \textbf{Ideia central do método MZ}:
+		      \begin{itemize}
+		      	\item Classificação das variáveis em:
+		      	      \begin{itemize}
+		      	      	\item Resolvidas
+		      	      	\item Não resolvidas:
+		      	      \end{itemize}
+		      	\item Substituição das variáveis não resolvidas por:
+		      	      \begin{itemize}
+		      	      	\item \textit{Ruído estocástico} (\textit{noise}).
+		      	      	\item \textit{Termo de memória} (\textit{memory term}), ou de amortecimento.
+		      	      \end{itemize}
+		      \end{itemize}
+		          
+		\item Essa substituição permite preservar a dinâmica do sistema resolvido, mesmo com informações incompletas.
+	\end{itemize}
+\end{frame}
+
+

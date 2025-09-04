@@ -1,0 +1,113 @@
+\section{Mori-Zwanzig}
+
+\begin{frame}{Construção do formalismo MZ}
+\begin{itemize}
+    \item Separação das variáveis: $x = (\hat{x}, \tilde{x})$ e $\phi = (\hat{\phi}, \tilde{\phi})$ e $R = (\hat{R}, \tilde{R})$
+    \item Foco nas $m$ primeiras componentes: variáveis resolvidas.
+    \item Escrevemos: $\hat{\phi}_j(x,t) = e^{tL}x_j$, $1 \leq j \leq m$
+    \item Derivando no tempo:
+    \begin{equation*}
+        \frac{\partial}{\partial t}e^{tL}x_j = e^{tL}Lx_j
+    \end{equation*}
+    \item Com projeções ortogonais: $\mathbb{Q} = I - \mathbb{P}$
+\end{itemize}
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Equação de Mori-Zwanzig via Dyson}
+\begin{itemize}
+    \item Fórmula de Dyson aplicada:
+    \begin{equation*}
+        e^{tL} = e^{t\mathbb{Q}L} + \int_0^t e^{(t-s)L} \mathbb{P}L e^{s\mathbb{Q}L} \, ds
+    \end{equation*}
+    \item Substituindo na equação de evolução:
+    \begin{equation*}
+        \frac{\partial}{\partial t} e^{tL} x_j = \ e^{tL} \mathbb{P}L x_j + e^{t\mathbb{Q}L} \mathbb{Q}L x_j + \int_0^t e^{(t-s)L} \mathbb{P}L e^{s\mathbb{Q}L} \mathbb{Q}L x_j \, ds
+    \end{equation*}
+\end{itemize}
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Análise termo a termo}
+    Vamos decompor o termo $e^{tL} x_j$ segundo a equação de Mori-Zwanzig, analisando separadamente:
+    \begin{itemize}
+        \item O termo markoviano (primeiro termo),
+        \item O termo de ruído (segundo termo),
+        \item O termo de memória (terceiro termo).
+    \end{itemize}
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Primeiro termo}
+O primeiro termo é dado por:
+\begin{equation}
+	e^{tL} \mathbb{P}L x_j
+	\label{eq:primeiro-termo-mz}
+\end{equation}
+
+A partir dele, temos que:
+\begin{align*}
+	Lx_j &= \sum_i R_i\left(\frac{\partial}{\partial x_i}\right)x_j = R_j(x), \\
+	\mathbb{P}Lx_j &= \mathbb{E}[R_j(x)\,|\,\hat{x}], \\
+	e^{tL}\mathbb{P}Lx_j &= \bar{R}_j\left(\hat{\phi}(x,t)\right).
+\end{align*}
+
+\footnotesize{Note que é um termo markoviano, pois depende apenas do estado atual $\hat{\phi}(x,t)$.}
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Segundo termo}
+
+O segundo termo é dado por:
+\begin{equation*}
+	w_j = e^{t\mathbb{Q}L} \mathbb{Q}L x_j
+\end{equation*}
+
+A partir dele, temos que:
+\begin{align}
+	\frac{\partial}{\partial t} w_j(x,t) &= \mathbb{Q}L w_j(x,t), \nonumber\\
+	w_j(x,0) &= \mathbb{Q}L x_j = R_j(x) - \mathbb{E}[R_j \mid \hat{x}]. 
+    \label{eq:mori-zwanzig-dinamica-ortogonal}
+\end{align}
+
+A função $w_j(x,0)$ representa a \textit{parte flutuante} de $R_j(x)$ e evolui segundo a dinâmica ortogonal. Temos $\mathbb{P} w_j(x,t) = 0$ para todo $t$.
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Subespaço de ruído}
+O \textit{subespaço do ruído} é formado por funções ortogonais às funções de $\hat{x}$.
+
+Isso corresponde, geralmente, a termos que dependem de $\tilde{x}$. Esses termos são imprevisíveis dado $\hat{x}$.
+\end{frame}
+
+\begin{frame}{Terceiro termo}
+
+O terceiro termo é dado por:
+\begin{equation*}
+	\int_0^t e^{(t-s)L} \mathbb{P}L e^{s\mathbb{Q}L} \mathbb{Q}L x_j
+\end{equation*}
+Este termo depende do histórico do sistema: é o \textbf{termo de memória}.
+
+Projeção usando polinômios hermitiano $H_1, H_2, \dots$:
+\begin{align*}
+	\mathbb{P}L e^{s\mathbb{Q}L} \mathbb{Q}L x_j &= \sum_k \langle L\mathbb{Q} e^{s\mathbb{Q}L} \mathbb{Q}Lx_j, H_k(\hat{x}) \rangle H_k(\hat{x}).
+\end{align*}
+\end{frame}
+
+%--------------------------------------------------------
+
+\begin{frame}{Produto interno e antissimetria de $L$}
+Se $L$ é antissimétrico: $(u, Lv) = -(Lu, v)$, então:
+\begin{align*}
+	(L \mathbb{Q} e^{s \mathbb{Q} L} \mathbb{Q}L x_j, H_k) 
+	  &= - (\mathbb{Q} e^{s \mathbb{Q} L} \mathbb{Q}L x_j, L H_k) \\
+	  &= - (e^{s \mathbb{Q} L} \mathbb{Q}L x_j, \mathbb{Q}L H_k).
+\end{align*}
+
+O terceiro termo é uma soma de covariâncias temporais de ruído.
+\end{frame}
