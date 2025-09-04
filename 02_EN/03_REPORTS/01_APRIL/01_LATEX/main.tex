@@ -1,71 +1,54 @@
 \documentclass[12pt]{article}
-
-% Codificação e Idioma
+% Encoding and Language
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
-
-% Formatação de Página e Estilo de Texto
+% Page Formatting and Text Style
 \usepackage[a4paper, left=3cm, right=2cm, top=3cm, bottom=2cm]{geometry}
 \usepackage{parskip}
 \usepackage{setspace}
 \onehalfspacing
 \usepackage{csquotes}
-
 % Links
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
-
-% Matemática
+% Mathematics
 \usepackage{amsmath, amssymb, amsfonts}
 \usepackage{cancel}
 \usepackage{tikz}
-
-% Bibliografia (ABNT)
+% Bibliography (ABNT)
 \usepackage[backend=biber, style=abnt, language=portuguese, natbib=true]{biblatex}
 \addbibresource{ref.bib}
 
-
-% Outros Pacotes
+% Other Packages
 \usepackage{graphicx}
 \usepackage{ascii}
 \usepackage{listings}
 \usepackage{enumitem}
 \usepackage{url}
-
-% Definir título da bibliografia
-\renewcommand{\refname}{Referências}  
-
-\title{Relatório do Trabalho de conclusão de curso \\ \large{MAP2419 - Introdução ao Trabalho de Formatura}}
-\date{Abril de 2025}
-
+% Set bibliography title
+\renewcommand{\refname}{References}
+\title{Final Course Project Report \\ \large{MAP2419 - Introduction to Graduation Project}}
+\date{April 2025}
 \author{
-\textbf{Aluno:} Lucas Amaral Taylor (IME-USP)\\
-\textbf{Orientador:} Prof. Dr. Breno Raphaldini Ferreira da Silva (IME-USP)
+\textbf{Student:} Lucas Amaral Taylor (IME-USP)\\
+\textbf{Advisor:} Prof. Dr. Breno Raphaldini Ferreira da Silva (IME-USP)
 }
-
 \begin{document}
 \maketitle
-
-O presente relatório tem como objetivo apresentar as atividades desenvolvidas ao longo do mês de abril de 2025, no contexto do Trabalho de Conclusão de Curso.
-
+The purpose of this report is to present the activities carried out during the month of April 2025, in the context of the Final Course Project.
 \begin{enumerate}
-	\item \textbf{Definição do tema.} O tema provisório definido para o trabalho foi “Uma Abordagem Estocástica para o Modelo L80”\footnote{Título sujeito a alterações}. O projeto tem como base o estudo do artigo de \citet{Chekroun2021};
-	      
-	\item \textbf{Levantamento bibliográfico.} Foram identificadas e selecionadas as principais referências teóricas que fundamentarão o desenvolvimento do trabalho. Todas disponíveis na página de \textbf{Referência} do relatório;
-	      
-	\item \textbf{Criação do repositório no \textit{GitHub}.} Com o intuito de organizar as tarefas e centralizar os materiais do projeto, foi criado um repositório no \textit{GitHub}, disponível em:
-	      
-	   \textcolor{blue}{\href{https://github.com/lucasamtaylor01/Lorenz80_SDE}{https://github.com/lucasamtaylor01/Lorenz80\_SDE}};
-
-	      
-	\item \textbf{Leitura dos artigos-base.} Foi realizada a leitura inicial de dois artigos fundamentais para o embasamento teórico do projeto: \citet{Chekroun2017} e \citet{Chekroun2021};
-	      
-	\item \textbf{Apresentação de seminário sobre o Formalismo de Mori-Zwanzig.} Como parte das atividades de aprofundamento teórico, foi preparado e apresentado um seminário introdutório sobre o Formalismo de Mori-Zwanzig, com base no Capítulo 09 do livro \textit{Stochastic Tools in Mathematics and Science} \citep{Chorin2013}. Os materiais utilizados encontram-se disponíveis no repositório: 
-	      
-	   \textcolor{blue}{\href{https://github.com/lucasamtaylor01/Lorenz80_SDE/tree/master/03_SEMINARIO_MZ}{https://github.com/lucasamtaylor01/Lorenz80\_SDE/tree/master/03\_SEMINARIO\_MZ}}.
-
+    \item \textbf{Definition of the topic.} The provisional topic defined for the project was “A Stochastic Approach to the L80 Model”\footnote{Title subject to change}. The project is based on the study of the article by \citet{Chekroun2021};
+          
+    \item \textbf{Bibliographic survey.} The main theoretical references that will underpin the development of the work were identified and selected. All are available on the \textbf{Reference} page of the report;
+          
+    \item \textbf{Creation of the repository on \textit{GitHub}.} In order to organize the tasks and centralize the project materials, a repository was created on \textit{GitHub}, available at:
+                 \textcolor{blue}{\href{https://github.com/lucasamtaylor01/Lorenz80_SDE}{https://github.com/lucasamtaylor01/Lorenz80_SDE}};
+              
+\item \textbf{Reading of the base articles.} An initial reading of two articles fundamental to the theoretical basis of the project was carried out: \citet{Chekroun2017} and \citet{Chekroun2021};
+          
+    \item \textbf{Seminar presentation on Mori-Zwanzig Formalism.} As part of the theoretical deepening activities, an introductory seminar on Mori-Zwanzig Formalism was prepared and presented, based on Chapter 09 of the book \textit{Stochastic Tools in Mathematics and Science} \citep{Chorin2013}. The materials used are available in the repository:
+                  \textcolor{blue}{\href{https://github.com/lucasamtaylor01/Lorenz80_SDE/tree/master/03_SEMINARIO_MZ}{https://github.com/lucasamtaylor01/Lorenz80_SDE/tree/master/03_SEMINARIO_MZ}}.
 \end{enumerate}
-
 
 \newpage
 \nocite{*}

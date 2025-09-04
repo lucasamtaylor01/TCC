@@ -1,37 +1,31 @@
 \documentclass[12pt]{article}
-
-% Codificação e idioma
+% Encoding and language
 \usepackage[utf8]{inputenc}
 \usepackage[brazilian]{babel}
 \linespread{1.5}
 
-
-% Layout da página e espaçamento
+% Page layout and spacing
 \usepackage[a4paper, left=3cm, right=2cm, top=3cm, bottom=2cm]{geometry}
 \usepackage{setspace}
 \usepackage{parskip}
-
-% Matemática
+% Mathematics
 \usepackage{amsmath, amssymb}
-
-% Gráficos e imagens
+% Graphics and images
 \usepackage{graphicx}
-
-% Listas e tabelas
+% Lists and tables
 \usepackage{enumitem}
 \usepackage{booktabs}
-
-% Texto fictício
+% Fictitious text
 \usepackage{lipsum}
 \usepackage{csquotes}
 \usepackage{ragged2e}
-
-% Citações e bibliografia
+% Citations and bibliography
 \usepackage[
     style=authoryear-comp,
     backend=biber,
     maxcitenames=2,
-    maxbibnames=99,
+    
+maxbibnames=99,
     uniquelist=false,
     dashed=false,
     doi=true,
@@ -39,54 +33,53 @@
     giveninits=true,
     uniquename=init,
     sorting=nyt,
-    language=portuguese,
+    language=English,
     natbib=true
 ]{biblatex}
-\addbibresource{referencias.bib}
-
-\setlength\bibitemsep{0pt}               % Espaçamento entre itens (0pt = simples)
-\setlength\bibhang{1.25em}               % Recuo da segunda linha
-\setlength\bibindent{0em}                % Sem indentação na primeira linha
-\renewcommand*{\bibfont}{\fontsize{10pt}{12pt}\selectfont}  % Tamanho da fonte 10pt com linha base de 12pt
-
-\newenvironment{resumo}{
-  \fontsize{10pt}{12pt}\selectfont  % tamanho 10 pt, altura de linha 12pt (simples)
-  \setstretch{1}                    % espaçamento simples
-  \par\noindent                     % começa parágrafo sem indentação extra
-  \justifying                      % comando para justificar texto
+\addbibresource{references.bib}
+\setlength\bibitemsep{0pt}              
+\setlength\bibhang{1.25em}              
+\setlength\bibindent{0em}              
+\renewcommand*{\bibfont}{\fontsize{10pt}{12pt}\selectfont} 
+\newenvironment{summary}{
+  \fontsize{10pt}{12pt}\selectfont  
+  
+\setstretch{1}            
+  \par\noindent              
+  \justifying                      
 }{
   \par
 }
-
 \begin{document}
-
 \begin{titlepage}
 	\centering
-	{\Large\scshape MAP2419 -- Introdução ao Trabalho de Formatura \par}
+	{\Large\scshape MAP2419 -- Introduction to Graduation Project \par}
 	\vspace{0.3cm}
-	{\large Instituto de Matemática e Estatística da Universidade de São Paulo (IME-USP)\par}
-	    
+	{\large Institute of Mathematics and Statistics, University of São Paulo (IME-USP)\par}
+	            
 	\vspace{3cm}
-	    
-	{\LARGE\bfseries Projeto\par}
+	{\LARGE\bfseries Project\par}
 	\vspace{1cm}
-	{\LARGE\bfseries Uma abordagem estocástica do Modelo de Lorenz 80\par}
+	{\LARGE\bfseries A stochastic approach to the Lorenz 80 model\par}
+	    
 	\vspace{0.5em}
 	{\large\bfseries A stochastic approach for the Lorenz 80 model\par}
-	
-	\vfill
 	    
+	\vfill
+	        
 	\begin{minipage}[t]{0.45\textwidth}
 		\raggedright
-		\textbf{Orientador:} \par
+		\textbf{Advisor:} \par
+		        
 		Prof. Dr. Breno Raphaldini Ferreira da Silva  \par
 		\texttt{brenorfs@gmail.com} \par
 		\textit{IME-USP} \par\medskip
 	\end{minipage}
 	\hfill
 	\begin{minipage}[t]{0.45\textwidth}
+		        
 		\raggedright
-		\textbf{Aluno:} \par
+		\textbf{Student:} \par
 		Lucas Amaral Taylor \par
 		NUSP: 13865062 \par
 		\texttt{lucasamtaylor@usp.br} \par
@@ -94,92 +87,78 @@
 	\end{minipage}
 	\vspace{2cm}
 \end{titlepage}
-
 \newpage
-\section*{Resumo}
-\begin{resumo}
-    Este trabalho apresenta um estudo do Modelo Lorenz 80, originalmente proposto por Edward Lorenz (1980), a partir de uma abordagem estocástica inspirada em \citet{Chekroun2021}. São abordados fundamentos teóricos essenciais, como o formalismo de Mori-Zwanzig, propriedades gerais de equações diferenciais estocásticas e as características matemáticas e físicas do próprio modelo. O desenvolvimento computacional inclui a implementação e simulação numérica do modelo utilizando as linguagens \textit{Julia} e \textit{Python}, com ênfase em bibliotecas científicas voltadas para sistemas dinâmicos estocásticos e análise de dados. Por fim, realiza-se uma análise exploratória de diferentes configurações do termo de ruído, com o objetivo de investigar abordagens alternativas e complementares ao tratamento original.
-\end{resumo}
-
 \section*{Abstract}
-\begin{resumo}
-    This project presents a study of the Lorenz 80 Model, originally proposed by Edward Lorenz (1980), from a stochastic approach inspired by \citet{Chekroun2021}. Essential theoretical foundations are covered, such as the Mori-Zwanzig formalism, general properties of stochastic differential equations and the mathematical and physical characteristics of the model itself. The computational development includes the implementation and numerical simulation of the model using the \textit{Julia} and \textit{Python} languages, with an emphasis on scientific libraries aimed at stochastic dynamic systems and data analysis. Finally, an exploratory analysis of different configurations of the noise term is carried out, with the aim of investigating alternative and complementary approaches to the original treatment.
-\end{resumo}
-
+\begin{abstract}
+	This paper presents a study of the Lorenz 80 Model, originally proposed by Edward Lorenz (1980), based on a stochastic approach inspired by \citet{Chekroun2021}. Essential theoretical foundations are addressed, such as the Mori-Zwanzig formalism, general properties of stochastic differential equations, and the mathematical and physical characteristics of the model itself. The computational development includes the implementation and numerical simulation of the model using the languages \textit{Julia} and \textit{Python}, with an emphasis on scientific libraries focused on stochastic dynamic systems and data analysis. Finally, an exploratory analysis of different configurations of the noise term is performed, with the aim of investigating alternative and complementary approaches to the original treatment.
+\end{abstract}
+\section*{Abstract}
+\begin{abstract}
+	This project presents a study of the Lorenz 80 Model, originally proposed by Edward Lorenz (1980), from a stochastic approach inspired by \citet{Chekroun2021}. Essential theoretical foundations are covered, such as the Mori-Zwanzig formalism, general properties of stochastic differential equations, and the mathematical and physical characteristics of the model itself. The computational development includes the implementation and numerical simulation of the model using the \textit{Julia} and \textit{Python} languages, with an emphasis on scientific libraries aimed at stochastic dynamic systems and data analysis. Finally, an exploratory analysis of different configurations of the noise term is carried out, with the aim of investigating alternative and complementary approaches to the original treatment.
+\end{abstract}
 \newpage
-
-\section*{Introdução}
-
-Em 1980, Edward N. Lorenz publicou o artigo \textit{Attractor Sets and Quasi-Geostrophic Equilibrium} \citep{Lorenz1980}, no qual desenvolveu o modelo que ficou conhecido como \textit{Modelo Lorenz 80} (L80), com o objetivo de estudar a dinâmica de sistemas atmosféricos forçados e dissipativos.
-
-Partindo das equações de águas rasas com topografia, Lorenz construiu um modelo de baixa ordem com nove equações diferenciais ordinárias, baseado em equações primitivas. Posteriormente, ao eliminar os termos de derivadas temporais nas equações de divergência, obteve-se uma versão quasi-geostrófica com apenas três equações. O modelo apresenta duas escalas distintas de movimento: oscilações rápidas, associadas a ondas gravitacionais, e oscilações lentas, de caráter quasi-geostrófico. Com o tempo, as componentes rápidas se dissipam, e a dinâmica concentra-se em uma variedade invariante de dimensão reduzida, onde o equilíbrio quasi-geostrófico é uma boa aproximação. Além da formulação teórica, Lorenz realizou simulações computacionais do modelo, um feito de grande importância para a época e para o desenvolvimento da matemática computacional.
-
-Em novembro de 2021, foi publicado o artigo \textit{Stochastic Rectification of Fast Oscillations on Slow Manifold Closures} \citep{Chekroun2021}, que propôs uma abordagem estocástica para sistemas lentos-rápidos utilizando métodos da física estatística. Neste estudo, os autores utilizaram o \textit{Modelo L80} como estudo de caso, aplicando o método de Mori-Zwanzig (MZ).
-
-O método MZ, originado na física estatística, separa a dinâmica de um sistema em partes relevantes e irrelevantes por meio de operadores de projeção. Uma característica central desse método é que, ao projetar a dinâmica sobre um subespaço de variáveis relevantes, os efeitos das variáveis descartadas não desaparecem. As variávies irrelevantes são incorporados à dinâmica efetiva na forma de dois termos adicionais: um termo markoviano, que representa a influência da memória dos estados passados, e um termo de ruído, que modela a variabilidade não resolvida.
-
-Em janeiro de 2025, o aluno Lucas Amaral Taylor cursou a disciplina \textbf{MAP5007 - Ondas em Fluidos Geofísicos}, oferecida no programa de verão do Instituto de Matemática e Estatística (IME-USP) e ministrada pelo Prof. Dr. Breno Raphaldini Ferreira da Silva. A disciplina teve como objetivo apresentar conceitos básicos da dinâmica de fluidos geofísicos por meio de uma abordagem matemática \citep{uspJanus}. Ao final da disciplina, o aluno realizou um seminário\footnote{Os arquivos do seminário estão disponíveis publicamente no repositório do \textit{GitHub} \citep{TaylorL80}.} com o tema \textit{Um breve estudo do Modelo Lorenz 80}, cujo objetivo foi apresentar os aspectos gerais do modelo L80.
-
-Por fim, o presente trabalho é uma extensão desse estudo anterior. Agora, em vez de explorar o modelo determinístico de \citet{Lorenz1980}, o foco será a abordagem estocástica proposta por \citet{Chekroun2021}. Serão analisadas propriedades matemáticas, estatísticas e físicas envolvidas na construção e tratamento do modelo, além de serem realizadas simulações computacionais.
-
+\section*{Introduction}
+In 1980, Edward N. Lorenz published the article \textit{Attractor Sets and Quasi-Geostrophic Equilibrium} \citep{Lorenz1980}, in which he developed the model that became known as the \textit{Lorenz 80 Model} (L80), with the aim of studying the dynamics of forced and dissipative atmospheric systems.
+Starting from shallow water equations with topography, Lorenz constructed a low-order model with nine ordinary differential equations based on primitive equations. Subsequently, by eliminating the time derivative terms in the divergence equations, a quasi-geostrophic version with only three equations was obtained. The model has two distinct scales of motion: fast oscillations, associated with gravitational waves, and slow oscillations, of a quasi-geostrophic nature. Over time, the fast components dissipate, and the dynamics concentrate on a reduced-dimension invariant manifold, where quasi-geostrophic equilibrium is a good approximation. In addition to the theoretical formulation, Lorenz performed computational simulations of the model, a feat of great importance for the time and for the development of computational mathematics.
+In November 2021, the article \textit{Stochastic Rectification of Fast Oscillations on Slow Manifold Closures} \citep{Chekroun2021} was published, proposing a stochastic approach to slow-fast systems using methods from statistical physics. In this study, the authors used the \textit{L80 Model} as a case study, applying the Mori-Zwanzig (MZ) method.
+The MZ method, which originated in statistical physics, separates the dynamics of a system into relevant and irrelevant parts using projection operators. A central feature of this method is that, when projecting the dynamics onto a subspace of relevant variables, the effects of the discarded variables do not disappear. The irrelevant variables are incorporated into the effective dynamics in the form of two additional terms: a Markovian term, which represents the influence of the memory of past states, and a noise term, which models the unresolved variability.
+In January 2025, student Lucas Amaral Taylor took the course \textbf{MAP5007 - Waves in Geophysical Fluids}, offered in the summer program of the Institute of Mathematics and Statistics (IME-USP) and taught by Prof. Dr. Breno Raphaldini Ferreira da Silva. The course aimed to present basic concepts of geophysical fluid dynamics through a mathematical approach \citep{uspJanus}. At the end of the course, the student held a seminar\footnote{The seminar files are publicly available in the \textit{GitHub} repository \citep{TaylorL80}.} on the topic \textit{A brief study of the Lorenz 80 Model}, whose objective was to present the general aspects of the L80 model.
+Finally, this work is an extension of that previous study. Now, instead of exploring the deterministic model of \citet{Lorenz1980}, the focus will be on the stochastic approach proposed by \citet{Chekroun2021}. Mathematical, statistical, and physical properties involved in the construction and treatment of the model will be analyzed, and computational simulations will be performed.
     
-\section*{Objetivos}
-O presente trabalho, baseia-se em três principais objetivos:
+\section*{Objectives}
+This work is based on three main objectives:
 \begin{enumerate}
-	\item \textbf{Compreensão e manipulação dos conceitos teóricos essenciais}
+	\item \textbf{Understanding and manipulating essential theoretical concepts}
 	      \begin{enumerate}
-	      	\item Estudo aprofundado do método MZ: teoria e aplicações, particularmente, em sistemas dinâmicos lentos-rápidos;
-	      	\item Análise das propriedades gerais de equações diferenciais estocásticas;
-	      	\item Estudo das particularidades do Modelo L80, tanto em seua versão determinística quanto na versão estocástica, considerando suas implicações físicas e matemáticas.
+	      	\item In-depth study of the MZ method: theory and applications, particularly in slow-fast dynamic systems;
+	      	                  
+	      	\item Analysis of the general properties of stochastic differential equations;
+	      	\item Study of the particularities of the L80 Model, both in its deterministic and stochastic versions, considering its physical and mathematical implications.
 	      \end{enumerate}
-	      
-	\item \textbf{Desenvolvimento de habilidades em ferramentas computacionais.}
+	\item \textbf{Development of skills in computational tools.}
+	                
 	      \begin{enumerate}
-	      	\item Domínio de linguagens computacionais voltadas à simulação e análise de modelos matemáticos, especialmente \textit{Julia} e \textit{Python}, com foco na utilização de bibliotecas científicas;
-	      	\item Capacidade de implementar, otimizar e interpretar rotinas computacionais para simulações numéricas.
+	      	\item Mastery of computational languages aimed at the simulation and analysis of mathematical models, especially \textit{Julia} and \textit{Python}, with a focus on the use of scientific libraries;
+	      	\item Ability to implement, optimize, and interpret computational routines for numerical simulations.
+	      	                
 	      \end{enumerate}
-	      
-	\item \textbf{Realizações de simulações do modelo L80 e análise exploratória.}
+	                
+	\item \textbf{Achievements in L80 model simulations and exploratory analysis.}
 	      \begin{enumerate}
-	      	\item Desenvolvimento do modelo L80 em \textit{Julia};
-	      	\item Análise exploratória de ruídos.
+	      	\item Development of the L80 model in \textit{Julia};
+	      	\item Exploratory noise analysis.
 	      \end{enumerate}
 \end{enumerate}
 
-
-\section*{Metodologia}
-Para a \textbf{compreensão e manipulação dos objetos matemáticos fundamentais para o desenvolvimento do modelo}, iniciamos com a leitura aprofundada dos artigos-base que introduzem os principais conceitos e motivam o estudo, em especial os trabalhos de \citet{Chekroun2017} e \citet{Chekroun2021}. Em seguida, para consolidar o entendimento do método MZ, serão analisadas referências que tratam da formulação e aplicações deste método, incluindo os textos de \citet{Gouasmi2017}, \citet{Chorin2000}, \citet{Chorin2002} e \citet{Chorin2013}.
-
-No \textbf{desenvolvimento de habilidades em ferramentas computacionais}, será utilizada, principalmente, a linguagem \textit{Julia} \citep{julialang}, com foco na biblioteca \texttt{SciML} \citep{SDEJulia}, voltada para simulações com equações diferenciais estocásticas e Python \citep{Python}, principalmente, com as bibliotecas \texttt{numpy} \citep{numpy} e \texttt{pandas} \citep{pandas} para análise de dados. Para a familiarização inicial, serão feitas simulações com base no exemplo 11.7 de \citep[p.~169]{Pavliotis2008}.
-
-Por fim, na etapa de \textbf{realizações de simulações do modelo L80 e análise exploratória}, serão realizadas simulações computacionais do modelo L80. Inicialmente, reproduziremos os resultados apresentados em \citet{Chekroun2021}. Em seguida, com base no conhecimento e na experiência adquiridos ao longo do projeto, idealmente, proporemos variações na modelagem do ruído, distintas daquelas adotadas no artigo original. A intenção é avaliar se abordagens alternativas ou complementares em relação ao ruído podem aperfeiçoar os resultados obtidos na formulação estocásticas.
-
-\section*{Plano de trabalho}
+\section*{Methodology}
+To \textbf{understand and manipulate the mathematical objects fundamental to the development of the model}, we began with an in-depth reading of the basic articles that introduce the main concepts and motivate the study, in particular the works of \citet{Chekroun2017} and \citet{Chekroun2021}. Next, to consolidate our understanding of the MZ method, we will analyze references that deal with the formulation and applications of this method, including the texts by \citet{Gouasmi2017}, \citet{Chorin2000}, \citet{Chorin2002}, and \citet{Chorin2013}.
+In the \textbf{development of skills in computational tools}, the \textit{Julia} \citep{julialang} language will be used, focusing on the \texttt{SciML} \citep{SDEJulia}, geared toward simulations with stochastic differential equations, and Python \citep{Python}, mainly with the libraries \texttt{numpy} \citep{numpy} and \texttt{pandas} \citep{pandas} for data analysis. For initial familiarization, simulations will be performed based on example 11.7 from \citep[p.~169]{Pavliotis2008}.
+Finally, in the stage of \textbf{simulations of the L80 model and exploratory analysis}, computational simulations of the L80 model will be performed. Initially, we will reproduce the results presented in \citet{Chekroun2021}. Then, based on the knowledge and experience acquired throughout the project, we will ideally propose variations in noise modeling, different from those adopted in the original article. The intention is to assess whether alternative or complementary approaches to noise can improve the results obtained in the stochastic formulation.
+\section*{Work plan}
 \begin{center}
 	\renewcommand{\arraystretch}{1.5}
 	\begin{tabular}{p{3cm}p{10cm}}
 		\toprule
-		\textbf{Mês} & \textbf{Atividade}\\
+		        
+		\textbf{Month} & \textbf{Activity}                                                                    \\
 		\midrule
-		Abril         & Definição do tema, escolha do orientador e levantamento das principais referências\\
-		Maio          & Introdução ao método MZ e à linguagem \textit{Julia}.\\
-		Junho         & Primeiras simulações em \textit{Julia} utilizando modelos simplificados.\\
-		Julho         & Leitura sobre equações diferenciais estocásticas e aprofundamento no Modelo L80.\\
-		Agosto        & Implementação inicial do Modelo L80.\\
-		Setembro      & Análise exploratória das propriedades do termo de ruído.\\
-		Outubro       & Redação e conclusão da monografia.\\
-		Novembro      & Revisão final, tradução e preparação para a apresentação.\\
+		April          & Definition of the topic, choice of advisor, and survey of the main references        \\
+		May            & Introduction to the MZ method and the \textit{Julia} language.                       \\
+		June           & First simulations in \textit{Julia} using simplified models.                         \\
+		        
+		July           & Reading about stochastic differential equations and in-depth study of the L80 Model. \\
+		August         & Initial implementation of the L80 Model.                                             \\
+		September      & Exploratory analysis of the properties of the noise term.                            \\
+		        
+		October        & Writing and completion of the monograph.                                             \\
+		November       & Final review, translation, and preparation for presentation.                         \\
 		\bottomrule
 	\end{tabular}
 \end{center}
-
-\section*{Resultados preliminares}
-O andamento do projeto pode ser acompanhado pelo link abaixo:
-
+\section*{Preliminary results}
+The progress of the project can be followed via the link below:
 \url{https://github.com/lucasamtaylor01/Lorenz80_SDE}
-
 \newpage
 \nocite{*}
-\printbibliography[title={Referências}, label={sec:bib}]
-
+\printbibliography[title={References}, label={sec:bib}]
 \end{document}
