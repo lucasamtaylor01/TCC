@@ -7,15 +7,39 @@ Na seção \ref{sec:ch01_agua_rasa}, introduzimos o modelo de água rasa, que se
 
 \section{Breves considerações sobre geofísica} \label{sec:ch01_geofisica}
 
-Nesta seção, reunimos um breve glossário com os principais conceitos de geofísica que servem de base para a compreensão do modelo de Lorenz 80. Segue abaixo a definição de alguns conceitos de geofísica fundamentais para o modelo estudado:
+Nesta seção, reunimos um breve glossário com os principais conceitos de geofísica que servem de base para a compreensão do modelo de Lorenz 80. Todas as definições expostas abaixo estão detalhadas em \citet{Vallis2017}.
 \begin{itemize}
-    \item \textbf{Quasi-geostrófico.}
-    \item \textbf{Parâmetro de Coriolis.}
-    \item \textbf{Equilíbrio hidrostático.}
-    \item \textbf{Estratificação.}
-    \item \textbf{Momento.}
-    \item \textbf{Conservação de massa.}
+    \item \textbf{Parâmetro de Coriolis.} A \textit{força de Coriolis} é uma quasi-força (ou pseudo-força) que surge devido à rotação da Terra. Quando analisamos o movimento de um corpo em um referencial rotativo, em nosso caso, o terrestre, esse corpo parece sofrer a ação de uma força que desvia sua trajetória. Esse desvio é quantificado pelo parâmetro de Coriolis, definido pela expressão:
+    \begin{equation*}
+        f = 2 \Omega \sin(\theta)
+    \end{equation*}
+    onde $\Omega$ representa a velocidade angular de rotação da Terra e $\theta$ é a latitude, ou seja, o ângulo entre a posição do ponto considerado e o equador terrestre.
+
+    \item \textbf{Número de Rossby.} O número de Rossby é a razão entre a magnitude da aceleração relativa e a aceleração de Coriolis. É aproximado por:
+    \begin{equation*}
+        Ro \equiv \frac{U}{fL},
+    \end{equation*}
+
+    onde $U$ é a magnitude aproximada da velocidade horizontal e $L$ é uma escala de comprimento e $f$ é o parâmetro de Coriolis.
+
+    \item \textbf{Equilíbrio hidrostático.} Matematicamente, a equação do equilíbrio hidrostático é dada por:
+    \begin{equation}
+        \frac{\partial p}{\partial z} = - \rho_0g, \label{eq:equilibrio_hidrostatico}
+    \end{equation}
+    
+    onde: $p$ é a pressão do fluido, $z$ é a coordenada vertical, $\rho_0$ é a densidade constante do fluido e $g$ é a aceleração da gravidade.
+    \item \textbf{Conservação de massa.} Em um escoamento de fluido, a densidade pode variar de acordo com o tempo ou a posição. No entanto, a \textit{quantidade total de massa} do fluido permanece constante. Esse princípio estabelece que a massa não pode ser criada nem perdida durante o movimento.
+
+    \item \textbf{Equações quasi-geostróficas.} As equações quasi-geostróficas são equações  amplamente usadas em estudos teóricos da atmosfera e oceano. Elas atendem as seguintes características:
+    \begin{enumerate}
+        \item O número de Rossby é pequeno;
+        \item A escala do movimento não é significativamente maior do que a escala de deformação;
+        \item As variações no parâmetro de Coriolis são pequenas;
+        \item As escalas de tempo são advectivas, ou seja, $T=L/U$.
+    \end{enumerate}
 \end{itemize}
+
+
 
 \section{Motivação e apresentação do modelo} \label{sec:ch01_apresentacao_do_modelo}
 
@@ -23,39 +47,26 @@ Edward Norton Lorenz (1917-2008) foi um importante matemático e meteorologista 
 
 Dentre eles, o mais famoso foi o modelo Lorenz 63, conhecido popularmente pelo ``efeito borboleta'' que foi um marco de grande relevância para simulações matemáticas computacionais. 
 
+\textbf{FALAR MAIS SOBRE O LORENZ 63 - CONSULTAR REPOSITÓRIO DO GITHUB}
+
 Em 1980, Lorenz publica o artigo intitulado ``\textit{Attractor Sets and Quasi-Geostrophic Equilibrium }'' \citep{Lorenz1980}. Nele, Lorenz apresenta a construção e a simulação de dois modelos distintos: o primeiro, é formado a partir das equações primitivas (PE) com nove EDOs (equações diferenciais ordinárias), derivado das equações de águas rasas com topografia e forçamento, enquanto o segundo é um modelo quasi-geostrófico (QG) com 3 EDOs, obtido ao descartar as variáveis associadas ao escoamento divergente $x$ e seus termos correspondentes. O modelo PE contém tanto ondas gravitacionais rápidas quanto oscilações quasi-geostróficas lentas, enquanto o modelo QG mantém apenas estas últimas, em um quadro simplificado para atmosfera de latitudes médias.
 
 
 \section{O modelo de água-rasa} \label{sec:ch01_agua_rasa}
-O modelo de água rasa descreve um fluido de densidade constante, em equilíbrio hidrostático, que pode ou não estar em rotação. Nele, a escala horizontal é significativamente maior que a profundidade. Esse fluido possui superfície livre e é limitado pelas bordas. No caso considerado, adotamos a versão de uma única camada, o que é vantajoso por permitir a desconsideração dos efeitos de estratificação. \citep{Vallis2017}.
+O modelo de água rasa descreve um fluido de densidade constante, em equilíbrio hidrostático, que pode ou não estar em rotação. Nele, a escala horizontal é significativamente maior que a profundidade. Esse fluido possui superfície livre e é limitado pelas bordas \citep{Vallis2017}. No caso considerado, adotamos a versão de uma única camada.
 
-Matematicamente, para a construção do modelo de água-rasa, consideramos a equação do equilíbrio hidrostático, dada por:
-\begin{equation}
-    \frac{\partial p}{\partial z} = - \rho_0g, \label{eq:equilibrio_hidrostatico}
-\end{equation}
-
-onde:
-\begin{itemize}
-    \item $p$: pressão do fluido,
-    \item $z$: coordenada vertical (positiva para cima),
-    \item $\rho_0$: densidade constante do fluido,
-    \item $g$: aceleração da gravidade.
-\end{itemize}
-
-A partir das manipulações envolvendo os conceitos de momento e conservação de massa, detalhado em \citet{Vallis2017}, obtemos as equações que descrevem o modelo: 
+Para a construção do modelo de água-rasa, consideramos a equação do equilíbrio hidrostático, expressa em \eqref{eq:equilibrio_hidrostatico}. A partir das manipulações envolvendo os conceitos de momento e conservação de massa, detalhado em \citet{Vallis2017}, obtemos as equações que descrevem o modelo: 
 \begin{align}
-	\frac{\partial V}{\partial t} + (V \cdot \nabla)V + f \mathbf{k} \times V & = -g \nabla z \label{eq:agua-rasa-1} \\
-	\frac{\partial z}{\partial t} + \nabla \cdot (z V)                        & = 0 \label{eq:agua-rasa-2}    
+	\frac{\partial V}{\partial t} + (V \cdot \nabla)V + f \mathbf{k} \times V & = -g \nabla \eta \label{eq:agua-rasa-1} \\
+	\frac{\partial \eta}{\partial t} + \nabla \cdot (\eta V)                        & = 0 \label{eq:agua-rasa-2}    
 \end{align}
 
 Onde:
 \begin{itemize}
     \item $t$: tempo;
     \item $\mathbf{r}$: vetor de posição inicial;
-	\item $V(t,r)$: Velocidade horizontal;
-	\item $z(t,r)$: altura da superfície;
-	\item $f$: parâmetro de Coriolis;
-	\item $g$: aceleração da gravidade;
+	\item $V(t)$: Velocidade horizontal;
+	\item $\eta(t)$: altura da superfície;
 	\item $\mathbf{k}$: vetor da vertical.
 \end{itemize}
 
@@ -129,23 +140,16 @@ Além disso, o modelo de água-rasa adaptado é expresso por:
 	\frac{\partial z}{\partial t} & = - (V \cdot \nabla)(z - h) - (H + z - h)\nabla \cdot  V + \kappa \nabla^2 z + F \label{eq:agua-rasa-modificada-2} 
 \end{align}
 
-% Onde:
-% \begin{multicols}{2}
-%     \begin{itemize}
-%     	\item $t$: tempo
-%     	\item $\mathbf{r}$: vetor de posição inicial;
-%     	\item $H$: profundidade média do fluido;
-%     	\item $h(\mathbf{r})$: variação da superfície topológica;
-%     	\item $V(t,\mathbf{r})$: Velocidade horizontal;
-%     	\item $z(t,\mathbf{r})$: altura da superfície;
-%     	\item $f$: parâmetro de Coriolis;
-%     	\item $g$: aceleração da gravidade;
-%     	\item $F$: forças externas;
-%     	\item $\kappa$: coeficiente de difusão viscosa;
-%     	\item $\nu$: coeficiente de difusão térmica;
-%     	\item $\mathbf{k}$: vetor da vertical.
-%     \end{itemize}
-% \end{multicols}
+Onde:
+    \begin{itemize}
+    	\item $H$: profundidade média do fluido;
+    	\item $h(\mathbf{r})$: variação da superfície topológica;
+    	\item $V(t,\mathbf{r})$: Velocidade horizontal;
+    	\item $z(t,\mathbf{r})$: altura da superfície;
+    	\item $F$: forças externas;
+    	\item $\kappa$: coeficiente de difusão viscosa;
+    	\item $\nu$: coeficiente de difusão térmica;
+    \end{itemize}
 
 Em seguida, aplicamos a \textit{decomposição de Helmholtz} à equação \eqref{eq:agua-rasa-modificada-1}, escrevendo
 \begin{equation*}
@@ -225,12 +229,12 @@ Substituindo as equações acima em \eqref{eq:equacao-basica-1}–\eqref{eq:equa
 	+ c\,y_i(z_k - h_k) - c(z_i - h_i)y_k + g_0a_ix_i - \kappa_0a_iz_i + F_i. \label{eq:modelo-pe-3}
 \end{align}
 
-% onde,
-% \begin{itemize}
-% 	\item $x_i$ representam os modos divergentes do escoamento (associados às ondas de gravidade);
-% 	\item $y_i$ representam os modos rotacionais (vorticidade), associados às oscilações quasi-geostróficas;
-% 	\item $z_i$ são variáveis auxiliares acopladas ao sistema;
-% \end{itemize}
+onde,
+\begin{itemize}
+	\item $x_i$ representam os modos divergentes do escoamento (associados às ondas de gravidade);
+	\item $y_i$ representam os modos rotacionais (vorticidade), associados às oscilações quasi-geostróficas;
+	\item $z_i$ são variáveis auxiliares acopladas ao sistema;
+\end{itemize}
 Na construção do modelo QG, começamos desprezando todos os termos não lineares, assim como aqueles que envolvem as variáveis $x$, incluindo a derivada temporal, na equação \eqref{eq:modelo-pe-1}. Fazemos o mesmo com os termos não lineares ou topográficos que dependem de $x$ nas equações \eqref{eq:modelo-pe-2} e \eqref{eq:modelo-pe-3}. Por fim, eliminamos as variáveis $x$ e $z$, obtendo ao modelo QG apresentado a seguir:
 \begin{equation}
 	(a_i g_0 + 1)\,\frac{dy_i}{d\tau} 
@@ -240,21 +244,27 @@ Na construção do modelo QG, começamos desprezando todos os termos não linear
 	\label{eq:modelo_lorenz_deterministico_qg}
 \end{equation}
 
-\section{Propriedades} \label{sec:ch01_prop_do_modelo}
+\textbf{ADICIONAR SOBRE O CAPÍTULO 2.7 DO SALMON}
 
 \section{Simulações} \label{sec:ch01_simulacoes_deterministico}
-Nesta seção, apresentaremos o resultados das simulações computacionais dos dois modelos construídos ao longo do capítulo. Os gráficos foram gerados a partir de simulações computacionais realizadas em Julia, principalmente, com o auxílio da biblioteca \textit{SciML: Differentiable Modeling and Simulation Combined with Machine Learning} \citep{Rackauckas2017}.
+Nesta seção, apresentaremos o resultados das simulações computacionais do modelo PE, expresso pelas equações \eqref{eq:modelo-pe-1}-\eqref{eq:modelo-pe-3}. Os gráficos foram gerados a partir de simulações computacionais realizadas em Julia, principalmente, com o auxílio da biblioteca \textit{SciML: Differentiable Modeling and Simulation Combined with Machine Learning} \citep{Rackauckas2017}. 
 
-O có
+Os parâmetros usados para a simulação foram os mesmos utilizados em \citet{Lorenz1980} e \cite{Chekroun2021}. Os parâmetros estão definidos a seguir: $g_0 = \SI{8}{\meter\per\square\second}$, $a = (1, 1, 3)$, $F = (0.1, 0, 0)$ e $c = \sqrt{\tfrac{3}{4}}$, $h=(-1, 0, 0)$ e $\nu_0 = \kappa_0 = \frac{1}{48}$. As simulações foram realizadas a partir do código disponível no apêndice \ref{app:apendice-lista-de-programas}.  
+
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.85\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/evolucao_temporal_01.png}
+  \includegraphics[width=0.6\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/evolucao_temporal_01.png}
   \caption{Simulação do modelo PE (1 dia).\label{fig:lorenz80_pe_1}}
 \end{figure}
 
+Os parâmetros usados para a simulação foram os mesmos utilizados em \citet{Lorenz1980} e \cite{Chekroun2021}. Os parâmetros estão definidos a seguir: $g_0 = \SI{8}{\meter\per\square\second}$, $a = (1, 1, 3)$, $F = (0.1, 0, 0)$ e $c = \sqrt{\tfrac{3}{4}}$, $h=(-1, 0, 0)$ e $\nu_0 = \kappa_0 = \frac{1}{48}$. As simulações foram realizadas a partir do código disponível no apêndice \ref{app:apendice-lista-de-programas}.  
+
+Os parâmetros usados para a simulação foram os mesmos utilizados em \citet{Lorenz1980} e \cite{Chekroun2021}. Os parâmetros estão definidos a seguir: $g_0 = \SI{8}{\meter\per\square\second}$, $a = (1, 1, 3)$, $F = (0.1, 0, 0)$ e $c = \sqrt{\tfrac{3}{4}}$, $h=(-1, 0, 0)$ e $\nu_0 = \kappa_0 = \frac{1}{48}$. As simulações foram realizadas a partir do código disponível no apêndice \ref{app:apendice-lista-de-programas}.  
+
+
 \begin{figure}[H]
   \centering
-    \includegraphics[width=0.85\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/evolucao_temporal_10.png}
+    \includegraphics[width=0.75\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/evolucao_temporal_10.png}
   \caption{Simulação do modelo PE (10 dias)\label{fig:lorenz80_pe_2}}
 \end{figure}
 

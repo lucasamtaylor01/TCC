@@ -1,34 +1,119 @@
-\chapter{Códigos}\label{cap:apendice_01_codigos}
+\chapter{Programas}  \label{app:apendice-lista-de-programas}
 
-% ----------------------------------------------------
-% Definição da linguagem Julia para listings
-% ----------------------------------------------------
+\definecolor{codebg}{RGB}{247,248,250}
+\definecolor{codenumber}{HTML}{7F8C8D}
+\definecolor{codekw}{HTML}{005CC5}
+\definecolor{codestr}{HTML}{032F62}
+\definecolor{codecm}{HTML}{6A737D}
+\definecolor{codetype}{HTML}{D73A49}
+\definecolor{codemacro}{HTML}{8A2BE2}
+
+% Julia para listings
 \lstdefinelanguage{Julia}{
+  alsoletter={@},
   morekeywords={
-    abstract, baremodule, begin, break, catch, const, continue, do, else, elseif,
-    end, export, false, finally, for, function, global, if, import, importall,
-    let, local, macro, module, mutable, primitive, quote, return, struct, true,
-    try, type, using, while
+    abstract,break,catch,const,continue,do,else,elseif,end,export,false,finally,
+    for,function,global,if,import,let,local,macro,module,mutable,primitive,
+    quote,return,struct,true,try,using,where,while,begin
   },
+  morekeywords=[2]{Int,Int8,Int16,Int32,Int64,UInt,UInt8,UInt16,UInt32,UInt64,
+    Float16,Float32,Float64,Complex,ComplexF64,Bool,Char,String,Nothing,Any,
+    Vector,Matrix,Dict,Tuple,Union,SubArray,AbstractArray,Range},
+  morekeywords=[3]{@time,@views,@inbounds,@simd,@threads,@btime,@benchmark,
+    @show,@assert,@inline,@code_warntype,@test},
   sensitive=true,
-  morecomment=[l]\#,        % Comentários iniciados por #
-  morestring=[b]",          % Strings entre aspas "
-  morestring=[m]'           % Caracteres entre aspas simples '
+  morecomment=[l]\#,
+  morestring=[b]",
 }
 
-% ----------------------------------------------------
-% Estilo Julia
-% ----------------------------------------------------
-\lstdefinestyle{juliaStyle}{
+% Estilo base
+\lstdefinestyle{jlstyle}{
   language=Julia,
-  basicstyle=\ttfamily\footnotesize,
-  keywordstyle=\color{blue}\bfseries,
-  commentstyle=\color{gray},
-  stringstyle=\color{red},
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\scriptsize\color{codenumber},
+  numbersep=8pt,
   showstringspaces=false,
-  breaklines=true,            % permite quebra automática
-  breakatwhitespace=true,     % só quebra em espaços
-  postbreak=\mbox{\textcolor{blue}{$\hookrightarrow$}\space}, % seta azul indicando continuação
-  frame=single
+  tabsize=2,
+  columns=fullflexible,
+  keepspaces=true,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{codebg},
+  keywordstyle=\bfseries\color{codekw},
+  keywordstyle=[2]\color{codetype},
+  keywordstyle=[3]\color{codemacro},
+  commentstyle=\itshape\color{codecm},
+  stringstyle=\color{codestr},
+  upquote=true,
+  % Alguns símbolos/Unicode comuns em Julia
+  literate=
+    {→}{{$\to$}}1 {←}{{$\leftarrow$}}1
+    {≤}{{$\le$}}1 {≥}{{$\ge$}}1
+    {α}{{$\alpha$}}1 {β}{{$\beta$}}1 {γ}{{$\gamma$}}1
+    {π}{{$\pi$}}1 {√}{{$\sqrt{\phantom{x}}$}}1
 }
 
+% Ambiente e macro inline
+\lstnewenvironment{juliacode}[1][]%
+  {\lstset{style=jlstyle,#1}}{}
+
+\newcommand{\jinline}[1]{\lstinline[style=jlstyle]!#1!}
+
+\section{Código do modelo Lorenz 80 determinístico}
+\begin{juliacode}[caption={Simulação do modelo Lorenz 80}]
+using DifferentialEquations, ModelingToolkit, CSV, DataFrames
+
+@parameters t
+@variables x[1:3](t) y[1:3](t) z[1:3](t)
+D = Differential(t)
+
+a = [1.0, 1.0, 3.0]
+b = [0.5 * (a[1] - a[2] - a[3]), 0.5 * (a[2] - a[3] - a[1]), 0.5 * (a[3] - a[1] - a[2])]
+c = sqrt(3/4)
+h = [-1.0, 0.0, 0.0]
+f = [0.1, 0.0, 0.0]
+g_0, kappa_0, nu_0 = 8.0, 1/48, 1/48
+
+eqs = [
+    D(x[i]) ~ (
+        a[i]*b[i]*x[(i % 3) + 1]*x[((i+1) % 3) + 1]
+        - c*(a[i]-a[((i+1) % 3) + 1])*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
+        - 2*c^2*y[i]*y[((i+1) % 3) + 1]
+        - nu_0*a[i]^2*x[i]
+        + a[i]*y[i] - a[i]*z[i]
+    ) / a[i] for i in 1:3
+]
+append!(eqs, [
+    D(y[i]) ~ (
+        -a[((i+1) % 3) + 1]*b[((i+1) % 3) + 1]*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
+        - a[(i % 3) + 1]*b[(i % 3) + 1]*y[(i % 3) + 1]*x[((i+1) % 3) + 1]
+        - a[i]*x[i] - nu_0*a[i]^2*y[i]
+    ) / a[i] for i in 1:3
+])
+append!(eqs, [
+    D(z[i]) ~ (
+        -b[((i+1) % 3) + 1]*x[(i % 3) + 1]*(z[((i+1) % 3) + 1]-h[((i+1) % 3) + 1])
+        - b[(i % 3) + 1]*(z[(i % 3) + 1]-h[(i % 3) + 1])*x[((i+1) % 3) + 1]
+        + c*y[(i % 3) + 1]*(z[((i+1) % 3) + 1]-h[((i+1) % 3) + 1])
+        - c*(z[(i % 3) + 1]-h[(i % 3) + 1])*y[((i+1) % 3) + 1]
+        + g_0*a[i]*x[i] - kappa_0*a[i]*z[i] + f[i]
+    ) for i in 1:3
+])
+
+@mtkbuild sys = ODESystem(eqs, t)
+
+x0, y0, z0 = [0.1, 0.0, 0.0], [0.1, 0.0, 0.0], [0.1, 0.0, 0.0]
+u0 = vcat(x0, y0, z0)
+tspan = (0.0, 8*10.0) # 8*numero_de_dias
+
+sol = solve(ODEProblem(sys, u0, tspan), Tsit5(); abstol=1e-6, reltol=1e-8, saveat=0.01)
+
+U = Array(sol)
+df = DataFrame(time = sol.t, x1 = U[1,:], x2 = U[2,:], x3 = U[3,:], y1 = U[4,:], y2 = U[5,:], y3 = U[6,:],z1 = U[7,:], z2 = U[8,:], z3 = U[9,:])
+
+cd(@__DIR__)  
+isdir("data") || mkdir("data")
+CSV.write("data/solucao.csv", df)
+\end{juliacode}
