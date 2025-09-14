@@ -53,6 +53,9 @@
     {≤}{{$\le$}}1 {≥}{{$\ge$}}1
     {α}{{$\alpha$}}1 {β}{{$\beta$}}1 {γ}{{$\gamma$}}1
     {π}{{$\pi$}}1 {√}{{$\sqrt{\phantom{x}}$}}1
+    {λ}{{$\lambda$}}1 {ϵ}{{$\varepsilon$}}1
+    {σ}{{$\sigma$}}1 {²}{{$^2$}}1
+    {Δ}{{$\Delta$}}1
 }
 
 % Ambiente e macro inline
@@ -116,4 +119,78 @@ df = DataFrame(time = sol.t, x1 = U[1,:], x2 = U[2,:], x3 = U[3,:], y1 = U[4,:],
 cd(@__DIR__)  
 isdir("data") || mkdir("data")
 CSV.write("data/solucao.csv", df)
+\end{juliacode}
+
+\section{Exemplo do capítulo 02}
+
+\begin{juliacode}[caption={Modelo determinístico browniano acoplado}]
+using DifferentialEquations, ModelingToolkit, Plots, BenchmarkTools, CSV, DataFrames
+
+@independent_variables t
+@variables x(t)=0.1 y1(t)=0.01 y2(t)=0.01 y3(t)=0.01
+@parameters ϵ=0.01 λ=1.0
+D = Differential(t)
+
+eqs = [
+    D(x) ~  x - x^3 + (λ/ϵ) * y2,
+    D(y1) ~ (10 / ϵ^2) * (y2 - y1),
+    D(y2) ~ (1 / ϵ^2) * (28*y1 - y2 - y1*y3),  
+    D(y3) ~ (1 / ϵ^2) * (y1*y2 - (8/3)*y3)
+]
+
+@mtkbuild sys = ODESystem(eqs, t)
+
+tspan = (0.0, 1.0)
+prob = ODEProblem(sys, [], tspan)
+solucao_deterministico = solve(prob, Tsit5(), reltol=1e-6, abstol=1e-7, saveat=1e-3)
+
+x_vals = solucao_deterministico[x]
+y2_vals = solucao_deterministico[y2]
+
+df = DataFrame(t = solucao_deterministico.t, y2 = y2_vals, x = x_vals)
+cd(@__DIR__)  
+CSV.write("data/deterministico.csv", df)
+\end{juliacode}
+
+\begin{juliacode}[caption={Cálculo do sigma}]
+using DataFrames, Plots, CSV, Statistics, StatsBase, DSP
+
+cd(@__DIR__)
+df = CSV.read("data/deterministico.csv", DataFrame)
+
+y2_vals = df[:, 2]
+t_vals = df[:,1]
+Δt = 1e-3
+
+y2_centered = y2_vals .- mean(y2_vals)
+
+acor = xcorr(y2_centered; scaling = :coeff)
+n = length(y2_centered)
+acor_pos = acor[n:end]  # lags ≥ 0
+
+λ = 1.0
+
+σ² = 2 * λ^2 * sum(acor_pos) * Δt
+σ = sqrt(σ²)
+
+println(σ)
+\end{juliacode}
+
+\begin{juliacode}[caption={Modelo estocastico browniano acoplado}]
+using DifferentialEquations, Plots
+
+sigma = 8.880502080440465
+x0 = 0.1
+tspan = (0.0, 1.0)
+
+f1(X, p, t) = X - X^3
+f2(X, p, t) = p
+
+W = WienerProcess(0.0, 0.0)
+prob = SDEProblem(f1, f2, x0, tspan, sigma; noise = W)
+solucao_estocastico = solve(prob, EM(), dt = 1e-3)
+
+df = DataFrame(t = solucao_estocastico.t, x = solucao_estocastico.u)
+cd(@__DIR__)  
+CSV.write("data/estocastico.csv", df)
 \end{juliacode}
