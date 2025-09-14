@@ -1,7 +1,7 @@
 using DifferentialEquations, ModelingToolkit, CSV, DataFrames
 
 @parameters t
-@variables x[1:3](t) y[1:3](t) z[1:3](t)
+@variables (x(t))[1:3] (y(t))[1:3] (z(t))[1:3]
 D = Differential(t)
 
 a = [1.0, 1.0, 3.0]
@@ -39,15 +39,30 @@ append!(eqs, [
 
 @mtkbuild sys = ODESystem(eqs, t)
 
+dias = 400
+"""
+HARDLEY
+y0 = (f[1]/a[1])*nu_0*(1 + a[1]*g_0 + nu_0^2*a[1]^2)
+z0 = (1 + nu_0^2*a[1]^2) * y0
+x0 = -nu_0 * a[1] * y0
+
+u0 = [x0, 0.0, 0.0,
+      y0, 0.0, 0.0,
+      z0, 0.0, 0.0]
+"""
+
 x0, y0, z0 = [0.1, 0.0, 0.0], [0.1, 0.0, 0.0], [0.1, 0.0, 0.0]
 u0 = vcat(x0, y0, z0)
-tspan = (0.0, 80.0)
-
+tspan = (0.0, 8*dias)
 sol = solve(ODEProblem(sys, u0, tspan), Tsit5(); abstol=1e-6, reltol=1e-8, saveat=0.01)
 
 U = Array(sol)
-df = DataFrame(time = sol.t, x1 = U[1,:], x2 = U[2,:], x3 = U[3,:], y1 = U[4,:], y2 = U[5,:], y3 = U[6,:],z1 = U[7,:], z2 = U[8,:], z3 = U[9,:])
+df = DataFrame(time = sol.t,
+               x1 = U[1,:], x2 = U[2,:], x3 = U[3,:],
+               y1 = U[4,:], y2 = U[5,:], y3 = U[6,:],
+               z1 = U[7,:], z2 = U[8,:], z3 = U[9,:])
 
-cd(@__DIR__)  
+cd(@__DIR__)
 isdir("data") || mkdir("data")
-CSV.write("data/solucao.csv", df)
+CSV.write("data/solucao_400.csv", df)
+println("Arquivo criado com sucesso")
