@@ -47,6 +47,7 @@
 % e fazer modificações nessa package. Com a opção "thesis", imelooks
 % também define os comandos para capa, folha de rosto etc.
 \usepackage{imegoodies}
+\usepackage{siunitx}
 \usepackage[thesis]{imelooks}
 
 %\nocolorlinks % para impressão em P&B
@@ -271,7 +272,7 @@ texto texto texto texto. Texto opcional.
 % definimos o novo tipo de float "program" (em utils.tex)
 % Você pode escolher se quer ou não permitir a quebra de página
 %\listof{program}{\programlistname}
-\disablenewpage{\listof{program}{\programlistname}}
+%\disablenewpage{\listof{program}{\programlistname}}
 
 % Sumário (obrigatório)
 \tableofcontents
@@ -315,9 +316,9 @@ texto texto texto texto. Texto opcional.
 \input{conteudo/00_exemplo-introducao}
 \pagestyle{mainmatter}
 \input{conteudo/01_lorenz_deterministico}
+\input{conteudo/02_introducao_sde}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% APÊNDICES E ANEXOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% APÊNDICES E ANEXOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Um apêndice é algum conteúdo adicional de sua autoria que faz parte e
 % colabora com a ideia geral do texto mas que, por alguma razão, não precisa
@@ -347,14 +348,13 @@ texto texto texto texto. Texto opcional.
 \pagestyle{appendix}
 
 \appendix
-\input{00_TCC/01_LATEX/conteudo/apendice_lista_de_programas}
-%\addappheadtotoc acrescenta a palavra "Apêndice" ao sumário; se
+
+% \addappheadtotoc acrescenta a palavra "Apêndice" ao sumário; se
 % só há apêndices, sem anexos, provavelmente não é necessário.
-\addappheadtotoc
+%\addappheadtotoc
 
-%\input{conteudo/apendice_01_glossario_geofisica}
+\input{00_TCC/01_LATEX/conteudo/apendice_lista_de_programas}
 \par
-
 %%%% Anexos %%%%
 
 \cleardoublepage
@@ -365,7 +365,6 @@ texto texto texto texto. Texto opcional.
 
 % \addappheadtotoc acrescenta a palavra "Anexo" ao sumário; se
 % só há anexos, sem apêndices, provavelmente não é necessário.
-\addappheadtotoc
 
 \par
 
