@@ -3,9 +3,6 @@ from scipy.integrate import solve_ivp
 import pandas as pd
 from pathlib import Path
 
-
-# REVISARRRR
-
 a = [1, 1, 3]
 b = [
     0.5 * (a[0] - a[1] - a[2]),
@@ -15,15 +12,15 @@ b = [
 c = np.sqrt(b[0]*b[1] + b[1]*b[2] + b[2]*b[0])
 
 h = [-1, 0, 0]
-f = [0.1, 0, 0]
+f = [0.327, 0, 0]
 g_0 = 8
 kappa_0 = 1 / 48
 nu_0 = kappa_0
 
-def pe_model(t, state):
-    x = state[0:3]
-    y = state[3:6]
-    z = state[6:9]
+def pe_model(t, u):
+    x = u[0:3]
+    y = u[3:6]
+    z = u[6:9]
     dx = np.zeros(3)
     dy = np.zeros(3)
     dz = np.zeros(3)
@@ -33,10 +30,9 @@ def pe_model(t, state):
         dx[i] = (
             a[i] * b[i] * x[j] * x[k]
             - c * (a[i] - a[k]) * x[j] * y[k]
-            + c * (a[i] - a[k]) * x[j] * y[k]
-            - c * (a[i] - a[j]) * y[j] * x[k]
-            - 2 * c**2 * y[i] * y[k]
-            - nu_0 * a[i] ** 2 * x[i]
+            + c * (a[i] - a[j]) * y[j] * x[k]
+            - 2 * c**2 * y[j] * y[k]
+            - nu_0 * (a[i] ** 2) * x[i]
             + a[i] * y[i]
             - a[i] * z[i]
         ) / a[i]
@@ -45,7 +41,7 @@ def pe_model(t, state):
             - a[j] * b[j] * y[j] * x[k]
             + c * (a[k] - a[j]) * y[j] * y[k]
             - a[i] * x[i]
-            - nu_0 * a[i] ** 2 * y[i]
+            - nu_0 * (a[i] ** 2) * y[i]
         ) / a[i]
         dz[i] = (
             -b[k] * x[j] * (z[k] - h[k])
@@ -58,12 +54,11 @@ def pe_model(t, state):
         )
     return np.concatenate([dx, dy, dz])
 
-def simulate(x0, y0, z0, days): # revisar funcao muita coisa é inutil em rel a tempo
-    initial_state = np.concatenate([x0, y0, z0])
+def simulate(x0, y0, z0, days): 
+    initial_u = np.concatenate([x0, y0, z0])
     t_final = days * 8
     t_span = (0, t_final)
-    t_eval = np.linspace(0, t_final, int(t_final * 24)) 
-    sol = solve_ivp(pe_model, t_span, initial_state, t_eval=t_eval, method="RK45", atol=1e-8, rtol=1e-6)
+    sol = solve_ivp(pe_model, t_span, initial_u, method="RK45", atol=1e-8, rtol=1e-6)
     return sol.t / 8, sol.y[:3].T, sol.y[3:6].T, sol.y[6:].T
 
 

@@ -13,7 +13,7 @@ t, y1, y2, y3 = df["time"],df["y1"], df["y2"], df["y3"]
 
 
 plt.figure(figsize=(12, 5))
-plt.plot(y3, y2, linewidth=1.5)
+plt.plot(y3, y2, linewidth=1.5, color="red", alpha=0.75)
 plt.title("L80 Attractor (y3 vs y2)")
 plt.xlabel("y3")
 plt.ylabel("y2")
