@@ -1,6 +1,7 @@
 using DifferentialEquations, Plots
 
-sigma = 8.880502080440465
+sigma = 7.543033682745253
+#sigma = 8.880502080440465
 x0 = 0.1
 tspan = (0.0, 1.0)
 
@@ -13,4 +14,4 @@ solucao_estocastico = solve(prob, EM(), dt = 1e-3)
 
 df = DataFrame(t = solucao_estocastico.t, x = solucao_estocastico.u)
 cd(@__DIR__)  
-CSV.write("data/estocastico.csv", df)
+CSV.write("data/estocastico01.csv", df)
