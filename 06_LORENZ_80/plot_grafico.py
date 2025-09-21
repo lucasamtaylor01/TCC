@@ -4,10 +4,10 @@ from pathlib import Path
 
 # Caminhos
 BASE = Path(__file__).resolve().parent
-DATA = BASE / "data" / "python0697.csv"
+DATA = BASE / "data" / "python327.csv"
 OUTDIR = BASE / "src"
 OUTDIR.mkdir(parents=True, exist_ok=True)
-OUTPNG = OUTDIR / "evolucao_xyz_python0697.png"
+OUTPNG = OUTDIR / "evolucao_xyz_python327.png"
 
 # Ler CSV
 df = pd.read_csv(DATA)

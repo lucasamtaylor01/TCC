@@ -66,7 +66,7 @@ def simulate(x_initial, y_initial, z_initial, days):
     return sol.t / 8, sol.y[:3].T, sol.y[3:6].T, sol.y[6:].T
 
 # DIAS AQUI!!!!!!!1
-hadley01_days = 400
+hadley01_days = 10
 
 y1 = (vector_f[0] / vector_a[1]) * nu_0 * (1 + vector_a[1] * g_0 + (nu_0**2) * (vector_a[1] ** 2))
 z1 = (1 + (nu_0**2) * (vector_a[1] ** 2)) * y1
@@ -103,7 +103,7 @@ df = pd.DataFrame(
 BASE = Path(__file__).resolve().parent
 DATADIR = BASE / "data"
 DATADIR.mkdir(parents=True, exist_ok=True)
-out_file = DATADIR / "python0327.csv"
+out_file = DATADIR / "python327.csv"
 df.to_csv(out_file, index=False)
 
 print(f"CSV salvo em: {out_file}")
