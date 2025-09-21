@@ -4,7 +4,7 @@ from pathlib import Path
 
 # Caminhos
 BASE = Path(__file__).resolve().parent
-DATA = BASE / "data" / "python327.csv"
+DATA = BASE / "data" / "python01.csv"
 OUTDIR = BASE / "src"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 OUTPNG = OUTDIR / "evolucao_xyz_python327.png"
