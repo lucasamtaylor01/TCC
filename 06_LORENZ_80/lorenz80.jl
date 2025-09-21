@@ -6,7 +6,7 @@ D = Differential(t)
 
 a = [1.0, 1.0, 3.0]
 b = [0.5 * (a[1] - a[2] - a[3]), 0.5 * (a[2] - a[3] - a[1]), 0.5 * (a[3] - a[1] - a[2])]
-c = sqrt(3/4)
+c = sqrt(b[1]*b[2] + b[2]*b[3] + b[3]*b[1])
 h = [-1.0, 0.0, 0.0]
 f = [0.1, 0.0, 0.0]
 g_0, kappa_0, nu_0 = 8.0, 1/48, 1/48
@@ -39,22 +39,26 @@ append!(eqs, [
 
 @mtkbuild sys = ODESystem(eqs, t)
 
-dias = 400
-"""
-HARDLEY
-y0 = (f[1]/a[1])*nu_0*(1 + a[1]*g_0 + nu_0^2*a[1]^2)
-z0 = (1 + nu_0^2*a[1]^2) * y0
-x0 = -nu_0 * a[1] * y0
+a1 = 1
+f1 = f[1] 
+
+y0 = f1/(a1*nu_0*(1+a1*g_0))
+x0 = -nu_0*a1*y0
+z0 = y0
 
 u0 = [x0, 0.0, 0.0,
-      y0, 0.0, 0.0,
-      z0, 0.0, 0.0]
-"""
+      y0, -0.000001, 0.0,
+      z0, 0.000001, 0.0]
 
+"""
+DEFAULT
 x0, y0, z0 = [0.1, 0.0, 0.0], [0.1, 0.0, 0.0], [0.1, 0.0, 0.0]
 u0 = vcat(x0, y0, z0)
+"""
+
+dias = 25
 tspan = (0.0, 8*dias)
-sol = solve(ODEProblem(sys, u0, tspan), Tsit5(); abstol=1e-6, reltol=1e-8, saveat=0.01)
+sol = solve(ODEProblem(sys, u0, tspan), Tsit5();)
 
 U = Array(sol)
 df = DataFrame(time = sol.t,
