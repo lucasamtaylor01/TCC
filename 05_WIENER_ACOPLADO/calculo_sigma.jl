@@ -1,7 +1,7 @@
 using DataFrames, Plots, CSV, Statistics, StatsBase, DSP
 
 cd(@__DIR__)
-df = CSV.read("data/deterministico_limpo.csv", DataFrame)
+df = CSV.read("data/deterministico.csv", DataFrame)
 
 y2_vals = df[:, 2]
 t_vals = df[:,1]
