@@ -12,7 +12,7 @@ b = [
 c = np.sqrt(b[0]*b[1] + b[1]*b[2] + b[2]*b[0])
 
 h = [-1, 0, 0]
-f = [0.1, 0, 0]
+f = [0.3027, 0, 0]
 g_0 = 8
 kappa_0 = 1 / 48
 nu_0 = kappa_0
@@ -62,8 +62,8 @@ def simulate(x0, y0, z0, days):
     return sol.t / 8, sol.y[:3].T, sol.y[3:6].T, sol.y[6:].T
 
 
-days = 8
-"""
+days = 400
+
 # HARDLEY
 y1 = f[0]/(a[0]*nu_0*(1+a[0]*g_0))
 x1 = -nu_0*a[0]*y1
@@ -73,13 +73,15 @@ z1 = y1
 x0 = [x1, 0, 0]
 y0 = [y1, -(10 ** (-5)), 0]
 z0 = [z1, 10 ** (-5), 0]
-"""
 
+"""
 # DEFAULT
 
 x0 = [0.1,0.1,0.1]
 y0 = [0.1,0.1,0.1]
 z0 = [0.1,0.1,0.1]
+"""
+
 t, x, y, z = simulate(x0, y0, z0, days)
 
 x = np.asarray(x)
@@ -105,7 +107,7 @@ df = pd.DataFrame(
 BASE = Path(__file__).resolve().parent
 DATADIR = BASE / "data"
 DATADIR.mkdir(parents=True, exist_ok=True)
-out_file = DATADIR / "python01.csv"
+out_file = DATADIR / "f03027d400_cond_hardley.csv"
 df.to_csv(out_file, index=False)
 
 print(f"CSV salvo em: {out_file}")

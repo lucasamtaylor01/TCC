@@ -1,6 +1,6 @@
 using DifferentialEquations, Plots
 
-sigma = 24.17868432900723
+sigma = 28.941430066845903
 #sigma = 8.880502080440465
 x0 = 0.1
 tspan = (0.0, 10.0)
