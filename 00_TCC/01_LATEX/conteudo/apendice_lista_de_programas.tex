@@ -1,5 +1,8 @@
 \chapter{Programas}  \label{app:apendice-lista-de-programas}
 
+%%%%%%%%%%%%%%%%%%%% AMBIENTES
+
+%----------- JULIA ---------------
 \definecolor{codebg}{RGB}{247,248,250}
 \definecolor{codenumber}{HTML}{7F8C8D}
 \definecolor{codekw}{HTML}{005CC5}
@@ -64,62 +67,180 @@
 
 \newcommand{\jinline}[1]{\lstinline[style=jlstyle]!#1!}
 
+%---------------- PYTHON
+% Python para listings
+\lstdefinelanguage{Python}{
+  morekeywords={
+    and,as,assert,break,class,continue,def,del,elif,else,except,False,finally,
+    for,from,global,if,import,in,is,lambda,None,nonlocal,not,or,pass,raise,
+    return,True,try,while,with,yield,match,case,async,await
+  },
+  morekeywords=[2]{int,float,bool,str,bytes,bytearray,complex,list,tuple,set,dict,
+    range,object,type,classmethod,staticmethod,property,Exception,BaseException},
+  morekeywords=[3]{@dataclass,@property,@staticmethod,@classmethod,@abstractmethod,
+    @lru_cache,@cache,@jit},
+  sensitive=true,
+  morecomment=[l]\#,
+  morestring=[b]",
+  morestring=[b]',
+}
+
+% Estilo base para Python (análogo ao jlstyle)
+\lstdefinestyle{pystyle}{
+  language=Python,
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\scriptsize\color{codenumber},
+  numbersep=8pt,
+  showstringspaces=false,
+  tabsize=4,
+  columns=fullflexible,
+  keepspaces=true,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{codebg},
+  keywordstyle=\bfseries\color{codekw},
+  keywordstyle=[2]\color{codetype},
+  keywordstyle=[3]\color{codemacro},
+  commentstyle=\itshape\color{codecm},
+  stringstyle=\color{codestr},
+  upquote=true,
+  literate=
+    {→}{{$\to$}}1 {←}{{$\leftarrow$}}1
+    {≤}{{$\le$}}1 {≥}{{$\ge$}}1
+    {α}{{$\alpha$}}1 {β}{{$\beta$}}1 {γ}{{$\gamma$}}1
+    {π}{{$\pi$}}1 {√}{{$\sqrt{\phantom{x}}$}}1
+    {λ}{{$\lambda$}}1 {ϵ}{{$\varepsilon$}}1
+    {σ}{{$\sigma$}}1 {²}{{$^2$}}1
+    {Δ}{{$\Delta$}}1
+}
+
+% Ambiente pronto para uso: \begin{pycode}[<opcionais do listings>] ... \end{pycode}
+\lstnewenvironment{pycode}[1][]{\lstset{style=pystyle,#1}}{}
+
+% Comando para inline code em Python
+\newcommand{\pyinline}[1]{\lstinline[style=pystyle]{#1}}
+
+%%%%%%%%%%%%%%%%%%%% CONTEÚDO
+
 \section{Código do modelo Lorenz 80 determinístico}
-\begin{juliacode}[caption={Simulação do modelo Lorenz 80}]
-using DifferentialEquations, ModelingToolkit, CSV, DataFrames
 
-@parameters t
-@variables x[1:3](t) y[1:3](t) z[1:3](t)
-D = Differential(t)
+\begin{pycode}
+import numpy as np
+from scipy.integrate import solve_ivp
+import pandas as pd
+from pathlib import Path
 
-a = [1.0, 1.0, 3.0]
-b = [0.5 * (a[1] - a[2] - a[3]), 0.5 * (a[2] - a[3] - a[1]), 0.5 * (a[3] - a[1] - a[2])]
-c = sqrt(3/4)
-h = [-1.0, 0.0, 0.0]
-f = [0.1, 0.0, 0.0]
-g_0, kappa_0, nu_0 = 8.0, 1/48, 1/48
-
-eqs = [
-    D(x[i]) ~ (
-        a[i]*b[i]*x[(i % 3) + 1]*x[((i+1) % 3) + 1]
-        - c*(a[i]-a[((i+1) % 3) + 1])*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
-        - 2*c^2*y[i]*y[((i+1) % 3) + 1]
-        - nu_0*a[i]^2*x[i]
-        + a[i]*y[i] - a[i]*z[i]
-    ) / a[i] for i in 1:3
+a = [1, 1, 3]
+b = [
+    0.5 * (a[0] - a[1] - a[2]),
+    0.5 * (a[1] - a[2] - a[0]),
+    0.5 * (a[2] - a[0] - a[1]),
 ]
-append!(eqs, [
-    D(y[i]) ~ (
-        -a[((i+1) % 3) + 1]*b[((i+1) % 3) + 1]*x[(i % 3) + 1]*y[((i+1) % 3) + 1]
-        - a[(i % 3) + 1]*b[(i % 3) + 1]*y[(i % 3) + 1]*x[((i+1) % 3) + 1]
-        - a[i]*x[i] - nu_0*a[i]^2*y[i]
-    ) / a[i] for i in 1:3
-])
-append!(eqs, [
-    D(z[i]) ~ (
-        -b[((i+1) % 3) + 1]*x[(i % 3) + 1]*(z[((i+1) % 3) + 1]-h[((i+1) % 3) + 1])
-        - b[(i % 3) + 1]*(z[(i % 3) + 1]-h[(i % 3) + 1])*x[((i+1) % 3) + 1]
-        + c*y[(i % 3) + 1]*(z[((i+1) % 3) + 1]-h[((i+1) % 3) + 1])
-        - c*(z[(i % 3) + 1]-h[(i % 3) + 1])*y[((i+1) % 3) + 1]
-        + g_0*a[i]*x[i] - kappa_0*a[i]*z[i] + f[i]
-    ) for i in 1:3
-])
+c = np.sqrt(b[0]*b[1] + b[1]*b[2] + b[2]*b[0])
 
-@mtkbuild sys = ODESystem(eqs, t)
+h = [-1, 0, 0]
+f = [0.1, 0, 0]
+g_0 = 8
+kappa_0 = 1 / 48
+nu_0 = kappa_0
 
-x0, y0, z0 = [0.1, 0.0, 0.0], [0.1, 0.0, 0.0], [0.1, 0.0, 0.0]
-u0 = vcat(x0, y0, z0)
-tspan = (0.0, 8*10.0) # 8*numero_de_dias
+def pe_model(t, u):
+    x = u[0:3]
+    y = u[3:6]
+    z = u[6:9]
+    dx = np.zeros(3)
+    dy = np.zeros(3)
+    dz = np.zeros(3)
+    for i in range(3):
+        j = (i + 1) % 3
+        k = (i + 2) % 3
+        dx[i] = (
+            a[i] * b[i] * x[j] * x[k]
+            - c * (a[i] - a[k]) * x[j] * y[k]
+            + c * (a[i] - a[j]) * y[j] * x[k]
+            - 2 * c**2 * y[j] * y[k]
+            - nu_0 * (a[i] ** 2) * x[i]
+            + a[i] * y[i]
+            - a[i] * z[i]
+        ) / a[i]
+        dy[i] = (
+            -a[k] * b[k] * x[j] * y[k]
+            - a[j] * b[j] * y[j] * x[k]
+            + c * (a[k] - a[j]) * y[j] * y[k]
+            - a[i] * x[i]
+            - nu_0 * (a[i] ** 2) * y[i]
+        ) / a[i]
+        dz[i] = (
+            -b[k] * x[j] * (z[k] - h[k])
+            - b[j] * (z[j] - h[j]) * x[k]
+            + c * y[j] * (z[k] - h[k])
+            - c * (z[j] - h[j]) * y[k]
+            + g_0 * a[i] * x[i]
+            - kappa_0 * a[i] * z[i]
+            + f[i]
+        )
+    return np.concatenate([dx, dy, dz])
 
-sol = solve(ODEProblem(sys, u0, tspan), Tsit5(); abstol=1e-6, reltol=1e-8, saveat=0.01)
+def simulate(x0, y0, z0, days): 
+    initial_u = np.concatenate([x0, y0, z0])
+    t_final = days * 8
+    t_span = (0, t_final)
+    sol = solve_ivp(pe_model, t_span, initial_u, method="RK45", atol=1e-8, rtol=1e-6)
+    return sol.t / 8, sol.y[:3].T, sol.y[3:6].T, sol.y[6:].T
 
-U = Array(sol)
-df = DataFrame(time = sol.t, x1 = U[1,:], x2 = U[2,:], x3 = U[3,:], y1 = U[4,:], y2 = U[5,:], y3 = U[6,:],z1 = U[7,:], z2 = U[8,:], z3 = U[9,:])
 
-cd(@__DIR__)  
-isdir("data") || mkdir("data")
-CSV.write("data/solucao.csv", df)
-\end{juliacode}
+days = 8
+"""
+# HARDLEY
+y1 = f[0]/(a[0]*nu_0*(1+a[0]*g_0))
+x1 = -nu_0*a[0]*y1
+z1 = y1
+
+
+x0 = [x1, 0, 0]
+y0 = [y1, -(10 ** (-5)), 0]
+z0 = [z1, 10 ** (-5), 0]
+"""
+
+# DEFAULT
+
+x0 = [0.1,0.1,0.1]
+y0 = [0.1,0.1,0.1]
+z0 = [0.1,0.1,0.1]
+t, x, y, z = simulate(x0, y0, z0, days)
+
+x = np.asarray(x)
+y = np.asarray(y)
+z = np.asarray(z)
+t = np.squeeze(np.asarray(t))
+
+df = pd.DataFrame(
+    {
+        "time": t,
+        "x1": x[:, 0],
+        "x2": x[:, 1],
+        "x3": x[:, 2],
+        "y1": y[:, 0],
+        "y2": y[:, 1],
+        "y3": y[:, 2],
+        "z1": z[:, 0],
+        "z2": z[:, 1],
+        "z3": z[:, 2],
+    }
+)
+
+BASE = Path(__file__).resolve().parent
+DATADIR = BASE / "data"
+DATADIR.mkdir(parents=True, exist_ok=True)
+out_file = DATADIR / "python01.csv"
+df.to_csv(out_file, index=False)
+
+print(f"CSV salvo em: {out_file}")
+\end{pycode}
+
+
 
 \section{Exemplo do capítulo 02}
 
