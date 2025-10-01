@@ -33,7 +33,7 @@ x_estocastico    = df_estocastico.iloc[:, 1]
 # Histograma determinístico
 plt.figure(figsize=(12, 9))
 plt.hist(x_deterministico, bins=50, density=True, color=COL_DET, edgecolor="black", alpha=0.85)
-plt.title("Histograma Determinístico — Acessível")
+plt.title("Histograma Determinístico")
 plt.xlabel("x")
 plt.ylabel("Densidade")
 plt.grid(True, alpha=0.75)
@@ -46,7 +46,7 @@ plt.close()
 plt.figure(figsize=(12, 9))
 plt.hist(x_estocastico, bins=50, density=True,
          color=COL_EST, edgecolor="black", alpha=0.85)
-plt.title("Histograma Estocástico — Acessível")
+plt.title("Histograma Estocástico")
 plt.xlabel("x")
 plt.ylabel("Densidade")
 plt.grid(True, alpha=0.75)
