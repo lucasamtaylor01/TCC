@@ -4,7 +4,7 @@ from pathlib import Path
 
 # Caminhos
 BASE = Path(__file__).resolve().parent
-DATA = BASE / "data" / "f03027d50_cond_default.csv"
+DATA = BASE / "data" / "f01d50_cond_default.csv"
 OUTDIR = BASE / "src"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 OUTPNG = OUTDIR / "f01d50_cond_default.png"
@@ -12,16 +12,16 @@ OUTPNG = OUTDIR / "f01d50_cond_default.png"
 # Ler CSV
 df = pd.read_csv(DATA)
 
-t = df["time"] # python n divide por 8
+t = df["time"] 
 x1 = df["x1"]
 y1 = df["y1"]
 z1 = df["z1"]
 
 # Plot
 plt.figure(figsize=(12, 8), dpi=300)
-plt.plot(t, x1, label="$x_1$", linewidth=1.5, color="green")
-plt.plot(t, y1, label="$y_1$", linewidth=1.5, color="blue")
-plt.plot(t, z1, label="$z_1$", linewidth=1.5, color="red")
+plt.plot(t, x1, label="$x_1$", linewidth=2, color="#0b8126", linestyle="-")   # contínua
+plt.plot(t, y1, label="$y_1$", linewidth=2, color="#0910aa", linestyle="--")  # tracejada
+plt.plot(t, z1, label="$z_1$", linewidth=2, color="#dc3220", linestyle=":")   # pontilhada
 
 plt.xlabel("t (dias)", fontsize=16)
 plt.ylabel("Valores", fontsize=16)

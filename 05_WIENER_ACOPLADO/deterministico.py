@@ -15,10 +15,12 @@ def rhs(t, u):
     return [dx, dy1, dy2, dy3]
 
 t0, tf = 0.0, 10.0
-y0 = [0.1, 0.01, 0.01, 0.01]
-t_eval = np.arange(t0, tf + 1e-12, 1e-3)
+x0 = 0.1
+y0_vals = [1e-2, 1e-2, 1e-2]
+y0 = [x0] + y0_vals
+t_eval = np.arange(t0, tf, 1e-3)
 
-sol = solve_ivp(rhs, (t0, tf), y0, method="RK45", t_eval=t_eval, rtol=1e-6, atol=1e-7)
+sol = solve_ivp(rhs, (t0, tf), y0, method="RK45", t_eval=t_eval, rtol=1e-4, atol=1e-6)
 
 x_vals = sol.y[0]
 y2_vals = sol.y[2]
@@ -29,3 +31,4 @@ DATADIR.mkdir(parents=True, exist_ok=True)
 
 df = pd.DataFrame({"t": sol.t, "y2": y2_vals, "x": x_vals})
 df.to_csv(DATADIR / "deterministico.csv", index=False)
+        
