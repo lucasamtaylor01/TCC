@@ -39,7 +39,7 @@ plt.ylabel("Densidade")
 plt.grid(True, alpha=0.75)
 plt.legend(handles=[Patch(facecolor=COL_DET, edgecolor="black", label="Determinístico")])
 plt.tight_layout()
-plt.savefig(OUTDIR / "hist_deterministico.png")
+plt.savefig(OUTDIR / "hist_deterministico_1.png")
 plt.close()
 
 # Histograma estocástico
