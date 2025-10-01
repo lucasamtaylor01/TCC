@@ -69,6 +69,6 @@ Chama a função para calcular σ usando os dados da coluna `y2` e o passo de te
 ```python
 print("σ ≈", sigma)
 ```
-Imprime o valor aproximado de σ.
+Imprime o valor aproximado de σ.!!
 
 ---
