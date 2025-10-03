@@ -41,7 +41,7 @@ Nesta seção, reunimos um breve glossário com os principais conceitos de geof�
 	      	\item As escalas de tempo são advectivas, ou seja, $T=L/U$.
 	      \end{enumerate}
 
-    \item \textbf{Condições de Hardley.}
+    \item \textbf{Condições de Hardley.} circulação de Hadley é um padrão atmosférico típico da região entre o Trópico de Câncer e o Trópico de Capricórnio. Nessa faixa tropical, o ar quente sobe próximo ao equador, se desloca em altitude para latitudes maiores e desce, formando um ciclo convectivo. As condições que regem este sistema, será utilizado em nossa simulação como as condições ideias da atmosfera, referida como ``condições de Hardley''.
 \end{itemize}
 
 
@@ -98,7 +98,7 @@ associada a movimentos de pequena escala: o termo $\nu$ representa o coeficiente
 
 
 A partir da descrição acima, podemos construir o seguinte diagrama:
-\begin{figure}[H][H]
+\begin{figure}[H]
 	\centering
 	\begin{tikzpicture}[scale=1] 
 								
@@ -246,7 +246,7 @@ Substituindo as equações de \eqref{eq:ch01-adimensionalizacao} em \eqref{eq:eq
 	+ c\,y_i(z_k - h_k) - c(z_i - h_i)y_k + g_0a_ix_i - \kappa_0a_iz_i + F_i. \label{eq:modelo-pe-3}
 \end{align}
 
-As variáveis $x_i$ representam os modos divergentes do escoamento, associados às ondas de gravidade; as variáveis $y_i$ correspondem aos modos rotacionais (vorticidade), ligados às oscilações quasi-geostróficas; e as variáveis $z_i$ funcionam como variáveis auxiliares acopladas ao sistema.
+As variáveis $x_i$ representam os modos divergentes do escoamento, associados às ondas de gravidade; as variáveis $y_i$ correspondem aos modos rotacionais (vorticidade), ligados às oscilações quasi-geostróficas; e as variáveis $z_i$ funcionam como variáveis auxiliares acopladas ao sistema. Na classificação em relação à variáveis rápidas e lentas, temos que: $x_i$ corresponde as variáveis lentas, enquanto $y_i$ e $z_i$ correspondem as variáveis rápidas.
 
 Na construção do modelo QG, começamos desprezando todos os termos não lineares, assim como aqueles que envolvem as variáveis $x$, incluindo a derivada temporal, na equação \eqref{eq:modelo-pe-1}. Fazemos o mesmo com os termos não lineares ou topográficos que dependem de $x$ nas equações \eqref{eq:modelo-pe-2} e \eqref{eq:modelo-pe-3}. Por fim, eliminamos as variáveis $x$ e $z$, obtendo ao modelo QG apresentado a seguir:
 \begin{equation}
@@ -256,8 +256,6 @@ Na construção do modelo QG, começamos desprezando todos os termos não linear
 	- c h_k y_j + c h_j y_k + F_i,
 	\label{eq:modelo_lorenz_deterministico_qg}
 \end{equation}
-
-\textbf{ADICIONAR SOBRE O CAPÍTULO 2.7 DO SALMON}
 
 \section{Comparação entre os modelos} \label{sec:ch01_propriedades}
 
@@ -321,21 +319,28 @@ Tomamos $f_1 = 0.1$ e as condições iniciais são:
 Para tais valores, obtivemos os seguintes resultados:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.80\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d01_cond_default.png}
-    \caption{Simulação de 1 dia com $f_1=0.1$}
-    \label{fig:f01d01_cond_default}
+    \begin{subfigure}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d01_cond_default.png}
+        \caption{Simulação de 1 dia com $f_1=0.1$}
+        \label{fig:f01d01_cond_default}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d50_cond_default.png}
+        \caption{Simulação de 50 dias com $f_1=0.1$}
+        \label{fig:f01d50_cond_default}
+    \end{subfigure}
+    \caption{Evolução temporal das variáveis $x_1$, $y_1$ e $z_1$ para $f_1=0.1$. À esquerda, simulação curta (1 dia). À direita, simulação longa (50 dias).}
+    \label{fig:subplots_f01}
 \end{figure}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam posuere elit ut faucibus aliquet. In efficitur neque lectus, vel cursus nisl laoreet sed. Duis tempus ex tortor, consectetur vehicula ex suscipit id. Aliquam hendrerit, odio ut ullamcorper fringilla, purus tellus semper sapien, in aliquet tellus tellus in justo. Aliquam erat volutpat. 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.80\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d50_cond_default.png}
-    \caption{Simulação de 50 dias com $f_1=0.1$}
-    \label{fig:f01d50_cond_default}
-\end{figure}
+Na figura \ref{fig:f01d01_cond_default}, observa-se claramente a diferença no comportamento da variável lenta $x_1$ em comparação com as variáveis rápidas $y_1$ e $z_1$. A variável $x_1$ apresenta uma amplitude menor em relação a $z_1$ e oscila com um período mais longo do que $y_1$ e $z_1$, evidenciando sua natureza lenta. Já a variável $y_1$ exibe um comportamento intermediário: sua frequência é mais alta que a de $x_1$, mas ainda acompanha, em certa medida, a variabilidade de $z_1$, o que destaca a separação das escalas de tempo no sistema.
 
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean dignissim mollis augue tristique ornare. Quisque vulputate sapien quis sapien sollicitudin, nec imperdiet lacus molestie. Vivamus et dui mauris. Sed feugiat augue vitae consequat viverra. Pellentesque volutpat luctus lobortis. Fusce ac pharetra velit. Suspendisse potenti. Etiam in orci non lorem eleifend varius. 
+Na figura \ref{fig:f01d50_cond_default}, essa distinção entre variáveis rápidas e lentas se mantém, mas com algumas distinções. A variável $x_1$ permanece praticamente centrada em zero ao longo de toda a série temporal, com sua amplitude diminuindo progressivamente — um indicativo claro do amortecimento das oscilações gravitacionais. Inicialmente, $y_1$ e $z_1$ apresentam amplitudes e períodos distintos; no entanto, com o passar do tempo, a amplitude de $z_1$ também decresce, e seus períodos tornam-se cada vez mais próximos. No final da simulação, as duas variáveis praticamente oscilam em sincronia. Esse comportamento assintótico revela uma transição para um regime dominado por oscilações quase-geostróficas associadas a $y_1$, enquanto os modos gravitacionais representados por $z_1$ se dissipam gradualmente.
+
 
 \subsection{Projeções bidimensionais} \label{subsec:proj_bidimensional}
 Para as projeções bidimensionais, utilizamos $f_1=0.3027$ e as variáveis iniciais com as condições de Hardley expressas matematicamente abaixo:
@@ -351,33 +356,33 @@ Com pequenas pertubações em $y_2$ e $z_2$:
     y_2 = -1\times 10^{-5} \quad \text{ e } \quad z_2 = 1\times 10^{-5}, 
 \end{equation*}
 
-e o restante das variáveis iguais a zero. As simulações correspondem ao período de $400$ dias e, foi eliminado os $10\%$ dos dados iniciais, já que estes são uma fase que o sistema ainda está entrando no formado de atrator. Isto posto, conseguimos os seguintes resultados:
+e as demais variáveis foram fixadas em zero. As simulações foram realizadas ao longo de $400$ dias, sendo descartados os $10\%$ iniciais dos dados, correspondentes à fase transitória em que o sistema ainda está evoluindo até se ajustar ao formato do atrator. Assim, obtiveram-se os seguintes resultados:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.80\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y3_x_y2.png}
-    \caption{Simulação de 50 dias com $f_1=0.1$}
-    \label{fig:proj_y3_y2}
+    \begin{subfigure}{0.75\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y3_x_y2.png}
+        \caption{Projeção no plano $(y_3, y_2)$}
+        \label{fig:proj_y3_y2}
+    \end{subfigure}
+
+    \vspace{0.5cm}
+    \begin{subfigure}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y1_x_y2.png}
+        \caption{Projeção no plano $(y_1, y_2)$}
+        \label{fig:proj_y1_y2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y1_x_y3.png}
+        \caption{Projeção no plano $(y_1, y_3)$}
+        \label{fig:proj_y1_y3}
+    \end{subfigure}
+
+    \caption{Projeções do modelo L80 para $f_1=0.3027$.}
+    \label{fig:proj_subplots}
 \end{figure}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam posuere elit ut faucibus aliquet. In efficitur neque lectus, vel cursus nisl laoreet sed. Duis tempus ex tortor, consectetur vehicula ex suscipit id. Aliquam hendrerit, odio ut ullamcorper fringilla, purus tellus semper sapien, in aliquet tellus tellus in justo. Aliquam erat volutpat. 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.80\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y1_x_y2.png}
-    \caption{Simulação de 50 dias com $f_1=0.1$}
-    \label{fig:proj_y1_y2}
-\end{figure}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam posuere elit ut faucibus aliquet. In efficitur neque lectus, vel cursus nisl laoreet sed. Duis tempus ex tortor, consectetur vehicula ex suscipit id. Aliquam hendrerit, odio ut ullamcorper fringilla, purus tellus semper sapien, in aliquet tellus tellus in justo. Aliquam erat volutpat. 
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.80\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y1_x_y3.png}
-    \caption{Simulação de 50 dias com $f_1=0.1$}
-    \label{fig:proj_y1_y3}
-\end{figure}
-
-
-
-
+O principal objetivo destas simulações projetadas bidimensionalmente é evidenciar o comportamento de atrator caótico característico do sistema. Note que, através da imagem, pode-se evidenciar a aperiodicidade do sistema, junto com o fato de que não há um ponto de convergência quando $t \to \infty$. Além disso, vale ressaltar também que, dado que o sistema é sensível às condições iniciais, especialmente ao valor de $f_1$, temos que os valores que constituem o atrator nesta condição não se repetem se as condições iniciais forem distintas.  Por fim, ponto importante é que as trajetórias permanecem confinadas em uma região limitada do espaço de fases, não divergindo para o infinito. 
