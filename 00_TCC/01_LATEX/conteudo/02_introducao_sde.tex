@@ -1,37 +1,77 @@
 \chapter{Introdução às equações diferenciais estocásticas} \label{cap:ch02_introducao_a_sde}
 
-\section{Introdução} \label{sec:ch02_introducao}
+\section{Introdução}\label{sec:ch02_introducao_sde}
 
-\section{Noções gerais de estatística}
-Nesta seção, vamos apresentar as principais definições e teoremas relacionados a probabilidade e estatística que constroem a base necessária para compreensão de equações diferenciais estocásticas. Todos os conceitos apresentados estão detalhados em \citet{Pavliotis2014} e \citet{Evans2014}.
+\section{Motivação} \label{sec:ch02_motivacao_sde}
 
-\begin{itemize}
-    \item \textbf{Variável aleatória.} Seja $(\Omega, \mathcal{F}, \mathbb{P})$ um espaço de probabilidade e $(E, \mathcal{G})$ um espaço mensurável. Definimos uma variável aleatória como uma função mensurável da forma
-    \begin{equation*}
-        X : (\Omega, \mathcal{F}) \to (E, \mathcal{G}).
-    \end{equation*}
-    \item \textbf{Processo Estocástico.} Definimos um processo estocástico como sendo uma coleção de variáveis aleatórias $\{X(t) : t \in T\}$, onde $T$ é um conjunto ordenado.
-    \item \textbf{Esperança condicional.}
-    \item \textbf{Processos de Markov.}
-    \item \textbf{Equações de Champman-Kolmogorov.}
-    \item \textbf{Processo de difusão.}
-    \item \textbf{\textit{Forward and Backward Kolmogorov Equation}}
-\end{itemize}
+Para iniciar a introdução às equações diferenciais estocásticas (EDEs), vamos apresentar a motivação para o seu estudo. Começamos com uma equação diferencial ordinária:
 
-\section{Movimento Browniano (Processo de Wiener)} \label{sec:ch02-movimento-browniano}
+\begin{equation}
+    \begin{cases}
+        \dot{\mathbf{x}} = \mathbf{b}(\mathbf{x}(t))\\
+        \mathbf{x}(0) = x_0, \label{eq:ch02_sistema_edo_generico}
+    \end{cases}
+\end{equation}
 
-\subsection{Desenvolvimento histórico} \label{subsec:ch02-motivacao-movimento-browniano}
-O movimento browniano tem como origem o problema físico: estudar o movimento de grãs de polém. Em 1827, Robert Brown
+onde $t > 0$, $\mathbf{b}: \mathbb{R}^n \to \mathbb{R}^n$ é um vetor suave, e $\mathbf{x}(t): [0, \infty) \to \mathbb{R}^n$ representa a trajetória do sistema ao longo do tempo. O sistema \eqref{eq:ch02_sistema_edo_generico} é classificado como determinístico, pois, uma vez conhecida a condição inicial, a trajetória do sistema é totalmente determinada, conforme garante o Teorema de Existência e Unicidade.
 
+Contudo, suponha que desejamos modelar a evolução de um fenômeno sujeito a incertezas. Em outras palavras, queremos aplicar o mesmo princípio das equações diferenciais ordinárias a um processo aleatório. Para isso, utilizamos as equações diferenciais estocásticas. Esse tipo de equação é definido como:
 
-% Em 1827, ao olhar através de um microscópio partículas encontradas em grãos de pólen na água,o biólogo Robert Brown observou que as partículas se moviam através da água, mas não foi capaz de determinar os mecanismos que causaram este movimento. Assim, foi o primeiro a observar cientificamente o movimento que achou se tratar de uma nova forma de vida, pois ainda não se tinha completa ciência da existência de moléculas, e as partículas pareciam descrever movimentos por vontade própria.
+\begin{equation}
+    \begin{cases}
+        \dot{X}(t) = b(t, X(t)) + \sigma(t, X(t))\xi(t)\\
+        \mathbf{X}(0) = x_0,
+    \end{cases}
+\end{equation}\label{eq:ch02_sistema_ede_generico}
 
-% Jan Ingenhousz também fez algumas observações do movimento irregular de poeira de carbono em álcool em 1765. Porém, a primeira pessoa a descrever a matemática por trás do movimento Browniano foi Thorvald N. Thiele em 1880 em um artigo no método dos menores quadrados. Isto foi seguido independentemente por Louis Bachelier em 1900 em sua tese de PhD "A Teoria da Especulação".
+onde $X(t) \in \mathbb{R}^d$, $b : [0,T] \times \mathbb{R}^d \mapsto \mathbb{R}^d$, e $\sigma : [0,T] \times \mathbb{R}^d \mapsto \mathbb{R}^{d \times m}$. Usamos a notação $\xi(t) = \frac{dW}{dt}$ para denotar (de forma formal) a derivada do movimento Browniano em $\mathbb{R}^m$, ou seja, um processo de ruído branco — um vetor Gaussiano generalizado, de média zero.
 
-% Átomos e moléculas , posteriormente foram teorizados como os constituintes da matéria e, muitas décadas depois, Albert Einstein publicou um artigo em 1905 que explicava em detalhes precisos como o movimento que Brown tinha observado era o resultado do pólen sendo movido por moléculas de água individuais. Esta explicação deste fenômeno de transporte serviu como a confirmação definitiva de que átomos e moléculas realmente existem, e foi ainda verificada experimentalmente por Jean Baptiste Perrin, em 1908. Perrin foi agraciado com o Prêmio Nobel de Física em 1926 "por seu trabalho sobre a estrutura descontínua da matéria" (Einstein tinha recebido o prêmio cinco anos antes "por seus serviços à física teórica", com citação específica de uma pesquisa diferente). Sendo então que a direção da força de bombardeamento atômico está constantemente mudando, e em diferentes momentos da partícula é atingido mais de um lado do que o outro, levando à natureza aparentemente aleatória do movimento. 
+Como exemplo motivador para o uso de EDEs, consideremos a evolução do preço de uma ação na bolsa de valores ao longo do tempo. Esse preço é influenciado por diversos fatores externos, o que introduz um grau de incerteza quanto ao seu comportamento futuro. Assim, podemos modelá-lo por meio de uma EDE:
 
-\subsection{Definição e Propriedades} \label{subsec:ch02-propriedades-movimento-browniano}
-Um processo estocástico real, denotado por $W(\cdot)$ é chamado de processo de Wiener quando satisfaz as seguintes propriedades:
+\begin{equation}
+    \begin{cases}
+        \dfrac{dS}{S} = \mu dt + \sigma dW\\
+        \mathbf{S}(0) = s_0, \label{eq:ch02_exemplo_mercado_de_acoes}
+    \end{cases}
+\end{equation}
+
+Nessa equação, $ \dfrac{dS}{S}$ representa a variação relativa do preço da ação ao longo do tempo; $\mu$ é uma constante positiva que representa a taxa média de crescimento; e $\sigma$ expressa a volatilidade, ou seja, a incerteza associada aos diversos fatores que influenciam no preço.
+
+Antes de continuar com esse exemplo, apresentaremos a base teórica necessária para a formulação da equação \eqref{eq:ch02_exemplo_mercado_de_acoes}, bem como suas propriedades.
+
+\section{Considerações estatísticas}\label{sec:ch02_consideracoes_estat}
+
+\section{Equações diferenciais estocásticas}
+
+Dadas as considerações estatísticas, passemos para a construção da equação \eqref{eq:ch02_sistema_ede_generico}, reproduzida novamente a seguir:
+\begin{equation*}
+    \begin{cases}
+        \dot{X}(t) = b(t, X(t)) + \sigma(t, X(t))\,\xi(t), \\begin{equation*}0.2cm]
+        X(0) = x_0, \label{eq:ch02_sistema_ede_generico_2}
+    \end{cases}
+\end{equation*}
+
+A solução $X(\cdot)$ é então expressa como
+\begin{equation}
+    X(t) = x + \int_0^t b(s, X(s))\,ds + \int_0^t \sigma(s, X(s))\,dW_s. \label{eq:ch02_solucao_integral}
+\end{equation}
+
+Note que, dadas essas expressões, restam algumas definições fundamentais: a definição do ruído $\xi(t)$, a forma de se interpretar a integral estocástica 
+$\int_0^t f(s, X(s))\,dW_s$ e a questão da existência (e unicidade) de soluções.
+
+Nesta seção, exploraremos cada um desses conceitos, bem como suas propriedades, a fim de justificar rigorosamente a construção de \eqref{eq:ch02_sistema_ede_generico_2}.
+
+\subsection{Processo de Wiener} \label{subsec:ch02_processo_de_wiener}
+
+\subsubsection{Desenvolvimento histórico}\label{subsubsec:desenvolvimento_historico}
+Um dos elementos fundamentais para o estudo de equações diferenciais estocásticas é o \textit{movimento browniano}. Trata-se de um fenômeno físico que envolve o estudo do movimento de grãos de pólen suspensos na água.
+
+Historicamente, o problema foi inicialmente proposto e estudado por Robert Brown entre 1826 e 1827. Em seus estudos, Brown observou que a trajetória das partículas era irregular e que o movimento de duas partículas distintas parecia ser independente. Em 1905, Albert Einstein retomou o problema, relacionando-o à equação da difusão\footnote{Detalhes em \citet{Evans2014}}. Esse trabalho foi essencial para a comprovação da existência dos átomos e permitiu, alguns anos depois, que Jean Perrin determinasse experimentalmente a constante de Avogadro \citep{Evans2014}.
+
+Finalmente, na década de 1920, o fenômeno foi formalizado matematicamente por Norbert Wiener. Essa formalização é crucial para a definição rigorosa do movimento browniano, tanto que outra forma de referir-se a ele é \textit{processo de Wiener} — forma que utilizaremos a fim de diferenciar do problema físico original.
+    
+\subsubsection{Definição}\label{subsubsec:definicao_processo_de_wiener}
+Um processo estocástico real, denotado por $W(\cdot)$ é chamado de \textit{processo de Wiener} padrão quando satisfaz as seguintes propriedades:
 \begin{enumerate}
     \item $W(0) = 0$, quase certamente;
     \item Para todo $t \geq s \geq 0$, tem-se que $W(t) - W(s) \sim \text{Normal}(0,t-s)$;
@@ -40,11 +80,34 @@ Um processo estocástico real, denotado por $W(\cdot)$ é chamado de processo de
         W(t_1), \; W(t_2) - W(t_1), \; \ldots, \; W(t_n) - W(t_{n-1}) \text{  são independentes.}
     \end{equation*}
 \end{enumerate}
+\hfill \citep{Evans2014}
 
-\section{Equações diferenciais estocásticas}
+A função densidade de probabilidade do processo de Wiener padrão unidimensional, definido como $W(t): \mathbb{R}^+ \to \mathbb{R}$, é dada por:
+\begin{equation*} 
+f(x; t, s) = \left( 2\pi (t - s) \right)^{-\tfrac{1}{2}} \exp\!\left( -\frac{x^{2}}{2(t - s)} \right). 
+\end{equation*}
+
+No caso do processo de Wiener padrão $n$-dimensional, $W(t): \mathbb{R}^+ \to \mathbb{R}^n$, onde cada componente $W_i(t)$, com $i = 1, \ldots, n$, é um processo de Wiener unidimensional independente, a função densidade do vetor gaussiano aleatório $W(t) - W(s)$ é dada por:
+\begin{equation*} 
+g(\mathbf{x}; t, s) = \left( 2\pi (t - s) \right)^{-n/2} \exp\!\left( -\frac{\|\mathbf{x}\|^2}{2(t - s)} \right). 
+\end{equation*}
 
 
+\subsubsection{Propriedades}\label{subsubsec:propriedades_processo_de_wiener}
+As principais propriedades do processo de Wiener padrão são:
+\begin{enumerate}
+    \item \textbf{Reescalonamento.} Para cada $c > 0$, defina $X_t = \tfrac{1}{\sqrt{c}} W(ct)$. Então $(X_t,\, t \geq 0) = (W_t,\, t \geq 0)$.
 
+    \item \textbf{Translação.} Para cada $c > 0$, $W_{c+t} - W_c$, $t \geq 0$, é um processo de Wiener que é independente de $W_u$, $u \in [0,c]$.
+
+    \item \textbf{Reversão no tempo.} Defina $X_t = W_{1-t} - W_1$, $t \in [0,1]$. Então $(X_t,\, t \in [0,1]) = (W_t,\, t \in [0,1])$.
+
+    \item \textbf{Inversão.} Seja $X_t, t \geq 0$, definido por $X_0 = 0$, $X_t = tW(1/t)$. Então $(X_t,\, t \geq 0) = (W_t,\, t \geq 0)$.
+\end{enumerate}
+\hfill \citep{Pavliotis2014}
+
+\subsection{Integral estocástica} \label{subsec:ch02_integral_estocastica}
+\subsection{Existência e unicidade das soluções} \label{subsec_existencia_e_unicidade_ede}
 
 \section{Exemplo}
 
@@ -52,7 +115,7 @@ A seguir, apresentemos um exemplo retirado de \citet{Pavliotis2008} de uma aprox
 
 O exemplo trata-se de um movimento browniano, assim como apresentado em na seção \ref{subsec:ch02-propriedades-movimento-browniano} acoplado ao sistema Lorenz 63 apresentado em \ref{eq:ch01-lorenz63} a partir das variáveis $y=(y_1, y_2, y_3)^\intercal$. O exemplo em questão é expresso por:
 
-\begin{equation}\label{eq:ch02-exemplo-de-aprox}
+\begin{equation}\label{eq:ch02_exemplo_de_aprox}
     \begin{aligned}
         \frac{dx}{dt} &= x - x^{3} + \frac{\lambda}{\varepsilon} y_{2}, \\
         \frac{dy_{1}}{dt} &= \frac{10}{\varepsilon^{2}} (y_{2} - y_{1}), \\
@@ -75,35 +138,21 @@ Onde $\sigma$ é expresso por:
 
 A partir das equações apresentadas, podemos realizar simulações computacionais. Novamente, as simulações foram realizadas com o uso da biblioteca \textit{SciML} \citep{Rackauckas2017} e os programas que geraram os dados estão no apêndice \ref{app:apendice-lista-de-programas}. 
 
-\textbf{VER O NEGÓCIO DA SEED}
-
 \begin{figure}[H]
-    \centering
-    \subfloat[Browniano acoplado determinístico.]{
-        \includegraphics[width=0.45\textwidth]{00_TCC/01_LATEX/figuras/ch02_introducao_a_sde/deterministico_plot.png}
-        \label{fig:ch02-exemplo-histograma-deterministico}
-    }
-    \hfill
-    \subfloat[Browniano acoplado estocástico.]{
-        \includegraphics[width=0.45\textwidth]{00_TCC/01_LATEX/figuras/ch02_introducao_a_sde/estocastico_plot.png}
-        \label{fig:ch02-exemplo-histograma-estocastico}
-    }
-    \caption{Comparação entre simulação determinística e estocástica do browniano acoplado.}
-    \label{fig:ch02-exemplo-comparacao-simulacao}
+	\centering
+	\begin{subfigure}{0.48\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d01_cond_default.png}
+		\caption{Simulação de 1 dia com $f_1=0.1$}
+		\label{fig:ch01-f01d01-cond-default}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.48\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d50_cond_default.png}
+		\caption{Simulação de 50 dias com $f_1=0.1$}
+		\label{fig:ch01-f01d50-cond-default}
+	\end{subfigure}
+	\caption{Evolução temporal das variáveis $x_1$, $y_1$ e $z_1$ para $f_1=0.1$. À esquerda, simulação curta (1 dia). À direita, simulação longa (50 dias).}
+	\label{fig:ch01-subplots-f01}
 \end{figure}
-
-\begin{figure}[H]
-    \centering
-    \subfloat[Histograma do browniano acoplado determinístico.]{
-        \includegraphics[width=0.45\textwidth]{00_TCC/01_LATEX/figuras/ch02_introducao_a_sde/hist_deterministico.png}
-        \label{fig:ch02-exemplo-histograma-deterministico}
-    }
-    \hfill
-    \subfloat[Histograma do browniano acoplado estocástico.]{
-        \includegraphics[width=0.45\textwidth]{00_TCC/01_LATEX/figuras/ch02_introducao_a_sde/hist_estocastico.png}
-        \label{fig:ch02-exemplo-histograma-estocastico}
-    }
-    \caption{Comparação entre histogramas das simulações determinística e estocástica do browniano acoplado.}
-    \label{fig:ch02-exemplo-comparacao-histogramas}
-\end{figure}
-

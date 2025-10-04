@@ -1,11 +1,11 @@
-\chapter{O modelo de Lorenz 80 determinístico} \label{cap:ch01_lorenz_deterministico}
+\chapter{O modelo de Lorenz 80 determinístico} \label{cap:ch01-lorenz-deterministico}
 
-\section{Introdução} \label{sec:ch01_introducao}
-Este capítulo tem como objetivo apresentar o modelo determinístico Lorenz 80. Para isso, começamos, na seção \ref{sec:ch01_geofisica}, com uma introdução aos conceitos básicos de geofísica, a fim de familiarizar o leitor com os fundamentos dessa área. Em seguida, na seção \ref{sec:ch01_apresentacao_do_modelo}, contextualizamos o modelo, discutindo os trabalhos que o precederam e as motivações por trás de sua formulação.
+\section{Introdução} \label{sec:ch01-introducao}
+Este capítulo tem como objetivo apresentar o modelo determinístico Lorenz 80. Para isso, começamos, na seção \ref{sec:ch01-geofisica}, com uma introdução aos conceitos básicos de geofísica, a fim de familiarizar o leitor com os fundamentos dessa área. Em seguida, na seção \ref{sec:ch01-apresentacao-do-modelo}, contextualizamos o modelo, discutindo os trabalhos que o precederam e as motivações por trás de sua formulação.
 
-Na seção \ref{sec:ch01_agua_rasa}, introduzimos o modelo de água rasa, que serve de base para o desenvolvimento do Lorenz 80. A construção deste é detalhada na seção \ref{sec:ch01_construcao_do_modelo}. Por fim, a seção \ref{sec:ch01_simulacoes_deterministico} traz simulações computacionais realizadas com o modelo, acompanhadas de uma análise gráfica dos resultados.
+Na seção \ref{sec:ch01-agua-rasa}, introduzimos o modelo de água rasa, que serve de base para o desenvolvimento do Lorenz 80. A construção deste é detalhada na seção \ref{sec:ch01-construcao-do-modelo}. Por fim, a seção \ref{sec:ch01-simulacoes-deterministico} traz simulações computacionais realizadas com o modelo, acompanhadas de uma análise gráfica dos resultados.
 
-\section{Breves considerações sobre geofísica} \label{sec:ch01_geofisica}
+\section{Breves considerações sobre geofísica} \label{sec:ch01-geofisica}
 
 Nesta seção, reunimos um breve glossário com os principais conceitos de geofísica que servem de base para a compreensão do modelo de Lorenz 80. Todas as definições expostas abaixo estão detalhadas em \citet{Vallis2017}.
 \begin{itemize}
@@ -17,22 +17,22 @@ Nesta seção, reunimos um breve glossário com os principais conceitos de geof�
 	      	f = 2 \Omega \sin(\theta)
 	      \end{equation*}
 	      onde $\Omega$ representa a velocidade angular de rotação da Terra e $\theta$ é a latitude, ou seja, o ângulo entre a posição do ponto e o equador terrestre.
-	      	      
+	      	      	      
 	\item \textbf{Número de Rossby.} O número de Rossby é a razão entre a magnitude da aceleração relativa e a aceleração de Coriolis. É aproximado por:
 	      \begin{equation*}
 	      	Ro \equiv \frac{U}{fL},
 	      \end{equation*}
-	      	      
+	      	      	      
 	      onde $U$ é a magnitude aproximada da velocidade horizontal e $L$ é uma escala de comprimento e $f$ é o parâmetro de Coriolis.
-	      	      
+	      	      	      
 	\item \textbf{Equilíbrio hidrostático.} Matematicamente, a equação do equilíbrio hidrostático é dada por:
 	      \begin{equation}
-	      	\frac{\partial p}{\partial z} = - \rho_0g, \label{eq:equilibrio_hidrostatico}
+	      	\frac{\partial p}{\partial z} = - \rho_0g, \label{eq:ch01-equilibrio-hidrostatico}
 	      \end{equation}
-	      	          
+	      	      	          
 	      onde: $p$ é a pressão do fluido, $z$ é a coordenada vertical, $\rho_0$ é a densidade constante do fluido e $g$ é a aceleração da gravidade.
 	\item \textbf{Conservação de massa.} Em um escoamento de fluido, a densidade pode variar de acordo com o tempo ou a posição. No entanto, a \textit{quantidade total de massa} do fluido permanece constante. Esse princípio estabelece que a massa não pode ser criada nem perdida durante o movimento.
-	      	      
+	      	      	      
 	\item \textbf{Equações quasi-geostróficas.} As equações quasi-geostróficas são equações  amplamente usadas em estudos teóricos da atmosfera e oceano. Elas atendem as seguintes características:
 	      \begin{enumerate}
 	      	\item O número de Rossby é pequeno;
@@ -40,13 +40,11 @@ Nesta seção, reunimos um breve glossário com os principais conceitos de geof�
 	      	\item As variações no parâmetro de Coriolis são pequenas;
 	      	\item As escalas de tempo são advectivas, ou seja, $T=L/U$.
 	      \end{enumerate}
-
-    \item \textbf{Condições de Hardley.} circulação de Hadley é um padrão atmosférico típico da região entre o Trópico de Câncer e o Trópico de Capricórnio. Nessa faixa tropical, o ar quente sobe próximo ao equador, se desloca em altitude para latitudes maiores e desce, formando um ciclo convectivo. As condições que regem este sistema, será utilizado em nossa simulação como as condições ideias da atmosfera, referida como ``condições de Hardley''.
+	      
+	\item \textbf{Condições de Hardley.} circulação de Hadley é um padrão atmosférico típico da região entre o Trópico de Câncer e o Trópico de Capricórnio. Nessa faixa tropical, o ar quente sobe próximo ao equador, se desloca em altitude para latitudes maiores e desce, formando um ciclo convectivo. As condições que regem este sistema, será utilizado em nossa simulação como as condições ideias da atmosfera, referida como ``condições de Hardley''.
 \end{itemize}
 
-
-
-\section{Motivação e apresentação do modelo} \label{sec:ch01_apresentacao_do_modelo}
+\section{Apresentação do modelo} \label{sec:ch01-apresentacao-do-modelo}
 
 Edward Norton Lorenz (1917-2008) foi um importante matemático e meteorologista responsável pela publicação de vários artigos com desenvolvimento de modelos na área de meteorologia e geofísica.
 
@@ -67,14 +65,18 @@ O modelo acima, conhecido como Lorenz 63, é um sistema determinístico desenvol
 Em 1980, Lorenz publica o artigo intitulado ``\textit{Attractor Sets and Quasi-Geostrophic Equilibrium }'' \citep{Lorenz1980}. Neste artigo, Lorenz apresenta a construção e a simulação de dois modelos distintos: o primeiro, é formado a partir das equações primitivas (PE) com nove EDOs (equações diferenciais ordinárias), derivado das equações de águas rasas com topografia e forçamento, enquanto o segundo é um modelo quasi-geostrófico (QG) com 3 EDOs, obtido ao descartar as variáveis associadas ao escoamento divergente $x$ e seus termos correspondentes. O modelo PE contém tanto ondas gravitacionais rápidas quanto oscilações quasi-geostróficas lentas, enquanto o modelo QG mantém apenas estas últimas, em um quadro simplificado para atmosfera de latitudes médias.
 
 
-\section{O modelo de água-rasa} \label{sec:ch01_agua_rasa}
+\section{O modelo de água-rasa} \label{sec:ch01-agua-rasa}
 O modelo de água rasa descreve um fluido de densidade constante, em equilíbrio hidrostático, que pode ou não estar em rotação. Nele, a escala horizontal é significativamente maior que a profundidade. Esse fluido possui superfície livre e é limitado pelas bordas \citep{Vallis2017}. No caso considerado, adotamos a versão de uma única camada.
 
-Para a construção do modelo de água-rasa, consideramos a equação do equilíbrio hidrostático, expressa em \eqref{eq:equilibrio_hidrostatico}. A partir das manipulações envolvendo os conceitos de momento e conservação de massa, detalhado em \citet{Vallis2017}, obtemos as equações que descrevem o modelo: 
-\begin{align}
-	\frac{\partial V}{\partial t} + (V \cdot \nabla)V + f \mathbf{k} \times V & = -g \nabla \eta \label{eq:agua-rasa-1} \\
-	\frac{\partial \eta}{\partial t} + \nabla \cdot (\eta V)                  & = 0 \label{eq:agua-rasa-2}              
-\end{align}
+Para a construção do modelo de água-rasa, consideramos a equação do equilíbrio hidrostático, expressa em \eqref{eq:ch01-equilibrio-hidrostatico}. A partir das manipulações envolvendo os conceitos de momento e conservação de massa, detalhado em \citet{Vallis2017}, obtemos as equações que descrevem o modelo: 
+\begin{equation}\label{eq:ch01-agua-rasa}   
+    \begin{aligned}
+        \frac{\partial V}{\partial t} + (V \cdot \nabla)V + f \mathbf{k} \times V &= -g \nabla \eta \\
+	    \frac{\partial \eta}{\partial t} + \nabla \cdot (\eta V)                  &= 0   
+    \end{aligned}
+\end{equation}
+	    
+
 
 Onde:
 \begin{itemize}
@@ -85,7 +87,7 @@ Onde:
 	\item $\mathbf{k}$: vetor da vertical.
 \end{itemize}
 
-\section{Construção dos modelos} \label{sec:ch01_construcao_do_modelo}
+\section{Construção dos modelos} \label{sec:ch01-construcao-do-modelo}
 Nesta seção, apresentaremos a construção dos modelos apresentados no artigo \citet{Lorenz1980}. Como dito anteriormente, o modelo é construído a partir das equações de água-rasa com algumas particularidades descritas a seguir. 
 
 Consideremos um fluido homogêneo e incompressível, ou seja, com densidade constante em todo o volume e volume invariável mesmo sob variações de pressão. O escoamento é predominantemente horizontal, descrito por uma velocidade $V(t, \mathbf{r})$ independente da altura, onde $\mathbf{r}$ representa o vetor de posição inicial.
@@ -101,7 +103,7 @@ A partir da descrição acima, podemos construir o seguinte diagrama:
 \begin{figure}[H]
 	\centering
 	\begin{tikzpicture}[scale=1] 
-								
+										
 		% Superfície livre
 		\draw[above] (0,4) to[out=0,in=180] (1,4.2) 
 		to[out=0,in=180] (2,3.8)
@@ -110,40 +112,40 @@ A partir da descrição acima, podemos construir o seguinte diagrama:
 		to[out=0,in=180] (5,4.2)
 		to[out=0,in=180] (6,3.8);
 		\node[right] at (6,3.8) {Superfície livre};
-								
+										
 		% Linha tracejada de referência para z
 		\draw[dashed] (2,4.2) -- (1,4.2);
-								
+										
 		% Desvio da superfície z
 		\draw[thick] (2,3.8) -- (2,4.2);
-		\draw[thick] (1.9,3.8) -- (2.1,3.8); % traço inferior
-		\draw[thick] (1.9,4.2) -- (2.1,4.2); % traço superior
+		\draw[thick] (1.9,3.8) -- (2.1,3.8); 
+		\draw[thick] (1.9,4.2) -- (2.1,4.2); 
 		\node[above] at (2,4.3) {$z(t,\mathbf{r})$};
-								
+										
 		% Velocidade V(t,r)
 		\node at (2,3) {$ V(t,\mathbf{r}) \rightarrow$};
-								
+										
 		% Profundidade média H
 		\draw[thick] (4,3.8) -- (4,1.8);
-		\draw[thick] (3.9,3.8) -- (4.1,3.8); % traço superior
-		\draw[thick] (3.9,1.8) -- (4.1,1.8); % traço inferior
+		\draw[thick] (3.9,3.8) -- (4.1,3.8); 
+		\draw[thick] (3.9,1.8) -- (4.1,1.8);
 		\node at (4.5,2.8) {$H$};
-								
+										
 		% Topografia do fundo (curva inferior)
 		\draw[dotted, thick] (0,2) to[out=10,in=170] (2,2.3) 
 		to[out=350,in=170] (4,1.8) 
 		to[out=350,in=170] (6,2);
 		\node[right] at (6,1.9) {Topografia do fundo};
-								
+										
 		% Variação da topografia h
 		\draw[thick] (2,2.3) -- (2,1.8);
-		\draw[thick] (1.9,2.3) -- (2.1,2.3); % traço superior
-		\draw[thick] (1.9,1.8) -- (2.1,1.8); % traço inferior
+		\draw[thick] (1.9,2.3) -- (2.1,2.3);
+		\draw[thick] (1.9,1.8) -- (2.1,1.8); 
 		\node[below] at (2,1.6) {$h(\mathbf{r})$};
-								
+										
 		% Linha tracejada de referência para h
 		\draw[dashed] (2,1.8) -- (4,1.8);
-								
+										
 	\end{tikzpicture}
 	\caption{Diagrama do modelo de água-rasa adaptado}
 	\label{fig:fluido-topografia}
@@ -151,8 +153,8 @@ A partir da descrição acima, podemos construir o seguinte diagrama:
 
 Além disso, o modelo de água-rasa adaptado é expresso por:
 \begin{align}
-	\frac{\partial V}{\partial t} & = - ( V \cdot \nabla)V - f \mathbf{k} \times V - g \nabla z + \nu \nabla^2 V \label{eq:agua-rasa-modificada-1}     \\
-	\frac{\partial z}{\partial t} & = - (V \cdot \nabla)(z - h) - (H + z - h)\nabla \cdot  V + \kappa \nabla^2 z + F \label{eq:agua-rasa-modificada-2} 
+	\frac{\partial V}{\partial t} & = - ( V \cdot \nabla)V - f \mathbf{k} \times V - g \nabla z + \nu \nabla^2 V \label{eq:ch01-agua-rasa-modificada-1}     \\
+	\frac{\partial z}{\partial t} & = - (V \cdot \nabla)(z - h) - (H + z - h)\nabla \cdot  V + \kappa \nabla^2 z + F \label{eq:ch01-agua-rasa-modificada-2} 
 \end{align}
 
 Onde:
@@ -166,7 +168,7 @@ Onde:
 	\item $\nu$: coeficiente de difusão térmica;
 \end{itemize}
 
-Em seguida, aplicamos a \textit{decomposição de Helmholtz}\footnote{Definição apresentada no apêndice \ref{app:apendice-consideracoes-matematicas} } à equação \eqref{eq:agua-rasa-modificada-1}, escrevendo
+Em seguida, aplicamos a \textit{decomposição de Helmholtz}\footnote{Definição apresentada no apêndice \ref{app:apendice-consideracoes-matematicas} } à equação \eqref{eq:ch01-agua-rasa-modificada-1}, escrevendo
 \begin{equation*}
 	V = \nabla \chi + \mathbf{k} \times \nabla \psi,
 \end{equation*}
@@ -177,22 +179,22 @@ onde $\chi$ é o potencial de velocidade associado à parte divergente e $\psi$ 
 	+ \nabla^2(\nabla \chi \cdot \nabla \psi \times \mathbf{k}) \nonumber \\
 	                                          & \quad + \nabla \cdot (\nabla^2\psi\nabla\psi)          
 	- \tfrac{1}{2}\nabla^2(\nabla \psi \cdot \nabla \psi) 
-	+ \nu\nabla^4\chi + f\nabla^2\psi - g\nabla^2z, \label{eq:equacao-basica-1} \\
+	+ \nu\nabla^4\chi + f\nabla^2\psi - g\nabla^2z, \label{eq:ch01-equacao-basica-1} \\
 	\frac{\partial \nabla^2 \psi}{\partial t} & = -\nabla \cdot (\nabla^2\psi\nabla \chi)              
 	- \nabla \psi \cdot \nabla(\nabla^2\psi) \times \mathbf{k} 
-	- f\nabla^2\chi + \nu\nabla^4\psi. \label{eq:equacao-basica-2}
+	- f\nabla^2\chi + \nu\nabla^4\psi. \label{eq:ch01-equacao-basica-2}
 \end{align}
 
-Analogamente, aplicando \eqref{eq:agua-rasa-modificada-2}, temos:
+Analogamente, aplicando \eqref{eq:ch01-agua-rasa-modificada-2}, temos:
 \begin{equation}
 	\frac{\partial z}{\partial t} 
 	= -\nabla \cdot \big[(z - h)\nabla \chi\big] 
 	- \nabla \psi \cdot \nabla(z - h) \times \mathbf{k} 
 	- H\nabla^2\chi + \kappa\nabla^2z + F. 
-	\label{eq:equacao-basica-3}
+	\label{eq:ch01-equacao-basica-3}
 \end{equation}
 
-Nosso objetivo é reduzir as equações \eqref{eq:equacao-basica-1}–\eqref{eq:equacao-basica-3} a um modelo de baixa ordem. Para isso, introduzimos três vetores adimensionais $\alpha_1, \alpha_2, \alpha_3$ que satisfazem
+Nosso objetivo é reduzir as equações \eqref{eq:ch01-equacao-basica-1}–\eqref{eq:ch01-equacao-basica-3} a um modelo de baixa ordem. Para isso, introduzimos três vetores adimensionais $\alpha_1, \alpha_2, \alpha_3$ que satisfazem
 \begin{equation*}
 	\alpha_1 + \alpha_2 + \alpha_3 = 0,
 \end{equation*}
@@ -236,41 +238,41 @@ onde os termos omitidos são múltiplos de cossenos. Com essas funções, expand
 	\end{aligned}
 \end{equation}
 
-Substituindo as equações de \eqref{eq:ch01-adimensionalizacao} em \eqref{eq:equacao-basica-1}–\eqref{eq:equacao-basica-3}, e projetando sobre a base $\{\phi_i\}$, obtemos finalmente o modelo PE de baixa ordem, composto de nove equações diferenciais ordinárias:
+Substituindo as equações de \eqref{eq:ch01-adimensionalizacao} em \eqref{eq:ch01-equacao-basica-1}–\eqref{eq:ch01-equacao-basica-3}, e projetando sobre a base $\{\phi_i\}$, obtemos finalmente o modelo PE de baixa ordem, composto de nove equações diferenciais ordinárias:
 \begin{align}
 	a_i\frac{dx_i}{d\tau} & = a_ib_ix_ix_k - c(a_i - a_k)x_iy_k      
-	+ c(a_i - a_j)y_ix_k -2c^2y_iy_k - \nu_0a_i^2x_i + a_iy_i - a_iz_i, \label{eq:modelo-pe-1}\\
+	+ c(a_i - a_j)y_ix_k -2c^2y_iy_k - \nu_0a_i^2x_i + a_iy_i - a_iz_i, \label{eq:ch01-modelo-pe-1}\\
 	a_i\frac{dy_i}{d\tau} & = -a_ib_kx_iy_k - a_ib_iy_ix_k           
-	+ c(a_k - a_i)y_iy_k - a_ix_i - \nu_0a_i^2y_i, \label{eq:modelo-pe-2}\\
+	+ c(a_k - a_i)y_iy_k - a_ix_i - \nu_0a_i^2y_i, \label{eq:ch01-modelo-pe-2}\\
 	\frac{dz_i}{d\tau}    & = -b_kx_i(z_k - h_k) - b_i(z_i - h_i)x_k 
-	+ c\,y_i(z_k - h_k) - c(z_i - h_i)y_k + g_0a_ix_i - \kappa_0a_iz_i + F_i. \label{eq:modelo-pe-3}
+	+ c\,y_i(z_k - h_k) - c(z_i - h_i)y_k + g_0a_ix_i - \kappa_0a_iz_i + F_i. \label{eq:ch01-modelo-pe-3}
 \end{align}
 
 As variáveis $x_i$ representam os modos divergentes do escoamento, associados às ondas de gravidade; as variáveis $y_i$ correspondem aos modos rotacionais (vorticidade), ligados às oscilações quasi-geostróficas; e as variáveis $z_i$ funcionam como variáveis auxiliares acopladas ao sistema. Na classificação em relação à variáveis rápidas e lentas, temos que: $x_i$ corresponde as variáveis lentas, enquanto $y_i$ e $z_i$ correspondem as variáveis rápidas.
 
-Na construção do modelo QG, começamos desprezando todos os termos não lineares, assim como aqueles que envolvem as variáveis $x$, incluindo a derivada temporal, na equação \eqref{eq:modelo-pe-1}. Fazemos o mesmo com os termos não lineares ou topográficos que dependem de $x$ nas equações \eqref{eq:modelo-pe-2} e \eqref{eq:modelo-pe-3}. Por fim, eliminamos as variáveis $x$ e $z$, obtendo ao modelo QG apresentado a seguir:
+Na construção do modelo QG, começamos desprezando todos os termos não lineares, assim como aqueles que envolvem as variáveis $x$, incluindo a derivada temporal, na equação \eqref{eq:ch01-modelo-pe-1}. Fazemos o mesmo com os termos não lineares ou topográficos que dependem de $x$ nas equações \eqref{eq:ch01-modelo-pe-2} e \eqref{eq:ch01-modelo-pe-3}. Por fim, eliminamos as variáveis $x$ e $z$, obtendo ao modelo QG apresentado a seguir:
 \begin{equation}
 	(a_i g_0 + 1)\,\frac{dy_i}{d\tau} 
 	= g_0 c (a_k - a_j) y_j y_k 
 	- a_i (a_i g_0 \nu_0 + \kappa_0) y_i 
 	- c h_k y_j + c h_j y_k + F_i,
-	\label{eq:modelo_lorenz_deterministico_qg}
+	\label{eq:ch01-modelo-lorenz-deterministico-qg}
 \end{equation}
 
-\section{Comparação entre os modelos} \label{sec:ch01_propriedades}
+\section{Comparação entre os modelos} \label{sec:ch01-propriedades}
 
 É importante destacar que, para apresentação, optei por realizar a comparação entre os modelos tomando apenas a base como critério. Nas seções finais do artigo \cite{Lorenz1980}, há uma análise detalhada sobre a estrutura do atrator e sua relação com a variedade invariante, incluindo suas propriedades qualitativas.
 
 Primeiro, consideremos um modelo dissipativo forçado genérico:
 \begin{equation}
-	\frac{d w_i}{dt} = \sum_{j,k}^N a_{ijk} w_j w_k - \sum_j^N b_{ij} w_j + c_i. \label{eq:sistema-generico}
+	\frac{d w_i}{dt} = \sum_{j,k}^N a_{ijk} w_j w_k - \sum_j^N b_{ij} w_j + c_i. \label{eq:ch01-sistema-generico}
 \end{equation}
 Nele, definimos
 \begin{equation*}
 	A = \sum_{i,j,k}^N a_{ijk} w_i w_j w_k, 
 	\quad 
 	B = \sum_{i,j}^N b_{ij} w_i w_j > 0,
-    \quad
+	\quad
 	C = \sum_i^N c_i w_i,
 	\quad 
 	R^2 = \sum_i^N w_i^2.
@@ -278,9 +280,9 @@ Nele, definimos
 
 O termo $A$ é um polinômio cúbico que representa as interações não lineares entre as componentes do sistema, $B$ é um polinômio quadrático que representa a dissipação, $C$ é um polinômio linear associado ao forçamento externo e $R$ é a norma euclidiana ao quadrado, representando a energia total. Além disso, definimos $A_1$ e $C_1$ como os máximos de $A$ e $C$, e $B_1$ como o mínimo de $B$.
 
-Os modelos analisados em \cite{Lorenz1980} devem satisfazer algumas condições. A primeira é a condição de dissipação:
+Os modelos analisados em \citet{Lorenz1980} devem satisfazer algumas condições. A primeira é a condição de dissipação:
 \begin{equation}
-	B_1^2 - 4A_1C_1 > 0. \label{eq:condicao-sis}
+	B_1^2 - 4A_1C_1 > 0. \label{eq:ch01-condicao-sis}
 \end{equation}
 A segunda é uma restrição sobre os coeficientes do sistema,
 \begin{equation*}
@@ -288,101 +290,101 @@ A segunda é uma restrição sobre os coeficientes do sistema,
 \end{equation*}
 e, por fim, temos a condição de volume zero: a taxa de variação do volume satisfaz
 \begin{equation}
-	\frac{dV}{dt} = - V \sum_{i=1}^{N} b_{ii}, \label{eq:volume-zero}
+	\frac{dV}{dt} = - V \sum_{i=1}^{N} b_{ii}, \label{eq:ch01-volume-zero}
 \end{equation}
 o que implica que o volume diminui exponencialmente ao longo do tempo devido à dissipação do sistema.
 
-A equação \eqref{eq:volume-zero} mostra que, como $B$ é positivo definido, o volume $V$ tende a zero quando o tempo avança. Isso implica que a dinâmica do sistema se restringe progressivamente a regiões de menor volume no espaço de fase. Qualquer superfície inicial $S$ gera uma sequência $S_1, S_2, \dots$, cada uma com volume menor que a anterior, até que, no limite, a sucessão de superfícies converge para um subconjunto de dimensão inferior, caracterizando um atrator dissipativo.
+A equação \eqref{eq:ch01-volume-zero} mostra que, como $B$ é positivo definido, o volume $V$ tende a zero quando o tempo avança. Isso implica que a dinâmica do sistema se restringe progressivamente a regiões de menor volume no espaço de fase. Qualquer superfície inicial $S$ gera uma sequência $S_1, S_2, \dots$, cada uma com volume menor que a anterior, até que, no limite, a sucessão de superfícies converge para um subconjunto de dimensão inferior, caracterizando um atrator dissipativo.
 
-Relacionando esse modelo genérico aos modelos construídos, destacam-se dois casos. No modelo QG, a energia total é aproximadamente conservada pelos termos quadráticos, e a dissipação introduzida pelos processos de difusão atua de modo análogo ao termo dissipativo de \eqref{eq:sistema-generico}, de forma que o atrator possui volume zero. Já no modelo PE, embora a energia total não seja exatamente conservada, se $F_1^2+F_2^2+F_3^2$ for suficientemente pequeno, a condição \eqref{eq:condicao-sis} é satisfeita. Nesse caso, as trajetórias permanecem limitadas e o atrator também apresenta volume zero.
+Relacionando esse modelo genérico aos modelos construídos, destacam-se dois casos. No modelo QG, a energia total é aproximadamente conservada pelos termos quadráticos, e a dissipação introduzida pelos processos de difusão atua de modo análogo ao termo dissipativo de \eqref{eq:ch01-sistema-generico}, de forma que o atrator possui volume zero. Já no modelo PE, embora a energia total não seja exatamente conservada, se $F_1^2+F_2^2+F_3^2$ for suficientemente pequeno, a condição \eqref{eq:ch01-condicao-sis} é satisfeita. Nesse caso, as trajetórias permanecem limitadas e o atrator também apresenta volume zero.
 
 
-\section{Simulações} \label{sec:ch01_simulacoes_deterministico}
+\section{Simulações} \label{sec:ch01-simulacoes-deterministico}
 Nesta seção, expor os resultados gráficos das simulações do Lorenz 80 determinístico com o objetivo de apresentar ao leitor o comportamento do modelo visualmente, bem como exibir características e propriedades do modelo. 
 
 Para as simulações utilizamos a linguagem \textit{Python}, em particular, bibliotecas \textit{scipy}, \textit{numpy} e \textit{pandas}. O código utilizado está no apêndice \ref{app:apendice-lista-de-programas}.
 
 Apresentaremos dois tipos de simulação: a primeira trata-se da evolução das variáveis $x_1$, $y_1$ e $z_1$ em relação ao tempo e a segunda são as projeções bidimensionais das variáveis $y$: $y_3$ x $y_2$, $y_1$ x $y_3$ e $y_1$ x $y_2$.
 
-\subsection{Parâmetros} \label{subsec:parametros_e_variaveis}
+\subsection{Parâmetros} \label{subsec:parametros-e-variaveis}
 
 Os parâmetros fixos nos dois tipos de simulação: $\kappa = \nu = \frac{1}{48}$, $g_0 = 8 \text{ m} \cdot \text{s}^{-2}$, $a_1 = a_2 = 1$, $a_3 =3$, $h_1 = -1$ e $h_2 = h_3 = f_2 = f_3 = 0$. 
 
 O único parâmetro que não será igual nas duas simulações será o valor de $f_1$. Nas simulações referentes à evolução das variávies de indíce 1, tomamos $f_1 = 0.1$ e nas projeções bidimensionais, tomamos $f_1=0.3027$. A escolha e $f_1$ é uma escolha sensível que muda totalmente o comportamento do sistema, tanto que a escolha de $f_1$ no modelo Lorenz 80 é tema de alguns artigos científicos posteriores a \citet{Lorenz1980}.  
 
-\subsection{Evolução das variávies de indíce 1} \label{subsec:evolucao_variavel_1}
+\subsection{Evolução das variávies de indíce 1} \label{subsec:evolucao-variavel-1}
 Tomamos $f_1 = 0.1$ e as condições iniciais são:
 \begin{equation*}
-    x_i = y_i = z_i = 0.1, \quad \forall i \in \{1,2,3\}    
+	x_i = y_i = z_i = 0.1, \quad \forall i \in \{1,2,3\}    
 \end{equation*}
  
 Para tais valores, obtivemos os seguintes resultados:
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.48\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d01_cond_default.png}
-        \caption{Simulação de 1 dia com $f_1=0.1$}
-        \label{fig:f01d01_cond_default}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.48\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d50_cond_default.png}
-        \caption{Simulação de 50 dias com $f_1=0.1$}
-        \label{fig:f01d50_cond_default}
-    \end{subfigure}
-    \caption{Evolução temporal das variáveis $x_1$, $y_1$ e $z_1$ para $f_1=0.1$. À esquerda, simulação curta (1 dia). À direita, simulação longa (50 dias).}
-    \label{fig:subplots_f01}
+	\centering
+	\begin{subfigure}{0.48\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d01_cond_default.png}
+		\caption{Simulação de 1 dia com $f_1=0.1$}
+		\label{fig:ch01-f01d01-cond-default}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.48\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/f01d50_cond_default.png}
+		\caption{Simulação de 50 dias com $f_1=0.1$}
+		\label{fig:ch01-f01d50-cond-default}
+	\end{subfigure}
+	\caption{Evolução temporal das variáveis $x_1$, $y_1$ e $z_1$ para $f_1=0.1$. À esquerda, simulação curta (1 dia). À direita, simulação longa (50 dias).}
+	\label{fig:ch01-subplots-f01}
 \end{figure}
 
 
-Na figura \ref{fig:f01d01_cond_default}, observa-se claramente a diferença no comportamento da variável lenta $x_1$ em comparação com as variáveis rápidas $y_1$ e $z_1$. A variável $x_1$ apresenta uma amplitude menor em relação a $z_1$ e oscila com um período mais longo do que $y_1$ e $z_1$, evidenciando sua natureza lenta. Já a variável $y_1$ exibe um comportamento intermediário: sua frequência é mais alta que a de $x_1$, mas ainda acompanha, em certa medida, a variabilidade de $z_1$, o que destaca a separação das escalas de tempo no sistema.
+Na figura \ref{fig:ch01-f01d01-cond-default}, observa-se claramente a diferença no comportamento da variável lenta $x_1$ em comparação com as variáveis rápidas $y_1$ e $z_1$. A variável $x_1$ apresenta uma amplitude menor em relação a $z_1$ e oscila com um período mais longo do que $y_1$ e $z_1$, evidenciando sua natureza lenta. Já a variável $y_1$ exibe um comportamento intermediário: sua frequência é mais alta que a de $x_1$, mas ainda acompanha, em certa medida, a variabilidade de $z_1$, o que destaca a separação das escalas de tempo no sistema.
 
-Na figura \ref{fig:f01d50_cond_default}, essa distinção entre variáveis rápidas e lentas se mantém, mas com algumas distinções. A variável $x_1$ permanece praticamente centrada em zero ao longo de toda a série temporal, com sua amplitude diminuindo progressivamente — um indicativo claro do amortecimento das oscilações gravitacionais. Inicialmente, $y_1$ e $z_1$ apresentam amplitudes e períodos distintos; no entanto, com o passar do tempo, a amplitude de $z_1$ também decresce, e seus períodos tornam-se cada vez mais próximos. No final da simulação, as duas variáveis praticamente oscilam em sincronia. Esse comportamento assintótico revela uma transição para um regime dominado por oscilações quase-geostróficas associadas a $y_1$, enquanto os modos gravitacionais representados por $z_1$ se dissipam gradualmente.
+Na figura \ref{fig:ch01-f01d50-cond-default}, essa distinção entre variáveis rápidas e lentas se mantém, mas com algumas distinções. A variável $x_1$ permanece praticamente centrada em zero ao longo de toda a série temporal, com sua amplitude diminuindo progressivamente — um indicativo claro do amortecimento das oscilações gravitacionais. Inicialmente, $y_1$ e $z_1$ apresentam amplitudes e períodos distintos; no entanto, com o passar do tempo, a amplitude de $z_1$ também decresce, e seus períodos tornam-se cada vez mais próximos. No final da simulação, as duas variáveis praticamente oscilam em sincronia. Esse comportamento assintótico revela uma transição para um regime dominado por oscilações quase-geostróficas associadas a $y_1$, enquanto os modos gravitacionais representados por $z_1$ se dissipam gradualmente.
 
 
-\subsection{Projeções bidimensionais} \label{subsec:proj_bidimensional}
+\subsection{Projeções bidimensionais} \label{subsec:ch01-proj-bidimensional}
 Para as projeções bidimensionais, utilizamos $f_1=0.3027$ e as variáveis iniciais com as condições de Hardley expressas matematicamente abaixo:
 
 \begin{equation*}
-    y_1 = \frac{f_1}{a_1 \nu_0 \cdot (1+a_1 g_0)}, \quad
-    x_1 = -\nu_0a_1y_1 \quad \text{e} \quad 
-    z_1 = y_1
+	y_1 = \frac{f_1}{a_1 \nu_0 \cdot (1+a_1 g_0)}, \quad
+	x_1 = -\nu_0a_1y_1 \quad \text{e} \quad 
+	z_1 = y_1
 \end{equation*}
 
 Com pequenas pertubações em $y_2$ e $z_2$:
 \begin{equation*}
-    y_2 = -1\times 10^{-5} \quad \text{ e } \quad z_2 = 1\times 10^{-5}, 
+	y_2 = -1\times 10^{-5} \quad \text{ e } \quad z_2 = 1\times 10^{-5}, 
 \end{equation*}
 
 e as demais variáveis foram fixadas em zero. As simulações foram realizadas ao longo de $400$ dias, sendo descartados os $10\%$ iniciais dos dados, correspondentes à fase transitória em que o sistema ainda está evoluindo até se ajustar ao formato do atrator. Assim, obtiveram-se os seguintes resultados:
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.75\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y3_x_y2.png}
-        \caption{Projeção no plano $(y_3, y_2)$}
-        \label{fig:proj_y3_y2}
-    \end{subfigure}
-
-    \vspace{0.5cm}
-    \begin{subfigure}{0.48\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y1_x_y2.png}
-        \caption{Projeção no plano $(y_1, y_2)$}
-        \label{fig:proj_y1_y2}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.48\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y1_x_y3.png}
-        \caption{Projeção no plano $(y_1, y_3)$}
-        \label{fig:proj_y1_y3}
-    \end{subfigure}
-
-    \caption{Projeções do modelo L80 para $f_1=0.3027$.}
-    \label{fig:proj_subplots}
+	\centering
+	\begin{subfigure}{0.75\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y3_x_y2.png}
+		\caption{Projeção no plano $(y_3, y_2)$}
+		\label{fig:ch01-proj-y3-y2}
+	\end{subfigure}
+	
+	\vspace{0.5cm}
+	\begin{subfigure}{0.48\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y1_x_y2.png}
+		\caption{Projeção no plano $(y_1, y_2)$}
+		\label{fig:ch01-proj-y1-y2}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.48\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/l80_y1_x_y3.png}
+		\caption{Projeção no plano $(y_1, y_3)$}
+		\label{fig:ch01-proj-y1-y3}
+	\end{subfigure}
+	
+	\caption{Projeções do modelo L80 para $f_1=0.3027$.}
+	\label{fig:ch01-proj-subplots}
 \end{figure}
 
 O principal objetivo destas simulações projetadas bidimensionalmente é evidenciar o comportamento de atrator caótico característico do sistema. Note que, através da imagem, pode-se evidenciar a aperiodicidade do sistema, junto com o fato de que não há um ponto de convergência quando $t \to \infty$. Além disso, vale ressaltar também que, dado que o sistema é sensível às condições iniciais, especialmente ao valor de $f_1$, temos que os valores que constituem o atrator nesta condição não se repetem se as condições iniciais forem distintas.  Por fim, ponto importante é que as trajetórias permanecem confinadas em uma região limitada do espaço de fases, não divergindo para o infinito. 
