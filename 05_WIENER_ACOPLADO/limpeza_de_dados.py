@@ -6,7 +6,8 @@ DATA = BASE / "data" / "estocastico.csv"
 
 
 df = pd.read_csv(DATA)
-n_remove = int(len(df) * 0.15)
+n_remove = int(len(df) * 0.10)
 df_filtrado = df.iloc[n_remove:].reset_index(drop=True)
 OUTFILE = BASE / "data" / "estocastico.csv"
 df_filtrado.to_csv(OUTFILE, index=False)
+print(f'Dados foram limpos e salvos em: {OUTFILE}')
