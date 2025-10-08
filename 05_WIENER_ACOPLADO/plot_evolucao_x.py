@@ -12,16 +12,10 @@ OUTDIR.mkdir(parents=True, exist_ok=True)
 COL_DET = "#005AB5"   # azul
 COL_EST = "#DC3220"   # laranja
 
-deterministico_path = DATADIR / 'deterministico.csv'
-estocastico_path = DATADIR / 'estocastico.csv'
+deterministico_path = DATADIR / 'deterministico_100.csv'
+estocastico_path = DATADIR / 'estocastico_100.csv'
 df_det = pd.read_csv(deterministico_path)
 df_est = pd.read_csv(estocastico_path)
-
-def checar_colunas(df, nome):
-    print(f'Colunas em {nome}:', df.columns.tolist())
-
-checar_colunas(df_det, 'deterministico.csv')
-checar_colunas(df_est, 'estocastico.csv')
 
 tempo_col = 't'
 x_col = 'x'
@@ -34,7 +28,7 @@ plt.ylabel('x')
 plt.title('Evolução da variável x (Determinístico)')
 plt.grid(True)
 plt.tight_layout()
-fig_det = OUTDIR / 'evolucao_x_deterministico.png'
+fig_det = OUTDIR / 'evolucao_x_deterministico_100.png'
 plt.savefig(fig_det)
 print(f'Figura determinística salva em: {fig_det}')
 plt.close()
@@ -47,7 +41,7 @@ plt.ylabel('x')
 plt.title('Evolução da variável x (Estocástico)')
 plt.grid(True)
 plt.tight_layout()
-fig_est = OUTDIR / 'evolucao_x_estocastico.png'
+fig_est = OUTDIR / 'evolucao_x_estocastico_100.png'
 plt.savefig(fig_est)
 print(f'Figura estocástica salva em: {fig_est}')
 plt.close()
