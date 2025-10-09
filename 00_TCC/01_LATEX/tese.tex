@@ -218,13 +218,17 @@ João 12:24
 % esta página. A epígrafe, obviamente, é opcional; é possível colocar
 % epígrafes em todos os capítulos. O comando "\chapter*" faz esta seção
 % não ser incluída no sumário.
-\chapter*{Agradecimentos}
-\epigrafe{Do. Or do not. There is no try.}{Mestre Yoda}
+\chapter*{Agradecimentos}  
+\epigrafe{There are two ways to do great mathematics. The first is to be smarter than everybody else. The second way is to be stupider than everybody else -- but persistent.}{Raoul Bott}
 
-Texto texto texto texto texto texto texto texto texto texto texto texto texto
-texto texto texto texto texto texto texto texto texto texto texto texto texto
-texto texto texto texto texto texto texto texto texto texto texto texto texto
-texto texto texto texto. Texto opcional.
+Primeiramente, gostaria de agradecer ao professor Breno Raphaldini Ferreira da Silva pela ótima orientação, cativantes desafios e generosa confiança em todo processo. Além disso, gostaria de agradecer com o apoio do professor Honghu Liu por sua contribuição no desenvolvimento deste trabalho.
+
+Estendo meu agradecimento a todos os professores da graduação que me proporcionaram uma nova forma de entender o mundo, da compreensão de fenômenos físicos à processos abstratos. Foi um privilégio estar presente nas aulas cativantes e ter contato com ideias tão belas e absolutamente maravilhosas.
+
+Quero também agradecer à minha mãe e meu pai por todo apoio durante este período tão importante, às amizades que o BMAC ofereceu pelo caminho e aos amigos sempre presentes.
+
+Por fim, é necessário voltar ao começo, professor Mauricio Osca Souza Pereira, ou ``Phalkon'', obrigado pelas histórias do IME foram elas que me trouxeram até aqui. 
+
 
 \input{conteudo/resumoabstract}
 
@@ -285,18 +289,6 @@ texto texto texto texto. Texto opcional.
 % executar texindy (ou makeindex) mais de uma vez, então colocar aqui é melhor.
 \index{Inglês|see{Língua estrangeira}}
 \index{Figuras|see{Floats}}
-\index{Tabelas|see{Floats}}
-\index{Código-fonte|see{Floats}}
-\index{Subcaptions|see{Subfiguras}}
-\index{Sublegendas|see{Subfiguras}}
-\index{Equações|see{Modo matemático}}
-\index{Fórmulas|see{Modo matemático}}
-\index{Rodapé, notas|see{Notas de rodapé}}
-\index{Captions|see{Legendas}}
-\index{Versão original|see{Tese/Dissertação, versões}}
-\index{Versão corrigida|see{Tese/Dissertação, versões}}
-\index{Palavras estrangeiras|see{Língua estrangeira}}
-\index{Floats!Algoritmo|see{Floats, ordem}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CAPÍTULOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -313,11 +305,11 @@ texto texto texto texto. Texto opcional.
 
 % A introdução não tem número de capítulo, então os cabeçalhos também não
 \pagestyle{unnumberedchapter}
-\input{conteudo/00_exemplo-introducao}
+\input{00_TCC/01_LATEX/conteudo/capitulos/00_exemplo_introducao}
 \pagestyle{mainmatter}
-\input{conteudo/01_lorenz_deterministico}
-\input{conteudo/02_introducao_sde}
-\input{conteudo/03_mori_zwanzig}
+\input{00_TCC/01_LATEX/conteudo/capitulos/01_lorenz_deterministico}
+\input{00_TCC/01_LATEX/conteudo/capitulos/02_introducao_sde}
+\input{00_TCC/01_LATEX/conteudo/capitulos/03_aproximacao_sistemas_deterministicos}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% APÊNDICES E ANEXOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -354,8 +346,10 @@ texto texto texto texto. Texto opcional.
 % só há apêndices, sem anexos, provavelmente não é necessário.
 %\addappheadtotoc
 
-\input{00_TCC/01_LATEX/conteudo/apendice_lista_de_programas}
-\input{00_TCC/01_LATEX/conteudo/apendice_consideracoes_matematicas}
+\input{00_TCC/01_LATEX/conteudo/apendices/01_apendice_consideracoes_matematicas}
+\input{00_TCC/01_LATEX/conteudo/apendices/02_apendice_lista_de_programas}
+\input{00_TCC/01_LATEX/conteudo/apendices/03_apendice_mori_zwanzig}
+
 \par
 %%%% Anexos %%%%
 
