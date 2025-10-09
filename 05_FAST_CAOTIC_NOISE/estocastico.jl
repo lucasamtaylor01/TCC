@@ -3,7 +3,7 @@ using DifferentialEquations, Plots, DataFrames, CSV, Random
 
 sigma = 7.879942813768798
 x0 = 0.1
-tspan = (0.0, 50.0)
+tspan = (0.0, 25.0)
 
 f1(X, p, t) = X - X^3
 f2(X, p, t) = p
