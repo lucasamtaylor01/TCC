@@ -1,5 +1,3 @@
-# Brownian motion
-
 using DifferentialEquations, DataFrames, CSV
 import StochasticDiffEq as SDE
 
