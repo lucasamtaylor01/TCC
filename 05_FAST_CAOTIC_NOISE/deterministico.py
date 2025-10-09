@@ -14,7 +14,7 @@ def rhs(t, u):
     dy3 = (1 / eps**2) * (y1*y2 - (8/3)*y3)
     return [dx, dy1, dy2, dy3]
 
-t0, tf = 0.0, 10.0
+t0, tf = 0.0, 25.0
 x0 = 0.1
 y0_vals = [1e-2, 1e-2, 1e-2]
 y0 = [x0] + y0_vals
@@ -30,5 +30,5 @@ DATADIR = BASE / "data"
 DATADIR.mkdir(parents=True, exist_ok=True)
 
 df = pd.DataFrame({"t": sol.t, "y2": y2_vals, "x": x_vals})
-df.to_csv(DATADIR / "deterministico_10.csv", index=False)
-print(f"Dados salvos em: {DATADIR / 'deterministico_10.csv'}")
+df.to_csv(DATADIR / "deterministico.csv", index=False)
+print(f"Dados salvos em: {DATADIR / 'deterministico.csv'}")

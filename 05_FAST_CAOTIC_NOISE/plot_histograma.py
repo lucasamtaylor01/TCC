@@ -24,8 +24,8 @@ plt.rcParams.update({
 })
 
 # === DADOS ===
-df_deterministico = pd.read_csv(DATADIR / "deterministico_100.csv")
-df_estocastico   = pd.read_csv(DATADIR / "estocastico_100.csv")
+df_deterministico = pd.read_csv(DATADIR / "deterministico_limpo.csv")
+df_estocastico   = pd.read_csv(DATADIR / "estocastico_limpo.csv")
 
 x_deterministico = df_deterministico.iloc[:, 2]
 x_estocastico    = df_estocastico.iloc[:, 1]
@@ -39,7 +39,7 @@ plt.ylabel("Densidade")
 plt.grid(True, alpha=0.75)
 plt.legend(handles=[Patch(facecolor=COL_DET, edgecolor="black", label="Determinístico")])
 plt.tight_layout()
-plt.savefig(OUTDIR / "hist_deterministico_100.png")
+plt.savefig(OUTDIR / "hist_deterministico.png")
 plt.close()
 
 # Histograma estocástico
@@ -52,7 +52,7 @@ plt.ylabel("Densidade")
 plt.grid(True, alpha=0.75)
 plt.legend(handles=[Patch(facecolor=COL_EST, edgecolor="black", label="Estocástico")])
 plt.tight_layout()
-plt.savefig(OUTDIR / "hist_estocastico_100.png")
+plt.savefig(OUTDIR / "hist_estocastico.png")
 plt.close()
 
 # Comparação
@@ -67,5 +67,5 @@ plt.ylabel("Densidade")
 plt.grid(True, alpha=0.75)
 plt.legend(frameon=True)
 plt.tight_layout()
-plt.savefig(OUTDIR / "hist_comparacao_densidade_100.png")
+plt.savefig(OUTDIR / "hist_comparacao_densidade.png")
 plt.close()

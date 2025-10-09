@@ -8,7 +8,7 @@ def sigma_from_y2(y2, dt, lam=1.0):
     nfft = n
     fy = np.fft.rfft(y, n=nfft)
     ac = np.fft.irfft(fy * np.conj(fy), n=nfft)[:n] / np.arange(n, 0, -1)
-    sigma2 = 2 * lam**2 * dt * np.sum(ac)
+    sigma2 = abs(2 * lam**2 * dt * np.sum(ac))
     return np.sqrt(max(sigma2, 0.0))
 
 
