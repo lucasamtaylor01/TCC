@@ -124,7 +124,7 @@
 
 %%%%%%%%%%%%%%%%%%%% CONTEÚDO
 
-\section{Código do modelo Lorenz 80 determinístico}
+\section{Lorenz 80 determinístico}\label{app_sec:lorenz80-det}
 
 
 \begin{pycode}[caption={Simulação do modelo Lorenz 80 determinístico}, label={prog:lorenz80}]
@@ -243,7 +243,7 @@ df.to_csv(out_file, index=False)
 print(f"CSV salvo em: {out_file}")
 \end{pycode}
 
-\section{Simulação de mercado de ações}
+\section{Simulação de mercado de ações}\label{app_sec:mercado-de-acoes}
 \begin{juliacode}[caption={Simulação da evolução de preço de mercado de ações}, label={prog:mercado-de-acoes}]
 using DifferentialEquations, DataFrames, CSV
 import StochasticDiffEq as SDE
@@ -263,7 +263,7 @@ cd(@__DIR__)
 CSV.write("data/stock_market.csv", df)
 println("Dados salvos em: data/stock_market.csv")
 \end{juliacode}
-\section{Ruído caótico rápido}
+\section{Ruído caótico rápido}\label{app_sec:ruido-caotico-rapido}
 \begin{pycode}[caption={Simulação do modelo determinístico}, label={prog:ruido_caotico_det}]
 import numpy as np
 import pandas as pd

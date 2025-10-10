@@ -10,7 +10,7 @@ Na seção \ref{sec:ch01-agua-rasa}, introduzimos o modelo de água rasa, que se
 Nesta seção, reunimos um breve glossário com os principais conceitos de geofísica que servem de base para a compreensão do modelo de Lorenz 80. Todas as definições expostas abaixo estão detalhadas em \citet{Vallis2017}.
 \begin{itemize}
 	\item \textbf{Convecção.} Convecção é um processo de transferência de calor que ocorre em
-	      fluidos, como líquidos e gases. Esse fenômeno envolve o movimento do próprio
+	      fluidos. Esse fenômeno envolve o movimento do próprio
 	      fluido e a transferência energia térmica de uma região para outra.
 	\item \textbf{Parâmetro de Coriolis.} A \textit{força de Coriolis} é uma quasi-força (ou pseudo-força) que surge devido à rotação da Terra. Quando analisamos o movimento de um corpo em um referencial rotativo, esse corpo parece sofrer a ação de uma força que desvia sua trajetória. Esse desvio é quantificado pelo parâmetro de Coriolis, definido pela expressão:
 	      \begin{equation*}
@@ -248,7 +248,7 @@ Substituindo as equações de \eqref{eq:ch01-adimensionalizacao} em \eqref{eq:ch
 	+ c\,y_i(z_k - h_k) - c(z_i - h_i)y_k + g_0a_ix_i - \kappa_0a_iz_i + F_i. \label{eq:ch01-modelo-pe-3}
 \end{align}
 
-As variáveis $x_i$ representam os modos divergentes do escoamento, associados às ondas de gravidade; as variáveis $y_i$ correspondem aos modos rotacionais (vorticidade), ligados às oscilações quasi-geostróficas; e as variáveis $z_i$ funcionam como variáveis auxiliares acopladas ao sistema. Na classificação em relação à variáveis rápidas e lentas, temos que: $x_i$ corresponde as variáveis lentas, enquanto $y_i$ e $z_i$ correspondem as variáveis rápidas.
+As variáveis $x_i$ representam os modos divergentes do escoamento, associados às ondas de gravidade; as variáveis $y_i$ correspondem aos modos rotacionais (vorticidade), ligados às oscilações quasi-geostróficas; e as variáveis $z_i$ funcionam como variáveis auxiliares acopladas ao sistema. Na classificação em relação à variáveis rápidas e lentas, temos que: $x_i$ corresponde as variáveis rápidas, enquanto $y_i$ e $z_i$ correspondem as variáveis lentas.
 
 Na construção do modelo QG, começamos desprezando todos os termos não lineares, assim como aqueles que envolvem as variáveis $x$, incluindo a derivada temporal, na equação \eqref{eq:ch01-modelo-pe-1}. Fazemos o mesmo com os termos não lineares ou topográficos que dependem de $x$ nas equações \eqref{eq:ch01-modelo-pe-2} e \eqref{eq:ch01-modelo-pe-3}. Por fim, eliminamos as variáveis $x$ e $z$, obtendo ao modelo QG apresentado a seguir:
 \begin{equation}
@@ -302,7 +302,7 @@ Relacionando esse modelo genérico aos modelos construídos, destacam-se dois ca
 \section{Simulações} \label{sec:ch01-simulacoes-deterministico}
 Nesta seção, expor os resultados gráficos das simulações do Lorenz 80 determinístico com o objetivo de apresentar ao leitor o comportamento do modelo visualmente, bem como exibir características e propriedades do modelo. 
 
-Para as simulações utilizamos a linguagem \textit{Python}, em particular, bibliotecas \textit{scipy}, \textit{numpy} e \textit{pandas}. O código utilizado está no apêndice \ref{app:apendice-lista-de-programas}.
+Para as simulações utilizamos a linguagem \textit{Python}, em particular, bibliotecas \textit{scipy}, \textit{numpy} e \textit{pandas}. O código utilizado está no apêndice \ref{app_sec:lorenz80-det}.
 
 Apresentaremos dois tipos de simulação: a primeira trata-se da evolução das variáveis $x_1$, $y_1$ e $z_1$ em relação ao tempo e a segunda são as projeções bidimensionais das variáveis $y$: $y_3$ x $y_2$, $y_1$ x $y_3$ e $y_1$ x $y_2$.
 
@@ -334,14 +334,17 @@ Para tais valores, obtivemos os seguintes resultados:
 		\caption{Simulação de 50 dias com $f_1=0.1$}
 		\label{fig:ch01-f01d50-cond-default}
 	\end{subfigure}
-	\caption{Evolução temporal das variáveis $x_1$, $y_1$ e $z_1$ para $f_1=0.1$. À esquerda, simulação curta (1 dia). À direita, simulação longa (50 dias).}
+	\caption{Evolução temporal das variáveis $x_1$, $y_1$ e $z_1$ para $f_1=0.1$. À esquerda, de 1 dia e à direita de 50 dias.}
 	\label{fig:ch01-subplots-f01}
 \end{figure}
 
+Inicialmente, no primeiro dia de simulação (figura \ref{fig:ch01-f01d01-cond-default}), observa-se que a variável $x_1$ apresenta amplitude superior à de $y_1$, mas inferior à de $z_1$. Além disso, seu período é ligeiramente menor que o das demais variáveis. Esse comportamento reflete a natureza de $x_1$ como uma variável rápida, associada às oscilações do tipo onda gravitacional.
 
-Na figura \ref{fig:ch01-f01d01-cond-default}, observa-se claramente a diferença no comportamento da variável lenta $x_1$ em comparação com as variáveis rápidas $y_1$ e $z_1$. A variável $x_1$ apresenta uma amplitude menor em relação a $z_1$ e oscila com um período mais longo do que $y_1$ e $z_1$, evidenciando sua natureza lenta. Já a variável $y_1$ exibe um comportamento intermediário: sua frequência é mais alta que a de $x_1$, mas ainda acompanha, em certa medida, a variabilidade de $z_1$, o que destaca a separação das escalas de tempo no sistema.
+Na figura \ref{fig:ch01-f01d50-cond-default}, após 50 dias de simulação, nota-se uma redução significativa da amplitude de $x_1$, acompanhada por oscilações mais rápidas e de menor intensidade. Isso é consistente com a dissipação progressiva das ondas gravitacionais, um efeito esperado devido à presença de termos dissipativos no modelo.
 
-Na figura \ref{fig:ch01-f01d50-cond-default}, essa distinção entre variáveis rápidas e lentas se mantém, mas com algumas distinções. A variável $x_1$ permanece praticamente centrada em zero ao longo de toda a série temporal, com sua amplitude diminuindo progressivamente — um indicativo claro do amortecimento das oscilações gravitacionais. Inicialmente, $y_1$ e $z_1$ apresentam amplitudes e períodos distintos; no entanto, com o passar do tempo, a amplitude de $z_1$ também decresce, e seus períodos tornam-se cada vez mais próximos. No final da simulação, as duas variáveis praticamente oscilam em sincronia. Esse comportamento assintótico revela uma transição para um regime dominado por oscilações quase-geostróficas associadas a $y_1$, enquanto os modos gravitacionais representados por $z_1$ se dissipam gradualmente.
+Com relação às variáveis lentas $y_1$ e $z_1$, percebe-se na figura \ref{fig:ch01-f01d01-cond-default} que $z_1$ possui a maior amplitude, enquanto $y_1$ apresenta a menor. Ambas têm períodos semelhantes. Já na figura \ref{fig:ch01-f01d50-cond-default}, observa-se que $y_1$ e $z_1$ passam a exibir comportamento oscilatório sincronizado, com amplitudes mais próximas. 
+
+Esse acoplamento dinâmico evidencia a convergência das trajetórias do sistema para o atrator, que no contexto do modelo. Essa convergência e sincronização indicam que, ao longo do tempo, a solução do sistema se aproxima de um regime dominado por oscilações de baixa frequência e mais regulares enquanto as componentes associadas a modos rápidos (como $x_1$) são dissipadas \citep{Lorenz1980}.
 
 
 \subsection{Projeções bidimensionais} \label{subsec:ch01-proj-bidimensional}
