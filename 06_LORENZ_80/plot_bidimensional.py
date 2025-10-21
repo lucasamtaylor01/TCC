@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
-DATA = BASE / "data" / "f03027d400_cond_hardley_limpo.csv"
+DATA = BASE / "data" / "qg_model.csv"
 OUTDIR = BASE / "src"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
@@ -18,5 +18,5 @@ plt.title("Projeção bidimensional $y_3$ x $y_2$", fontsize=18)
 plt.xlabel("y3")
 plt.ylabel("y2")
 plt.grid(True)
-plt.savefig(OUTDIR / "l80_y3_x_y2.png")
+plt.savefig(OUTDIR / "l80qg_y3_x_y2.png")
 plt.close()
