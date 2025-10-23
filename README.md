@@ -16,5 +16,9 @@ Este repositório tem o objetivo de organizar todos os arquivos e materiais rela
 ## 🤝 Contribuição
 As contribuições são bem-vindas! Sinta-se à vontade para abrir um problema ou enviar uma solicitação pull através do GitHub se você tiver sugestões, melhorias ou feedback.
 
+## ⚠️ Aviso
+Todos os .csv estão sendo ignorados pelo .gitignore, dado que alguns excedem a capacidade do github. Caso queira verificá-los, apeanas rode os códigos.
+
 ## 📄 Licença
 Este projeto está atualmente licenciado sob a [MIT License](LICENSE), mas a licença pode mudar no futuro.
+
