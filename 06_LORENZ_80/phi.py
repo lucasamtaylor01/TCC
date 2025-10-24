@@ -1,5 +1,7 @@
 import numpy as np
-from parameters import a, b, c, h, f, nu_0, g_0, y
+from parameters import a, b, c, h, f, nu_0, g_0
+from scipy.linalg import LinAlgError
+from condicoes_iniciais import y0
 
 def cyc(i):
     return i, (i + 1) % 3, (i + 2) % 3
@@ -70,10 +72,10 @@ def M_matrix_from_z(y, z):
 
 
 def Phi(y):
-    z = np.array([G(y, i) for i in range(3)], dtype=float)
-    dvec = np.array([d(i, y, z) for i in range(3)], dtype=float)
+    z = np.array([G(y0, i) for i in range(3)], dtype=float)
+    dvec = np.array([d(i, y0, z) for i in range(3)], dtype=float)
 
-    M = M_matrix_from_z(y, z)
+    M = M_matrix_from_z(y0, z)
     try:
         M_inv = np.linalg.inv(M)
         phi_vec = M_inv @ dvec

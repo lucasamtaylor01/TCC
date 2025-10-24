@@ -63,7 +63,7 @@ def pe_simulate(x0, y0, z0, days):
     sol = solve_ivp(
         pe_model, t_span, initial_u, method="RK45", atol=1e-8, rtol=1e-6
     )
-    print("Integração concluída.")
+    print("Aguarde...")
 
     t = sol.t / TIMESCALE_FACTOR
     x, y, z = sol.y[0:3].T, sol.y[3:6].T, sol.y[6:9].T
@@ -121,7 +121,7 @@ def simulate_model(model_func, y0, days, model_name, dt=0.001, model_args=()):
         model_func, t_span, y0, t_eval=t_eval, args=model_args,
         method="RK45", atol=1e-8, rtol=1e-6
     )
-    print("Integração concluída.")
+    print("Aguarde...")
 
     t = sol.t / TIMESCALE_FACTOR
     y = sol.y
