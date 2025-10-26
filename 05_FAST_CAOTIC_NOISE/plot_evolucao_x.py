@@ -12,9 +12,9 @@ OUTDIR.mkdir(parents=True, exist_ok=True)
 COL_DET = "#005AB5"   # azul
 COL_EST = "#DC3220"   # laranja
 
-deterministico_path = DATADIR / 'deterministico_limpo.csv'
-estocastico_path = DATADIR / 'estocastico_limpo.csv'
-df_det = pd.read_csv(deterministico_path)
+deterministico_path = DATADIR / 'deterministico01.csv'
+estocastico_path = DATADIR / 'estocastico01_limpo.csv'
+df_det = pd.read_csv(deterministico_path, comment="#")
 df_est = pd.read_csv(estocastico_path)
 
 tempo_col = 't'

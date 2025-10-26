@@ -24,8 +24,8 @@ plt.rcParams.update({
 })
 
 # === DADOS ===
-df_deterministico = pd.read_csv(DATADIR / "deterministico_limpo.csv")
-df_estocastico   = pd.read_csv(DATADIR / "estocastico_limpo.csv")
+df_deterministico = pd.read_csv(DATADIR / "deterministico001.csv", comment="#")
+df_estocastico   = pd.read_csv(DATADIR / "estocastico001_limpo.csv")
 
 x_deterministico = df_deterministico.iloc[:, 2]
 x_estocastico    = df_estocastico.iloc[:, 1]
