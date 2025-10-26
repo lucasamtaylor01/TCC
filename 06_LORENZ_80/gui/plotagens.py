@@ -18,7 +18,6 @@ def get_model_prefix(model_type):
         raise ValueError("model_type deve ser 1, 2 ou 3")
 
 
-
 def plotagem_y2y3(df, model_type):
 
     y2, y3 = df["y2"], df["y3"]
@@ -27,7 +26,7 @@ def plotagem_y2y3(df, model_type):
 
     plt.figure(figsize=(12, 5))
     plt.plot(y3, y2, linewidth=1.5, color="#dc3220")
-    plt.title("Projeção bidimensional $y_3$ x $y_2$", fontsize=18)
+    plt.title("Projeção bidimensional $y_3$ x $y_2$")
     plt.xlabel("y3")
     plt.ylabel("y2")
     plt.grid(True)
@@ -45,7 +44,7 @@ def plotagem_y1y3(df, model_type):
 
     plt.figure(figsize=(12, 5))
     plt.plot(y1, y3, linewidth=1.5, color="#dc3220")
-    plt.title("Projeção bidimensional $y_1$ x $y_3$", fontsize=18)
+    plt.title("Projeção bidimensional $y_1$ x $y_3$")
     plt.xlabel("y1")
     plt.ylabel("y3")
     plt.grid(True)
@@ -63,7 +62,7 @@ def plotagem_y1y2(df, model_type):
 
     plt.figure(figsize=(12, 5))
     plt.plot(y1, y2, linewidth=1.5, color="#dc3220")
-    plt.title("Projeção bidimensional $y_1$ x $y_2$", fontsize=18)
+    plt.title("Projeção bidimensional $y_1$ x $y_2$")
     plt.xlabel("y1")
     plt.ylabel("y2")
     plt.grid(True)
@@ -80,16 +79,15 @@ def plotagem_xyz_temporal(df, model_type):
     filename = f"{prefix}time_x1y1z1.png"
 
 
-    plt.figure(figsize=(12, 8), dpi=300)
+    plt.figure(figsize=(12, 8))
     plt.plot(t, x1, label="$x_1$", linewidth=2, color="#0b8126", linestyle="-")   # contínua
     plt.plot(t, y1, label="$y_1$", linewidth=2, color="#0910aa", linestyle="--")  # tracejada
     plt.plot(t, z1, label="$z_1$", linewidth=2, color="#dc3220", linestyle=":")   # pontilhada
 
-    plt.xlabel("time")
-    plt.ylim(-0.4, 0.6)
-    plt.ylabel("Valores de $x_1$, $y_1$ e $z_1$", fontsize=18)
-    plt.title("Evolução temporal de $x_1$, $y_1$ e $z_1$", fontsize=18)
-    plt.legend(fontsize=14)
+    plt.xlabel("Tempo")
+    plt.ylabel("Valores de $x_1$, $y_1$ e $z_1$")
+    plt.title("Evolução temporal de $x_1$, $y_1$ e $z_1$")
+    plt.legend()
 
     plt.grid(True)
     plt.savefig(OUTDIR / filename)
@@ -117,7 +115,7 @@ def plotagem_temporal(df, model_type, yi):
     
     plt.figure(figsize=(12, 5))
     plt.plot(t, y, linewidth=1.5, color="#dc3220")
-    plt.title(f"Evolução temporal de ${ylabel}$", fontsize=18)
+    plt.title(f"Evolução temporal de ${ylabel}$")
     plt.xlabel("time")
     plt.ylabel(ylabel)
     plt.grid(True)

@@ -4,17 +4,13 @@ import pandas as pd
 from phi import Phi
 from parameters import a, b, c, h, f, nu_0, kappa_0, g_0
 
-# Fator de conversão de dias para a unidade de tempo do modelo
 TIMESCALE_FACTOR = 8.0
 
 def cyc(i):
-    """Retorna os índices para operações cíclicas: i, (i+1)%3, (i+2)%3."""
     return i, (i + 1) % 3, (i + 2) % 3
 
 def pe_model(t, u):
-    """
-    Define o sistema de EDOs para o modelo PE.
-    """
+
     x = u[0:3]
     y = u[3:6]
     z = u[6:9]
@@ -52,9 +48,7 @@ def pe_model(t, u):
     return np.concatenate([dx, dy, dz])
 
 def pe_simulate(x0, y0, z0, days):
-    """
-    Executa a simulação do modelo PE.
-    """
+
     initial_u = np.concatenate([x0, y0, z0])
     t_final = days * TIMESCALE_FACTOR
     t_span = (0, t_final)
@@ -77,9 +71,6 @@ def pe_simulate(x0, y0, z0, days):
     return df
 
 def be_model(tau, y, phi_vec):
-    """
-    Define o sistema de EDOs para o modelo BE.
-    """
     dydt = np.zeros(3, dtype=float)
     for i in range(3):
         i_, j, k = cyc(i)
@@ -93,9 +84,6 @@ def be_model(tau, y, phi_vec):
     return dydt
 
 def qg_model(t, y):
-    """
-    Define o sistema de EDOs para o modelo QG.
-    """
     dy = np.zeros(3, dtype=float)
     for i in range(3):
         _, j, k = cyc(i)
@@ -109,9 +97,6 @@ def qg_model(t, y):
     return dy
 
 def simulate_model(model_func, y0, days, model_name, dt=0.001, model_args=()):
-    """
-    Função genérica para simular modelos (BE e QG).
-    """
     t_final = days * TIMESCALE_FACTOR
     t_span = (0, t_final)
     t_eval = np.arange(0, t_final + dt, dt)
@@ -133,14 +118,8 @@ def simulate_model(model_func, y0, days, model_name, dt=0.001, model_args=()):
     return df
 
 def be_simulate(y0, days):
-    """
-    Executa a simulação do modelo BE.
-    """
     phi_vec = Phi(y0)
     return simulate_model(be_model, y0, days, "BE", model_args=(phi_vec,))
 
 def qg_simulate(y0, days):
-    """
-    Executa a simulação do modelo QG.
-    """
     return simulate_model(qg_model, y0, days, "QG")

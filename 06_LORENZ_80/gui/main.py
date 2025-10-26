@@ -46,7 +46,7 @@ class Lorenz80GUI:
     def open_initial_conditions_window(self):
         ic_window = tk.Toplevel(self.root)
         ic_window.title("Definir Condições Iniciais")
-        ic_window.geometry("400x550")
+        ic_window.geometry("500x500")
         ic_window.resizable(False, False)
         
         ic_window.transient(self.root)
@@ -149,8 +149,7 @@ class Lorenz80GUI:
         qg_radio.grid(row=2, column=0, pady=5)
         
         # Botão para executar simulação
-        simulate_btn = ttk.Button(main_frame, text="Executar Simulação", 
-                                 command=self.execute_simulation)
+        simulate_btn = ttk.Button(main_frame, text="Executar Simulação", command=self.execute_simulation)
         simulate_btn.grid(row=2, column=0, columnspan=2, pady=15)
         
         # Frame para botões de funcionalidades
