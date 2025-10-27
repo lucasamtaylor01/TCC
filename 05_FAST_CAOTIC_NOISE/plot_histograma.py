@@ -24,8 +24,8 @@ plt.rcParams.update({
 })
 
 # === DADOS ===
-df_deterministico = pd.read_csv(DATADIR / "deterministico001.csv", comment="#")
-df_estocastico   = pd.read_csv(DATADIR / "estocastico001_limpo.csv")
+df_deterministico = pd.read_csv(DATADIR / "deterministico02.csv", comment="#")
+df_estocastico   = pd.read_csv(DATADIR / "estocastico02.csv")
 
 x_deterministico = df_deterministico.iloc[:, 2]
 x_estocastico    = df_estocastico.iloc[:, 1]
@@ -44,8 +44,7 @@ plt.close()
 
 # Histograma estocástico
 plt.figure(figsize=(12, 9))
-plt.hist(x_estocastico, bins=50, density=True,
-         color=COL_EST, edgecolor="black", alpha=0.85)
+plt.hist(x_estocastico, bins=50, density=True, color=COL_EST, edgecolor="black", alpha=0.85)
 plt.title("Histograma Estocástico")
 plt.xlabel("x")
 plt.ylabel("Densidade")

@@ -4,7 +4,7 @@ from scipy.integrate import solve_ivp
 from pathlib import Path
 import time
 
-eps = 1e-3
+eps = 0.2
 lam = 1.0
 
 progress_tracker = {'last_printed_percent': -1}
@@ -50,7 +50,7 @@ y2_vals = sol.y[2]
 BASE = Path(__file__).resolve().parent if "__file__" in globals() else Path(".")
 DATADIR = BASE / "data"
 DATADIR.mkdir(parents=True, exist_ok=True)
-out_file = DATADIR / f"deterministico0001.csv"
+out_file = DATADIR / f"deterministico02.csv"
 
 df = pd.DataFrame({"t": sol.t, "y2": y2_vals, "x": x_vals})
 with open(out_file, 'w') as f:
