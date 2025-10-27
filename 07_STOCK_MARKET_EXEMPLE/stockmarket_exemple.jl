@@ -13,6 +13,7 @@ sol = SDE.solve(prob, EM(), dt = dt);
 
 # Salvar dados em CSV
 df = DataFrame(t = sol.t, x = sol.u)
-cd(@__DIR__)  
-CSV.write("data/stock_market.csv", df)
-println("Dados salvos em: data/stock_market.csv")
+
+outfile = joinpath(@__DIR__, "stockmarket.csv")
+CSV.write(outfile, df)
+println("Dados salvos em: $outfile")

@@ -1,0 +1,58 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from pathlib import Path
+
+# Criar diretório de saída
+OUTDIR = Path("src")
+OUTDIR.mkdir(parents=True, exist_ok=True)
+
+
+# Carregar os dados do arquivo CSV
+df = pd.read_csv("slo.csv")
+
+# --- Gráficos 2D ---
+# Gráfico 1: Parte Imaginária vs. Parte Real
+plt.figure(figsize=(8, 6))
+plt.plot(df['real'], df['imag'])
+plt.title('Parte Imaginária vs. Parte Real')
+plt.xlabel('Parte Real')
+plt.ylabel('Parte Imaginária')
+plt.grid(True)
+plt.savefig(OUTDIR / "plot_real_vs_imag.png")
+plt.close()
+
+# Gráfico 2: Evolução Temporal da Parte Real
+plt.figure(figsize=(8, 6))
+plt.plot(df['t'], df['real'])
+plt.title('Evolução Temporal da Parte Real')
+plt.xlabel('Tempo')
+plt.ylabel('Parte Real')
+plt.grid(True)
+plt.savefig(OUTDIR / "plot_evolucao_real.png")
+plt.close()
+
+# Gráfico 3: Evolução Temporal da Parte Imaginária
+plt.figure(figsize=(8, 6))
+plt.plot(df['t'], df['imag'])
+plt.title('Evolução Temporal da Parte Imaginária')
+plt.xlabel('Tempo')
+plt.ylabel('Parte Imaginária')
+plt.grid(True)
+plt.savefig(OUTDIR / "plot_evolucao_imag.png")
+plt.close()
+
+
+"""
+fig_3d = plt.figure(figsize=(10, 8))
+ax_3d = fig_3d.add_subplot(111, projection='3d')
+
+ax_3d.plot(df['t'], df['real'], df['imag'])
+ax_3d.set_xlabel('Tempo')
+ax_3d.set_ylabel('Parte Real')
+ax_3d.set_zlabel('Parte Imaginária')
+ax_3d.set_title('Evolução 3D da Solução')
+fig_3d.savefig(OUTDIR / "plot_3d.png")
+
+plt.show()
+"""
