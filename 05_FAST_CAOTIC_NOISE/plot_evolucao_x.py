@@ -5,7 +5,7 @@ from pathlib import Path
 # Configurações de diretórios
 BASE = Path(__file__).resolve().parent
 DATADIR = BASE / "data"
-OUTDIR = BASE / "src"
+OUTDIR = BASE / "img"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 
