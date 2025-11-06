@@ -1,8 +1,8 @@
 from pathlib import Path
-import simulacoes as sim
+import simulations as sim
 import pandas as pd
-import condicoes_iniciais as ci
-import plotagens as plt
+import initial_conditions as ic
+import plot as plt
 
 BASE = Path(__file__).resolve().parent
 DATADIR = BASE / "data"
@@ -19,17 +19,17 @@ print("3: QG Model")
 model_type = int(input("\nOpção selecionada: "))
 
 if model_type == 1:
-    df = sim.pe_simulate(ci.x0, ci.y0, ci.z0, ci.days)
+    df = sim.pe_simulate(ic.x0, ic.y0, ic.z0, ic.days)
     out_file = DATADIR / "pe_model.csv"
     df.to_csv(out_file, index=False)
     print("Processo concluído. Arquivo salvo em:", out_file)
 elif model_type == 2:
-    df = sim.be_simulate(ci.y0, ci.days)
+    df = sim.be_simulate(ic.y0, ic.days)
     out_file = DATADIR / "be_model.csv"
     df.to_csv(out_file, index=False)
     print("\nProcesso concluído. Arquivo salvo em:", out_file)    
 elif model_type == 3:
-    df = sim.qg_simulate(ci.y0, ci.days)
+    df = sim.qg_simulate(ic.y0, ic.days)
     out_file = DATADIR / "qg_model.csv"
     df.to_csv(out_file, index=False)
     print("\nProcesso concluído. Arquivo salvo em:", out_file)
@@ -37,13 +37,14 @@ else:
     print("Opção inválida")
     exit()
 
-limpeza_de_dados = input("\nDeseja eliminar 15% dos dados? (s/n): ").strip().lower()
+limpeza_de_dados = input("\nDeseja eliminar 25% dos dados? (s/n): ").strip().lower()
 if limpeza_de_dados == 's':
     print("Limpando dados...")
     df = pd.read_csv(out_file)
-    n_remove = int(len(df) * 0.15)
-    df_filtrado = df.iloc[n_remove:].reset_index(drop=True)
+    n_remove = int(len(df) * 0.25)
+    df_filtrado = df.iloc[n_remove:].copy()
     df_filtrado.to_csv(out_file, index=False)
+    df = df_filtrado
     print(f"Limpeza concluída. Foram removidos ({n_remove/len(df)*100:.1f}% dos dados).")
 elif limpeza_de_dados == 'n':
     print("Dados mantidos sem alteração.")
@@ -65,23 +66,23 @@ while True:
 
         opcao_grafica = int(input("\nEscolha a opção gráfica: "))
         if opcao_grafica == 1:
-            print("Gráfico salvo em: src/", plt.plotagem_y1y2(df, model_type))
+            print("Gráfico salvo em: img/", plt.plot_y1y2(df, model_type))
         elif opcao_grafica == 2:
-            print("Gráfico salvo em: src/", plt.plotagem_y1y3(df, model_type))
+            print("Gráfico salvo em: img/", plt.plot_y1y3(df, model_type))
         elif opcao_grafica == 3:
-            print("Gráfico salvo em: src/", plt.plotagem_y2y3(df, model_type))
+            print("Gráfico salvo em: img/", plt.plot_y2y3(df, model_type))
         elif opcao_grafica == 4:
-            print("Gráfico salvo em: src/", plt.plotagem_temporal(df, model_type, "y1"))
+            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y1"))
         elif opcao_grafica == 5:
-            print("Gráfico salvo em: src/", plt.plotagem_temporal(df, model_type, "y2"))
+            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y2"))
         elif opcao_grafica == 6:
-            print("Gráfico salvo em: src/", plt.plotagem_temporal(df, model_type, "y3"))
+            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y3"))
         elif opcao_grafica == 4:
-            print("Gráfico salvo em: src/", plt.plotagem_temporal(df, model_type, "y1"))
+            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y1"))
         elif opcao_grafica == 5:
-            print("Gráfico salvo em: src/", plt.plotagem_temporal(df, model_type, "y2"))
+            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y2"))
         elif opcao_grafica == 6:
-            print("Gráfico salvo em: src/", plt.plotagem_temporal(df, model_type, "y3"))
+            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y3"))
         else:
             print("Opção inválida.")
             continue
@@ -92,15 +93,15 @@ while True:
         print("3: Projeção y2 vs y3")
         print("4: Evolução temporal de y1, x1, z1")
 
-        opcao_grafica = int(input("Opção selecionada:"))
+        opcao_grafica = int(input("Opção selecionada: "))
         if opcao_grafica == 1:
-            print("Gráfico salvo em:", plt.plotagem_y1y2(df, model_type))
+            print("Gráfico salvo em:", plt.plot_y1y2(df, model_type))
         elif opcao_grafica == 2:    
-            print("Gráfico salvo em:", plt.plotagem_y1y3(df, model_type))
+            print("Gráfico salvo em:", plt.plot_y1y3(df, model_type))
         elif opcao_grafica == 3:    
-            print("Gráfico salvo em:", plt.plotagem_y2y3(df, model_type))
+            print("Gráfico salvo em:", plt.plot_y2y3(df, model_type))
         elif opcao_grafica == 4:
-            print("Gráfico salvo em:", plt.plotagem_xyz_temporal(df, model_type))
+            print("Gráfico salvo em:", plt.plot_xyz_temporal(df, model_type))
         else:
             print("Opção inválida.")
             continue

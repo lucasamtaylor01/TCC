@@ -1,7 +1,7 @@
 import numpy as np
 from parameters import a, b, c, h, f, nu_0, g_0
 from scipy.linalg import LinAlgError
-from condicoes_iniciais import y0
+from initial_conditions import y0
 
 def cyc(i):
     return i, (i + 1) % 3, (i + 2) % 3
