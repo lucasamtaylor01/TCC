@@ -4,15 +4,11 @@ from mpl_toolkits.mplot3d import Axes3D
 from pathlib import Path
 
 # Criar diretório de saída
-OUTDIR = Path("src")
+OUTDIR = Path("img")
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
-
-# Carregar os dados do arquivo CSV
 df = pd.read_csv("slo.csv")
 
-# --- Gráficos 2D ---
-# Gráfico 1: Parte Imaginária vs. Parte Real
 plt.figure(figsize=(8, 6))
 plt.plot(df['real'], df['imag'])
 plt.title('Parte Imaginária vs. Parte Real')
@@ -22,7 +18,7 @@ plt.grid(True)
 plt.savefig(OUTDIR / "plot_real_vs_imag.png")
 plt.close()
 
-# Gráfico 2: Evolução Temporal da Parte Real
+
 plt.figure(figsize=(8, 6))
 plt.plot(df['t'], df['real'])
 plt.title('Evolução Temporal da Parte Real')
@@ -32,7 +28,7 @@ plt.grid(True)
 plt.savefig(OUTDIR / "plot_evolucao_real.png")
 plt.close()
 
-# Gráfico 3: Evolução Temporal da Parte Imaginária
+
 plt.figure(figsize=(8, 6))
 plt.plot(df['t'], df['imag'])
 plt.title('Evolução Temporal da Parte Imaginária')
