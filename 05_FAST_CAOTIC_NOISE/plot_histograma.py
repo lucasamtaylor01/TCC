@@ -6,7 +6,7 @@ from matplotlib.patches import Patch
 # === CONFIGURAÇÕES ===
 BASE = Path(__file__).resolve().parent
 DATADIR = BASE / "data"
-OUTDIR = BASE / "src"
+OUTDIR = BASE / "img"
 OUTDIR.mkdir(parents=True, exist_ok=True)
 
 # Paleta Okabe–Ito (color-blind safe)
@@ -23,36 +23,16 @@ plt.rcParams.update({
     "savefig.dpi": 150
 })
 
+eps = 0.01
+eps_str = str(eps).replace(".", "")
+
 # === DADOS ===
-df_deterministico = pd.read_csv(DATADIR / "deterministico02.csv", comment="#")
-df_estocastico   = pd.read_csv(DATADIR / "estocastico02.csv")
+df_deterministico = pd.read_csv(DATADIR / f"deterministico_{eps_str}.csv", comment="#")
+df_estocastico   = pd.read_csv(DATADIR / f"estocastico_{eps_str}.csv")
 
 x_deterministico = df_deterministico.iloc[:, 2]
 x_estocastico    = df_estocastico.iloc[:, 1]
 
-# Histograma determinístico
-plt.figure(figsize=(12, 9))
-plt.hist(x_deterministico, bins=50, density=True, color=COL_DET, edgecolor="black", alpha=0.85)
-plt.title("Histograma Determinístico")
-plt.xlabel("x")
-plt.ylabel("Densidade")
-plt.grid(True, alpha=0.75)
-plt.legend(handles=[Patch(facecolor=COL_DET, edgecolor="black", label="Determinístico")])
-plt.tight_layout()
-plt.savefig(OUTDIR / "hist_deterministico.png")
-plt.close()
-
-# Histograma estocástico
-plt.figure(figsize=(12, 9))
-plt.hist(x_estocastico, bins=50, density=True, color=COL_EST, edgecolor="black", alpha=0.85)
-plt.title("Histograma Estocástico")
-plt.xlabel("x")
-plt.ylabel("Densidade")
-plt.grid(True, alpha=0.75)
-plt.legend(handles=[Patch(facecolor=COL_EST, edgecolor="black", label="Estocástico")])
-plt.tight_layout()
-plt.savefig(OUTDIR / "hist_estocastico.png")
-plt.close()
 
 # Comparação
 plt.figure(figsize=(12, 9))
@@ -66,5 +46,5 @@ plt.ylabel("Densidade")
 plt.grid(True, alpha=0.75)
 plt.legend(frameon=True)
 plt.tight_layout()
-plt.savefig(OUTDIR / "hist_comparacao_densidade.png")
+plt.savefig(OUTDIR / f"hist_comparacao_densidade_{eps_str}.png")
 plt.close()
