@@ -16,4 +16,4 @@ csv_path = os.path.join(os.path.dirname(__file__), "data", "deterministico_001.c
 df = pd.read_csv(csv_path, comment="#")
 dt = df["t"][1] - df["t"][0]
 sigma = sigma_from_y2(df["y2"].to_numpy(), dt)
-print("σ =", sigma)
+print("sigma", sigma)
