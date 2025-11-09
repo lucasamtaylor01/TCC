@@ -63,6 +63,8 @@ while True:
         print("4: Evolução temporal de y1")
         print("5: Evolução temporal de y2")
         print("6: Evolução temporal de y3")
+        print("7: Evolução temporal empilhada de y1, y2, y3")
+        print("8: Gerar todos os gráficos")
 
         opcao_grafica = int(input("\nEscolha a opção gráfica: "))
         if opcao_grafica == 1:
@@ -83,6 +85,11 @@ while True:
             print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y2"))
         elif opcao_grafica == 6:
             print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y3"))
+        elif opcao_grafica == 7:
+            print("Gráfico salvo em: img/", plt.evolucao_temporal_y(df, model_type))
+        elif opcao_grafica == 8:
+            plt.gerar_todos_graficos(df, model_type)
+            print("Gráficos gerados com sucesso.")
         else:
             print("Opção inválida.")
             continue
@@ -92,6 +99,8 @@ while True:
         print("2: Projeção y1 vs y3")
         print("3: Projeção y2 vs y3")
         print("4: Evolução temporal de y1, x1, z1")
+        print("5: Evolução temporal empilhada de y1, y2, y3")
+        print("6: Gerar todos os gráficos")
 
         opcao_grafica = int(input("Opção selecionada: "))
         if opcao_grafica == 1:
@@ -102,6 +111,11 @@ while True:
             print("Gráfico salvo em:", plt.plot_y2y3(df, model_type))
         elif opcao_grafica == 4:
             print("Gráfico salvo em:", plt.plot_xyz_temporal(df, model_type))
+        elif opcao_grafica == 5:
+            print("Gráfico salvo em:", plt.evolucao_temporal_y(df, model_type))
+        elif opcao_grafica == 6:
+            plt.gerar_todos_graficos(df, model_type)
+            print("Gráficos gerados com sucesso.")
         else:
             print("Opção inválida.")
             continue

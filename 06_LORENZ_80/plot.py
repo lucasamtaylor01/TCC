@@ -1,9 +1,19 @@
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-OUTDIR = Path("img")
-OUTDIR.mkdir(parents=True, exist_ok=True)
-
+def get_output_dir(model_type):
+    """Retorna o diretório de saída baseado no tipo de modelo"""
+    if model_type == 1:
+        outdir = Path("img/PE")
+    elif model_type == 2:
+        outdir = Path("img/BE")
+    elif model_type == 3:
+        outdir = Path("img/QG")
+    else:
+        raise ValueError("model_type deve ser 1, 2 ou 3")
+    
+    outdir.mkdir(parents=True, exist_ok=True)
+    return outdir
 
 def get_model_prefix(model_type):
 
@@ -22,6 +32,7 @@ def plot_y2y3(df, model_type):
     y2, y3 = df["y2"], df["y3"]
     prefix = get_model_prefix(model_type)
     filename = f"{prefix}y3y2.png"
+    outdir = get_output_dir(model_type)
 
     plt.figure(figsize=(12, 5))
     plt.plot(y3, y2, linewidth=1.5, color="#0910aa")
@@ -29,7 +40,7 @@ def plot_y2y3(df, model_type):
     plt.xlabel("y3")
     plt.ylabel("y2")
     plt.grid(True)
-    plt.savefig(OUTDIR / filename)
+    plt.savefig(outdir / filename)
     plt.close()
     
     return filename
@@ -39,6 +50,7 @@ def plot_y1y3(df, model_type):
     y1,y3 = df["y1"], df["y3"]
     prefix = get_model_prefix(model_type)
     filename = f"{prefix}y1y3.png"
+    outdir = get_output_dir(model_type)
 
     plt.figure(figsize=(12, 5))
     plt.plot(y1, y3, linewidth=1.5, color="#0910aa")
@@ -46,7 +58,7 @@ def plot_y1y3(df, model_type):
     plt.xlabel("y1")
     plt.ylabel("y3")
     plt.grid(True)
-    plt.savefig(OUTDIR / filename)
+    plt.savefig(outdir / filename)
     plt.close()
     
     return filename
@@ -56,6 +68,7 @@ def plot_y1y2(df, model_type):
     y1, y2= df["y1"], df["y2"]
     prefix = get_model_prefix(model_type)
     filename = f"{prefix}y1y2.png"
+    outdir = get_output_dir(model_type)
 
     plt.figure(figsize=(12, 5))
     plt.plot(y1, y2, linewidth=1.5, color="#0910aa")
@@ -63,7 +76,7 @@ def plot_y1y2(df, model_type):
     plt.xlabel("y1")
     plt.ylabel("y2")
     plt.grid(True)
-    plt.savefig(OUTDIR / filename)
+    plt.savefig(outdir / filename)
     plt.close()
     
     return filename
@@ -73,6 +86,7 @@ def plot_xyz_temporal(df, model_type):
 
     prefix = get_model_prefix(model_type)    # Plot
     filename = f"{prefix}time_x1y1z1.png"
+    outdir = get_output_dir(model_type)
 
 
     plt.figure(figsize=(12, 8))
@@ -85,7 +99,7 @@ def plot_xyz_temporal(df, model_type):
     plt.title("Evolução temporal de $x_1$, $y_1$ e $z_1$")
     plt.legend()
     plt.grid(True)
-    plt.savefig(OUTDIR / filename)
+    plt.savefig(outdir / filename)
     
     plt.close()
     return filename
@@ -93,6 +107,7 @@ def plot_xyz_temporal(df, model_type):
 def plot_temporal(df, model_type, yi):
     t = df["time"]
     prefix = get_model_prefix(model_type)
+    outdir = get_output_dir(model_type)
 
     if yi == "y1":
         y = df["y1"]
@@ -114,9 +129,66 @@ def plot_temporal(df, model_type, yi):
     plt.xlabel("time")
     plt.ylabel(ylabel)
     plt.grid(True)
-    plt.savefig(OUTDIR / filename)
+    plt.savefig(outdir / filename)
     
     plt.close()
     
     return filename
+
+def evolucao_temporal_y(df, model_type):
+    VARS = ["y1", "y2", "y3"]
+    prefix = get_model_prefix(model_type)
+    filename = f"{prefix}evolucao_temporal_y.png"
+    outdir = get_output_dir(model_type)
+    
+    # --- Limites por variável para visual ---
+    ylims = {}
+    for v in VARS:
+        vals = df[v].to_numpy(dtype=float)
+        vmin, vmax = vals.min(), vals.max()
+        rng = vmax - vmin
+        pad = 0.05 * (rng if rng > 0 else 1.0)
+        ylims[v] = (vmin - pad, vmax + pad)
+
+    # --- Plot: três linhas empilhadas ---
+    nrows = len(VARS)
+    fig, axes = plt.subplots(nrows=nrows, ncols=1, figsize=(12, 7), sharex=True)
+    if nrows == 1:
+        axes = [axes]
+
+    for i, v in enumerate(VARS):
+        ax = axes[i]
+        ax.plot(df["time"].to_numpy(), df[v].to_numpy(), lw=0.9, color="#0910aa")
+        ax.axhline(0.0, lw=1.5, alpha=0.75)
+        ax.grid(True, linewidth=0.4, alpha=0.35)
+        ax.set_ylim(*ylims[v])
+        ax.text(0.01, 0.88, v, transform=ax.transAxes, fontsize=10, weight="bold")
+        if i < nrows - 1:
+            ax.tick_params(axis="x", labelbottom=False)
+
+    axes[0].set_title("Séries temporais empilhadas de $y_1,y_2,y_3$", pad=8, fontsize=12)
+    axes[-1].set_xlabel("time")
+    plt.subplots_adjust(hspace=0.12, top=0.95, bottom=0.07, left=0.07, right=0.985)
+    fig.savefig(outdir / filename)
+    plt.close(fig)
+    
+    return filename
+
+def gerar_todos_graficos(df, model_type):
+    graficos_gerados = []
+    if model_type == 1:
+        graficos_gerados.append(plot_xyz_temporal(df, model_type))
+        
+    graficos_gerados.append(plot_y1y2(df, model_type))
+    graficos_gerados.append(plot_y1y3(df, model_type))
+    graficos_gerados.append(plot_y2y3(df, model_type))
+    graficos_gerados.append(plot_temporal(df, model_type, "y1"))
+    graficos_gerados.append(plot_temporal(df, model_type, "y2"))
+    graficos_gerados.append(plot_temporal(df, model_type, "y3"))
+    graficos_gerados.append(evolucao_temporal_y(df, model_type))
+    
+    for grafico in graficos_gerados:
+        print(f"  - {grafico}")
+    
+    return graficos_gerados
 
