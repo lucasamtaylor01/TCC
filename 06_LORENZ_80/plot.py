@@ -22,11 +22,13 @@ def get_output_dir(model_type):
     if model_type == 1:
         outdir = Path("img/PE")
     elif model_type == 2:
-        outdir = Path("img/BE")
+        outdir = Path("img/PE_SCALED")
     elif model_type == 3:
+        outdir = Path("img/BE")
+    elif model_type == 4:
         outdir = Path("img/QG")
     else:
-        raise ValueError("model_type deve ser 1, 2 ou 3")
+        raise ValueError("model_type deve ser 1, 2, 3 ou 4")
     
     outdir.mkdir(parents=True, exist_ok=True)
     return outdir
@@ -36,11 +38,13 @@ def get_model_prefix(model_type):
     if model_type == 1:
         return "pe_"
     elif model_type == 2:
-        return "be_"
+        return "pe_scaled_"
     elif model_type == 3:
+        return "be_"
+    elif model_type == 4:
         return "qg_"
     else:
-        raise ValueError("model_type deve ser 1, 2 ou 3")
+        raise ValueError("model_type deve ser 1, 2, 3 ou 4")
 
 
 def plot_y2y3(df, model_type):

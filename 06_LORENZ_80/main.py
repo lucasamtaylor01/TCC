@@ -13,8 +13,9 @@ print("""==============================
 ==============================""")
 
 print("1: PE Model")
-print("2: BE Model")
-print("3: QG Model")
+print("2: PE Model - escalado")
+print("3: BE Model")
+print("4: QG Model")
 
 model_type = int(input("\nOpção selecionada: "))
 
@@ -24,11 +25,16 @@ if model_type == 1:
     df.to_csv(out_file, index=False)
     print("Processo concluído. Arquivo salvo em:", out_file)
 elif model_type == 2:
+    df = sim.pe_simulate(ic.x0, ic.y0, ic.z0, ic.days, use_scaled=True)
+    out_file = DATADIR / "pe_model_scaled.csv"
+    df.to_csv(out_file, index=False)
+    print("Processo concluído. Arquivo salvo em:", out_file)
+elif model_type == 3:
     df = sim.be_simulate(ic.y0, ic.days)
     out_file = DATADIR / "be_model.csv"
     df.to_csv(out_file, index=False)
     print("\nProcesso concluído. Arquivo salvo em:", out_file)    
-elif model_type == 3:
+elif model_type == 4:
     df = sim.qg_simulate(ic.y0, ic.days)
     out_file = DATADIR / "qg_model.csv"
     df.to_csv(out_file, index=False)
@@ -56,7 +62,7 @@ print("""\n==============================
 ==============================""")
 
 while True:
-    if model_type == 2 or model_type == 3:
+    if model_type == 3 or model_type == 4:
         print("1: Projeção y1 vs y2")
         print("2: Projeção y1 vs y3")
         print("3: Projeção y2 vs y3")
@@ -94,7 +100,7 @@ while True:
             print("Opção inválida.")
             continue
     
-    if model_type == 1:
+    if model_type == 1 or model_type == 2:
         print("1: Projeção y1 vs y2")
         print("2: Projeção y1 vs y3")
         print("3: Projeção y2 vs y3")
