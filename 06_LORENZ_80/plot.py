@@ -1,6 +1,17 @@
 import matplotlib.pyplot as plt
 from pathlib import Path
 
+# Configuração global do matplotlib
+plt.rcParams.update({
+    "axes.titlesize": 22,
+    "axes.labelsize": 18,
+    "xtick.labelsize": 14,
+    "ytick.labelsize": 14,
+    "legend.fontsize": 16,
+    "lines.linewidth": 1.5,
+    "savefig.dpi": 300
+})
+
 def get_output_dir(model_type):
     """Retorna o diretório de saída baseado no tipo de modelo"""
     if model_type == 1:
@@ -35,7 +46,7 @@ def plot_y2y3(df, model_type):
     outdir = get_output_dir(model_type)
 
     plt.figure(figsize=(12, 5))
-    plt.plot(y3, y2, linewidth=1.5, color="#0910aa")
+    plt.plot(y3, y2, color="#0910aa")
     plt.title("Projeção bidimensional $y_3$ x $y_2$")
     plt.xlabel("y3")
     plt.ylabel("y2")
@@ -53,7 +64,7 @@ def plot_y1y3(df, model_type):
     outdir = get_output_dir(model_type)
 
     plt.figure(figsize=(12, 5))
-    plt.plot(y1, y3, linewidth=1.5, color="#0910aa")
+    plt.plot(y1, y3, color="#0910aa")
     plt.title("Projeção bidimensional $y_1$ x $y_3$")
     plt.xlabel("y1")
     plt.ylabel("y3")
@@ -71,7 +82,7 @@ def plot_y1y2(df, model_type):
     outdir = get_output_dir(model_type)
 
     plt.figure(figsize=(12, 5))
-    plt.plot(y1, y2, linewidth=1.5, color="#0910aa")
+    plt.plot(y1, y2, color="#0910aa")
     plt.title("Projeção bidimensional $y_1$ x $y_2$")
     plt.xlabel("y1")
     plt.ylabel("y2")
@@ -90,9 +101,9 @@ def plot_xyz_temporal(df, model_type):
 
 
     plt.figure(figsize=(12, 8))
-    plt.plot(t, x1, label="$x_1$", linewidth=2, color="#0b8126", linestyle="-")   # contínua
-    plt.plot(t, y1, label="$y_1$", linewidth=2, color="#0910aa", linestyle="--")  # tracejada
-    plt.plot(t, z1, label="$z_1$", linewidth=2, color="#dc3220", linestyle=":")   # pontilhada
+    plt.plot(t, x1, label="$x_1$", color="#0b8126", linestyle="-")   # contínua
+    plt.plot(t, y1, label="$y_1$", color="#0910aa", linestyle="--")  # tracejada
+    plt.plot(t, z1, label="$z_1$", color="#dc3220", linestyle=":")   # pontilhada
 
     plt.xlabel("Tempo")
     plt.ylabel("Valores de $x_1$, $y_1$ e $z_1$")
@@ -124,7 +135,7 @@ def plot_temporal(df, model_type, yi):
     filename = f"{prefix}time{ylabel}.png"
     
     plt.figure(figsize=(12, 5))
-    plt.plot(t, y, linewidth=1.5, color="#0910aa")
+    plt.plot(t, y, color="#0910aa")
     plt.title(f"Evolução temporal de ${ylabel}$")
     plt.xlabel("time")
     plt.ylabel(ylabel)
@@ -158,7 +169,7 @@ def evolucao_temporal_y(df, model_type):
 
     for i, v in enumerate(VARS):
         ax = axes[i]
-        ax.plot(df["time"].to_numpy(), df[v].to_numpy(), lw=0.9, color="#0910aa")
+        ax.plot(df["time"].to_numpy(), df[v].to_numpy(), color="#0910aa")
         ax.axhline(0.0, lw=1.5, alpha=0.75)
         ax.grid(True, linewidth=0.4, alpha=0.35)
         ax.set_ylim(*ylims[v])
@@ -166,7 +177,7 @@ def evolucao_temporal_y(df, model_type):
         if i < nrows - 1:
             ax.tick_params(axis="x", labelbottom=False)
 
-    axes[0].set_title("Séries temporais empilhadas de $y_1,y_2,y_3$", pad=8, fontsize=12)
+    axes[0].set_title("Séries temporais empilhadas de $y_1,y_2,y_3$", pad=8)
     axes[-1].set_xlabel("time")
     plt.subplots_adjust(hspace=0.12, top=0.95, bottom=0.07, left=0.07, right=0.985)
     fig.savefig(outdir / filename)
