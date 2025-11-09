@@ -1,16 +1,21 @@
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 from pathlib import Path
 
 # Configuração global do matplotlib
 plt.rcParams.update({
+    "font.size": 14,
     "axes.titlesize": 22,
     "axes.labelsize": 18,
     "xtick.labelsize": 14,
     "ytick.labelsize": 14,
-    "legend.fontsize": 16,
+    "legend.fontsize": 14,
     "lines.linewidth": 1.5,
-    "savefig.dpi": 300
+    "savefig.dpi": 300,
+    "figure.autolayout": True,
+    "axes.grid": True
 })
+
 
 def get_output_dir(model_type):
     """Retorna o diretório de saída baseado no tipo de modelo"""

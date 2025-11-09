@@ -2,7 +2,7 @@ from pathlib import Path
 import simulations as sim
 import pandas as pd
 import initial_conditions as ic
-import plot as plt
+import plot
 
 BASE = Path(__file__).resolve().parent
 DATADIR = BASE / "data"
@@ -68,27 +68,27 @@ while True:
 
         opcao_grafica = int(input("\nEscolha a opção gráfica: "))
         if opcao_grafica == 1:
-            print("Gráfico salvo em: img/", plt.plot_y1y2(df, model_type))
+            print("Gráfico salvo em: img/", plot.plot_y1y2(df, model_type))
         elif opcao_grafica == 2:
-            print("Gráfico salvo em: img/", plt.plot_y1y3(df, model_type))
+            print("Gráfico salvo em: img/", plot.plot_y1y3(df, model_type))
         elif opcao_grafica == 3:
-            print("Gráfico salvo em: img/", plt.plot_y2y3(df, model_type))
+            print("Gráfico salvo em: img/", plot.plot_y2y3(df, model_type))
         elif opcao_grafica == 4:
-            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y1"))
+            print("Gráfico salvo em: img/", plot.plot_temporal(df, model_type, "y1"))
         elif opcao_grafica == 5:
-            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y2"))
+            print("Gráfico salvo em: img/", plot.plot_temporal(df, model_type, "y2"))
         elif opcao_grafica == 6:
-            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y3"))
+            print("Gráfico salvo em: img/", plot.plot_temporal(df, model_type, "y3"))
         elif opcao_grafica == 4:
-            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y1"))
+            print("Gráfico salvo em: img/", plot.plot_temporal(df, model_type, "y1"))
         elif opcao_grafica == 5:
-            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y2"))
+            print("Gráfico salvo em: img/", plot.plot_temporal(df, model_type, "y2"))
         elif opcao_grafica == 6:
-            print("Gráfico salvo em: img/", plt.plot_temporal(df, model_type, "y3"))
+            print("Gráfico salvo em: img/", plot.plot_temporal(df, model_type, "y3"))
         elif opcao_grafica == 7:
-            print("Gráfico salvo em: img/", plt.evolucao_temporal_y(df, model_type))
+            print("Gráfico salvo em: img/", plot.evolucao_temporal_y(df, model_type))
         elif opcao_grafica == 8:
-            plt.gerar_todos_graficos(df, model_type)
+            plot.gerar_todos_graficos(df, model_type)
             print("Gráficos gerados com sucesso.")
         else:
             print("Opção inválida.")
@@ -104,17 +104,17 @@ while True:
 
         opcao_grafica = int(input("Opção selecionada: "))
         if opcao_grafica == 1:
-            print("Gráfico salvo em:", plt.plot_y1y2(df, model_type))
+            print("Gráfico salvo em:", plot.plot_y1y2(df, model_type))
         elif opcao_grafica == 2:    
-            print("Gráfico salvo em:", plt.plot_y1y3(df, model_type))
+            print("Gráfico salvo em:", plot.plot_y1y3(df, model_type))
         elif opcao_grafica == 3:    
-            print("Gráfico salvo em:", plt.plot_y2y3(df, model_type))
+            print("Gráfico salvo em:", plot.plot_y2y3(df, model_type))
         elif opcao_grafica == 4:
-            print("Gráfico salvo em:", plt.plot_xyz_temporal(df, model_type))
+            print("Gráfico salvo em:", plot.plot_xyz_temporal(df, model_type))
         elif opcao_grafica == 5:
-            print("Gráfico salvo em:", plt.evolucao_temporal_y(df, model_type))
+            print("Gráfico salvo em:", plot.evolucao_temporal_y(df, model_type))
         elif opcao_grafica == 6:
-            plt.gerar_todos_graficos(df, model_type)
+            plot.gerar_todos_graficos(df, model_type)
             print("Gráficos gerados com sucesso.")
         else:
             print("Opção inválida.")
