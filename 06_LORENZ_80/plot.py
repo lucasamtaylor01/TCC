@@ -53,8 +53,8 @@ def plot_y2y3(df, model_type):
     plt.figure(figsize=(12, 5))
     plt.plot(y3, y2, color="#0910aa")
     plt.title("Projeção bidimensional $y_3$ x $y_2$")
-    plt.xlabel("y3")
-    plt.ylabel("y2")
+    plt.xlabel("$y_3$")
+    plt.ylabel("$y_2$")
     plt.grid(True)
     plt.savefig(outdir / filename)
     plt.close()
@@ -71,8 +71,8 @@ def plot_y1y3(df, model_type):
     plt.figure(figsize=(12, 5))
     plt.plot(y1, y3, color="#0910aa")
     plt.title("Projeção bidimensional $y_1$ x $y_3$")
-    plt.xlabel("y1")
-    plt.ylabel("y3")
+    plt.xlabel("$y_1$")
+    plt.ylabel("$y_3$")
     plt.grid(True)
     plt.savefig(outdir / filename)
     plt.close()
@@ -89,8 +89,8 @@ def plot_y1y2(df, model_type):
     plt.figure(figsize=(12, 5))
     plt.plot(y1, y2, color="#0910aa")
     plt.title("Projeção bidimensional $y_1$ x $y_2$")
-    plt.xlabel("y1")
-    plt.ylabel("y2")
+    plt.xlabel("$y_1$")
+    plt.ylabel("$y_2$")
     plt.grid(True)
     plt.savefig(outdir / filename)
     plt.close()
@@ -100,7 +100,7 @@ def plot_y1y2(df, model_type):
 def plot_xyz_temporal(df, model_type):
     t, x1, y1, z1 = df["time"], df["x1"], df["y1"], df["z1"]
 
-    prefix = get_model_prefix(model_type)    # Plot
+    prefix = get_model_prefix(model_type)
     filename = f"{prefix}time_x1y1z1.png"
     outdir = get_output_dir(model_type)
 
@@ -142,8 +142,8 @@ def plot_temporal(df, model_type, yi):
     plt.figure(figsize=(12, 5))
     plt.plot(t, y, color="#0910aa")
     plt.title(f"Evolução temporal de ${ylabel}$")
-    plt.xlabel("time")
-    plt.ylabel(ylabel)
+    plt.xlabel("Tempo")
+    plt.ylabel(f"${ylabel}$")
     plt.grid(True)
     plt.savefig(outdir / filename)
     
@@ -183,7 +183,7 @@ def evolucao_temporal_y(df, model_type):
             ax.tick_params(axis="x", labelbottom=False)
 
     axes[0].set_title("Séries temporais empilhadas de $y_1,y_2,y_3$", pad=8)
-    axes[-1].set_xlabel("time")
+    axes[-1].set_xlabel("Tempo")
     plt.subplots_adjust(hspace=0.12, top=0.95, bottom=0.07, left=0.07, right=0.985)
     fig.savefig(outdir / filename)
     plt.close(fig)
