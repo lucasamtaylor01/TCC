@@ -13,67 +13,6 @@ def cyc(i):
 def cyc(i):
     return i, (i + 1) % 3, (i + 2) % 3
 
-def pe_model_scaled(tau, U, eps, a, b, c, g0, N0, K0, H, Fcal):
-    X = U[0:3]
-    Y = U[3:6]
-    Z = U[6:9]
-
-    dX = np.zeros(3)
-    dY = np.zeros(3)
-    dZ = np.zeros(3)
-
-    for i in range(3):
-        i_, j, k = cyc(i)
-
-        rhs_X = (
-            (eps**3) * a[i] * b[i] * X[j] * X[k]
-            - (eps**2) * c * (a[i] - a[k]) * X[j] * Y[k]
-            + (eps**2) * c * (a[i] - a[j]) * Y[j] * X[k]
-            - (2.0 * eps) * (c**2) * Y[j] * Y[k]
-            - (eps**2) * N0 * (a[i]**2) * X[i]
-            + a[i] * (Y[i] - Z[i])
-        )
-        dX[i] = rhs_X / (eps**2 * a[i])
-
-        rhs_Y = (
-            - eps * a[k] * b[k] * X[j] * Y[k]
-            - eps * a[j] * b[j] * Y[j] * X[k]
-            + c * (a[k] - a[j]) * Y[j] * Y[k]
-            - a[i] * X[i]
-            - N0 * (a[i]**2) * Y[i]
-        )
-        dY[i] = rhs_Y / a[i]
-
-        dZ[i] = (
-            - eps * b[k] * X[j] * (Z[k] - H[k])
-            - eps * b[j] * (Z[j] - H[j]) * X[k]
-            + c * Y[j] * (Z[k] - H[k])
-            - c * (Z[j] - H[j]) * Y[k]
-            + g0 * a[i] * X[i]
-            - K0 * a[i] * Z[i]
-            + Fcal[i]
-        )
-
-    return np.concatenate([dX, dY, dZ])
-
-
-def to_scaled_state(u_lowercase, *, eps):
-    x = np.array(u_lowercase[0:3], dtype=float)
-    y = np.array(u_lowercase[3:6], dtype=float)
-    z = np.array(u_lowercase[6:9], dtype=float)
-    X = x / (eps**2)
-    Y = y / eps
-    Z = z / eps
-    return np.concatenate([X, Y, Z])
-
-def scale_params(nu0, kappa0, h, F, *, eps):
-    N0 = nu0 / eps
-    K0 = kappa0 / eps
-    H  = np.array(h, dtype=float) / eps
-    Fcal = np.array(F, dtype=float) / (eps**2)
-    return N0, K0, H, Fcal
-
-
 def pe_model(t, u):
 
     x = u[0:3]
@@ -113,81 +52,25 @@ def pe_model(t, u):
     return np.concatenate([dx, dy, dz])
 
 
-def pe_simulate(x0, y0, z0, days, *, use_scaled=False, eps=1.5522):
+def pe_simulate(x0, y0, z0, days):
+    initial_u = np.concatenate([x0, y0, z0])
+    t_final = days * TIMESCALE_FACTOR
+    t_span = (0.0, t_final)
 
-    if not use_scaled:
-        # --------- MODO NÃO ESCALADO ----------
-        initial_u = np.concatenate([x0, y0, z0])
-        t_final = days * TIMESCALE_FACTOR
-        t_span = (0.0, t_final)
+    print("Iniciando integração numérica para o modelo PE (não escalado)...")
+    sol = solve_ivp(pe_model, t_span, initial_u, method="RK45", atol=1e-8, rtol=1e-6)
+    print("Aguarde...")
 
-        print("Iniciando integração numérica para o modelo PE (não escalado)...")
-        sol = solve_ivp(
-            pe_model, t_span, initial_u, method="RK45", atol=1e-8, rtol=1e-6
-        )
-        print("Aguarde...")
+    t_out = sol.t / TIMESCALE_FACTOR
+    x, y, z = sol.y[0:3].T, sol.y[3:6].T, sol.y[6:9].T
 
-        t_out = sol.t / TIMESCALE_FACTOR
-        x, y, z = sol.y[0:3].T, sol.y[3:6].T, sol.y[6:9].T
-
-        df = pd.DataFrame({
-            "time": t_out,
-            "x1": x[:, 0], "x2": x[:, 1], "x3": x[:, 2],
-            "y1": y[:, 0], "y2": y[:, 1], "y3": y[:, 2],
-            "z1": z[:, 0], "z2": z[:, 1], "z3": z[:, 2],
-        })
-        return df
-
-    else:
-        # --------- MODO ESCALADO ----------
-        U0 = to_scaled_state(np.concatenate([x0, y0, z0]), eps=eps)
-        N0, K0, H, Fcal = scale_params(nu_0, kappa_0, h, f, eps=eps)
-
-        tau_final = (days * TIMESCALE_FACTOR) / eps
-        
-        print("Iniciando integração numérica para o modelo PE (versão escalada)...")
-        
-        n_steps = 100  # Para reportar progresso
-        tau_steps = np.linspace(0, tau_final, n_steps + 1)
-        
-        U = U0
-        sols = []
-
-        for i in range(n_steps):
-            tau_span = (tau_steps[i], tau_steps[i+1])
-            sol = solve_ivp(
-                pe_model_scaled,
-                tau_span,
-                U,
-                method="RK45",
-                atol=1e-8,
-                rtol=1e-6,
-                args=(eps, a, b, c, g_0, N0, K0, H, Fcal),
-            )
-            sols.append(sol)
-            U = sol.y[:, -1]
-            print(f"Progresso: {i+1}% concluído")
-
-        # Concatenar resultados
-        t_sol = np.concatenate([s.t for s in sols])
-        y_sol = np.concatenate([s.y for s in sols], axis=1)
-
-        print("Aguarde...")
-
-        # Tempo físico (t = ετ)
-        t_phys = (eps * t_sol) / TIMESCALE_FACTOR
-
-        X = y_sol[0:3].T
-        Y = y_sol[3:6].T
-        Z = y_sol[6:9].T
-
-        df = pd.DataFrame({
-            "time": t_phys,
-            "x1": X[:, 0], "x2": X[:, 1], "x3": X[:, 2],
-            "y1": Y[:, 0], "y2": Y[:, 1], "y3": Y[:, 2],
-            "z1": Z[:, 0], "z2": Z[:, 1], "z3": Z[:, 2],
-        })
-        return df
+    df = pd.DataFrame({
+        "time": t_out,
+        "x1": x[:, 0], "x2": x[:, 1], "x3": x[:, 2],
+        "y1": y[:, 0], "y2": y[:, 1], "y3": y[:, 2],
+        "z1": z[:, 0], "z2": z[:, 1], "z3": z[:, 2],
+    })
+    return df
 
 def be_model(tau, y, phi_vec):
     dydt = np.zeros(3, dtype=float)

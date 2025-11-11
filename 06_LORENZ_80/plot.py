@@ -22,10 +22,8 @@ def get_output_dir(model_type):
     if model_type == 1:
         outdir = Path("img/PE")
     elif model_type == 2:
-        outdir = Path("img/PE_SCALED")
-    elif model_type == 3:
         outdir = Path("img/BE")
-    elif model_type == 4:
+    elif model_type == 3:
         outdir = Path("img/QG")
     else:
         raise ValueError("model_type deve ser 1, 2, 3 ou 4")
@@ -38,10 +36,8 @@ def get_model_prefix(model_type):
     if model_type == 1:
         return "pe_"
     elif model_type == 2:
-        return "pe_scaled_"
-    elif model_type == 3:
         return "be_"
-    elif model_type == 4:
+    elif model_type == 3:
         return "qg_"
     else:
         raise ValueError("model_type deve ser 1, 2, 3 ou 4")
