@@ -2,9 +2,7 @@ using DifferentialEquations, DataFrames, CSV, Random
 
 eps = 0.1
 # Valores calculados previamente
-if eps == 0.5
-    sigma = 242.69367736299662
-elseif eps == 0.2
+if eps == 0.2
     sigma = 205.05745681770404
 elseif eps == 0.1
     sigma = 142.6677313864854

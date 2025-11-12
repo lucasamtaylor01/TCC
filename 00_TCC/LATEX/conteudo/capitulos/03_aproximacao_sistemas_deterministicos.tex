@@ -1,0 +1,280 @@
+\chapter{Aproximação de sistemas determinísticos usando EDEs} \label{cap:ch03-approx-sis-det}
+
+\section{Introdução}
+Neste capítulo, abordaremos a aproximação de sistemas determinísticos por meio de equações diferenciais estocásticas (EDEs). Para isso, analisaremos dois modelos distintos. O primeiro, apresentado na Seção \ref{subsec:ch03-fast-chaotic-noise}, é um modelo mais simples que nos ajudará a ilustrar o processo de aproximação. Nessa etapa, descreveremos o modelo, discutiremos brevemente os aspectos teóricos que viabilizam a aproximação estocástica e, por fim, compararemos os comportamentos dos modelos determinístico e estocástico, por meio da evolução temporal da variável de interesse e da análise de histogramas dos resultados. 
+
+Na Seção \ref{sec:ch03-be-slo}, abordaremos a versão estocástica do modelo Lorenz 80,BE-SLO, conforme desenvolvido no artigo-base deste trabalho \citet{Chekroun2021}. Serão apresentados alguns fundamentos teóricos do modelo, como variedades, ressonâncias e oscilações. Em seguida, descreveremos o processo de construção do modelo estocástico e, por fim, exibiremos os resultados das simulações, comparando-os com aqueles obtidos a partir do modelo determinístico original.
+
+\newpage
+\section{\textit{Fast Chaotic Noise}} \label{subsec:ch03-fast-chaotic-noise}
+O exemplo a seguir, intitulado \textit{Fast Chaotic Noise}, foi retirado de \citet[p.~169]{Pavliotis2008} e é descrito pelo sistema
+\begin{equation}
+  \begin{aligned}
+    \frac{dx}{dt} &= x - x^3 + \frac{\lambda}{\varepsilon}\, y_2, \\
+    \frac{dy_1}{dt} &= \frac{10}{\varepsilon^2}\,(y_2 - y_1), \\
+    \frac{dy_2}{dt} &= \frac{1}{\varepsilon^2}\,(28y_1 - y_2 - y_1 y_3), \\
+    \frac{dy_3}{dt} &= \frac{1}{\varepsilon^2}\,(y_1 y_2 - \tfrac{8}{3} y_3).
+  \end{aligned}\label{eq:ch03-sistema-simplificado-det}
+\end{equation}
+
+\textbf{ARRUMAR}
+Aqui, $y^{\mathsf T}=(y_1,y_2,y_3)$ satisfaz o modelo de Lorenz--63 (ver \eqref{eq:ch01-lorenz63}) e o parâmetro $\varepsilon>0$ é responsável por separar escalas de tempo. Temos que $y_2$ é uma variável rápida e $y_1$ e $y_3$ são variáveis rápidas em relação ao sistema.
+
+Vale ressaltar que o fluxo de Lorenz-63 é ergódico (com respeito à sua medida SRB): para funções integráveis, as médias temporais ao longo de uma trajetória coincidem com as médias na medida invariante. Em particular, pela condição de centralização adotada em \citet{Pavliotis2008}, tem média zero. No limite $\varepsilon\to0$, o termo rápido produz um ruído efetivo e a dinâmica pode ser aproximada pela EDE:
+\begin{equation}
+    dX_t=(X_t-X_t^3)\,dt+\sigma\,dW_t, \label{eq:ch03-sistema-simplificado-est}
+\end{equation}
+
+onde,
+\begin{equation}
+        \sigma^2=2\lambda^2\int_0^\infty \operatorname{Cov}\left(y_2(0),y_2(s)\right)\,ds, \label{ch03-sigma}
+\end{equation}
+ou seja, a variância efetiva é dada pela autocorrelação integrada de $y_2$.
+
+Dada as devidas considerações teóricas, para as simulações computacionais, utilizamos a linguagem \textit{Python} para a simulação do sistema determinístico \eqref{eq:ch03-sistema-simplificado-det} e para o cálculo do $\sigma$ em \eqref{ch03-sigma}. Para o sistema determinístico de \eqref{eq:ch03-sistema-simplificado-est}, utilizamos a linguagem \textit{Julia}. Os códigos utilizados para a simulação estão em \ref{appsec:fcn}
+
+Vale destacar que, como dito na seção anterior, na medida em que  $\varepsilon\to0$, o termo rápido produz um ruído efetivo e a dinâmica fica cada vez mais próxima da EDE. Para evidenciar tal comportamento, utilizamos três valores de $\varepsilon$: $0.2, 0.1$ e $0.01$. Paracada valor de $\varepsilon$, obtivemos diferentes valores de $\sigma$ expressos na tabela a seguir:
+\begin{table}[H]
+    \centering
+    \caption{Valores de $\varepsilon$ e dos respectivos coeficientes de difusão $\sigma$}
+    \label{tab:ch03-eps-sigma}
+    \begin{tabular}{cc}
+        \toprule
+        $\varepsilon$ & $\sigma$ \\
+        \midrule
+        $0.2$  & $205.05745681770404$ \\
+        $0.1$  & $142.6677313864854$  \\
+        $0.01$ & $5.754046294922591$  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+A partir dos valores, obtivemos os seguintes resultados gráficos:
+\begin{figure}[H]
+    \centering
+
+    % --- EPSILON = 0.2 ---
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/fast_chaotic_noise/02/02_hist_comparacao_densidade.png}
+        \caption*{(a) $\varepsilon=0.2$: Histograma}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/fast_chaotic_noise/02/02_serie_temporal_x.png}
+        \caption*{(b) $\varepsilon=0.2$: Série temporal}
+    \end{subfigure}
+
+    \vspace{0.5cm}
+
+    % --- EPSILON = 0.1 ---
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/fast_chaotic_noise/01/01_hist_comparacao_densidade.png}
+        \caption*{(c) $\varepsilon=0.1$: Histograma}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/fast_chaotic_noise/01/01_serie_temporal_x.png}
+        \caption*{(d) $\varepsilon=0.1$: Série temporal}
+    \end{subfigure}
+
+    \vspace{0.5cm}
+
+    % --- EPSILON = 0.01 ---
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/fast_chaotic_noise/001/001_hist_comparacao_densidade.png}
+        \caption*{(e) $\varepsilon=0.01$: Histograma}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/fast_chaotic_noise/001/001_serie_temporal_x.png}
+        \caption*{(f) $\varepsilon=0.01$: Série temporal}
+    \end{subfigure}
+
+    \caption{Comparação entre o sistema determinístico e o estocástico para diferentes valores de $\varepsilon$. À esquerda, histogramas das densidades; à direita, séries temporais da variável $x$.}
+    \label{fig:ch03-fcn-combined}
+\end{figure}
+
+\newpage
+
+\section{Lorenz 80 BE-SLO}\label{sec:ch03-be-slo}
+    O modelo BE-SLO foi desenvolvido no artigo de ``\textit{Stochastic rectification of fast oscillations on slow manifold closures}'' \citep{Chekroun2021}. O modelo em questão é uma versão estocástica do modelo Lorenz 80 que baseia-se na versão BE. Nesta seção, vamos abordados os aspectos teóricos necessários para o desenvolvimento do modelo e além disso realizar a construção deste da mesma maneira que foi realizada para os demais modelos
+
+    \subsection{Variedades e escolha do modelo BE}\label{subsec:ch03-variedades}
+    Na atmosfera, temos variáveis sob diferentes escalas temporais, como, por exemplo, as variáveis rápidas associadas às ondas de gravidade e aquelas relacionadas aos movimentos mais lentos, como os associados às ondas de \textit{Rossby}. 
+    
+    A partir deste fato, surge a motivação para realizar um ``filtro'' capaz de reduzir discrepâncias e estabelecer um equilíbrio entre as variáveis, de forma que seja possível realizar análises coerentes com a escala de interesse. Essa filtragem é feita através de uma variedade\footnote{De acordo com \citet{Kuznetsov2023}, podemos definir uma variedade de forma simplificada como um conjunto de pontos em $\mathbb{R}^n$ que satisfazem um sistema de $m$ equações escalares:
+    \begin{equation*}
+        F(x) = 0,
+    \end{equation*}
+        onde $F : \mathbb{R}^n \to \mathbb{R}^m$ para algum $m \leq n$.} que representa o espaço geométrico onde o balanço entre as componentes rápidas e lentas é mantido.
+    
+    A ideia original de utilizar uma variedade para representar esse tipo de equilíbrio foi introduzida por Leith no artigo ``\textit{Nonlinear Normal Mode Initialization and Quasi-Geostrophic Theory}'' \citep{Leith1980}. Nesse trabalho, Leith introduz o conceito de \textit{slow manifold}, uma variedade que filtra as oscilações rápidas e aproxima o sistema para um regime quasi-geostrófico.
+    
+    Em \citet{Lorenz1980}, Lorenz emprega uma ideia conceitualmente semelhante para transicionar do modelo PE para o modelo QG sem perder as propriedades fundamentais do sistema original. Vale destacar que, no artigo de Lorenz, ele não utiliza o termo \textit{slow manifold}, mas sim \textit{invariant manifold}. No capítulo \ref{cap:ch01-lorenz-deterministico}, mostramos essa transição de modelos. Contudo, a partir do momento em que aplicamos as hipóteses de simplificação apresentadas em \ref{sec:ch01-modelo-qg}, não estamos apenas simplificando o modelo, mas também alterando a variedade na qual ele está definido. Isso é essencial, pois este processo preserva as propriedades dinâmicas do modelo original. 
+        
+    O estudo dessas variedades foi ampliado ao longo do tempo, com novos desenvolvimentos, como em ``\textit{The Slow Manifold—What Is It?}'' \citep{Lorenz1992}. Em particular, destacamos o \textit{Parameterizing Manifold} (PM Manifold), introduzido no artigo ``\textit{Finite-Horizon Parameterizing Manifolds, and Applications to Suboptimal Control of Nonlinear Parabolic PDEs}'' e no livro ``\textit{Stochastic Parameterizing Manifolds and Non-Markovian Reduced Equations}''\citep{Chekroun2014, Chekroun2015}. 
+
+    No artigo \citet{Chekroun2017}, os autores desenvolvem uma versão ótima do PM, \textit{slow optimal parameterizing manifold}. O OPM possui as seguintes propriedades:
+    \begin{enumerate}
+        \item \textbf{É NECESSÁRIO DEFINIR DA FORMA QUE O CHEOJOUN DECIDE}
+    \end{enumerate}
+
+    Ao final, no mesmo artigo, os autores concluem, através de simulações, que a variedade do modelo BE acompanha o comportamento da variedade da variedade OPM. A partir deste fato, em \citet{Chekroun2021}, define-se o modelo BE como base para o modelo estocástico com ruído, o modelo BE-SLO.
+    
+
+    
+    \subsection{Ressonâncias de Ruelle-Pollicot}\label{subsec:ch03-ressonancias}
+    
+    \subsection{Oscilações estocásticas de Stuart-Landau}\label{subsec:ch03-slo}
+
+    As oscilações estocásticas de Stuart-Landau são utilizadas em \citet{Chekroun2021} para a geração do ruído. Para definir uma oscilação estocástica de Stuart-Landau (ESL), primeiro vamos tratar das equações de Stuart-Landau em sua forma determinística para então tratar da sua forma estocástica e, por fim, definir a função que ela exerce no sistema: a função de oscilador. Ao final da seção, apresentaremos uma simulação de uma ESL simples proposta em \citet{Chekroun2014}.
+
+    Antes de definir uma equação de Stuart Landau, é necessário definir uma \textit{bifucação de Hopf}. Segundo \citet{Kuznetsov2023} bifurcação genérica é definida como: 
+    \begin{definition} \label{def:bifurcacao}
+    	O surgimento de um retrato de fase topologicamente não equivalente sob variação de parâmetros é chamado de \textit{bifurcação}.
+    \end{definition}
+
+    Ou seja, podemos interpretar uma bifurcação como um ponto crítico no espaço de parâmetros onde a solução muda de comportamento qualitativo. Em especial, temos a \textit{bifurcação de Hopf}, é uma definida por \citet{Kuznetsov2023}, como:
+    \begin{definition} \label{def:hopf}
+    	A bifurcação correspondente à presença de autovalores
+    	$\lambda_{1,2} = \pm i\omega_0$, com $\omega_0 > 0$,
+    	é chamada de \textit{bifurcação de Hopf} (ou \textit{de Andronov–Hopf}).
+    \end{definition}
+
+    Por fim, a partir da bifurcação de Hopf, podemos definir uma equação de Stuart-Landau. Uma equação deste tipo é definida a partir de pequenas amplitudes válidas perto do ponto de bifurcação de Hopf. Por \citet{Kuramoto1984}, a equação que descreve as equações de Stuart-Landau são dadas por:
+    \begin{equation*}
+        \frac{dA}{dt} = \lambda A - \frac{g}{2} |A|^2A,
+    \end{equation*}
+    onde:
+    \begin{itemize}
+        \item $A = |A| e^{i\phi}$ é uma quantidade complexa que descreve a perturbação;
+        \item $\lambda = \lambda_r + i\lambda_i$ o autovalor complexo
+        \item $g$ é um número complexo
+    \end{itemize}
+
+    \textbf{FALTA DEFINIR PQ É UM OSCILADOR}
+    
+    Dada a definição do sistema determinístico, podemos considerar que a sua versão estocástica expressa por:
+    \begin{equation}
+        \frac{z}{dt} = (\alpha + i\omega)z - \beta z|z|^2 + \sigma \frac{W}{dt}, \label{eq:ch03-oesl}
+    \end{equation}
+    onde $\frac{W}{dt}$ denota um ruído branco complexo, enquanto $\sigma$, $\alpha$ e $\omega$ são escalares reais, e $\beta$ é um coeficiente complexo com parte real positiva. 
+
+    Realizamos simulações em \textit{Julia} para retratar o comportamento visual do \ref{eq:ch03-oesl}, com os seguinte parâmetros: $\alpha = \frac{1}{2}$, $\omega = 2$, $\beta = 1 + \frac{1}{2}i$ e $\sigma = \frac{1}{4}$. Os resultados obtiram foram:
+    
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.48\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/slo/plot_evolucao_real.png}
+            \caption{Projeção no plano $(y_1, y_2)$.}
+            \label{fig:ch03-tempo-real}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.48\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/slo/plot_evolucao_imag.png}
+            \caption{Projeção no plano $(y_1, y_3)$.}
+            \label{fig:ch03-slo-tempo-img}
+        \end{subfigure}
+    
+        \caption{Evolução temporal da parte real e imaginária}
+        \label{fig:ch03-slo-temporal}
+    \end{figure}
+    
+    Além disso, temos que a projeção da parte real e imaginária é dada por:
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/slo/plot_real_vs_imag.png}
+        \caption{Projeção da parte real e imaginária}
+        \label{fig:ch03-slo-real-imaginaria}
+    \end{figure}
+    
+    \subsection{Construção do modelo BE-SLO}\label{subsec:ch03-construcao-do-modelo}
+    \newpage
+    \subsection{Simulações}\label{subsec:ch03-simulacoes}
+
+    Feitas as devidas considerações, podemos realizar a simulação do modelo BE-SLO. Utilizamos os mesmos parâmetros expostos em \ref{sec:ch01-simulacoes-deterministico} e as mesmas condições iniciais usadas nas projeções bidimensionais dos modelos determinísticos.
+
+    \begin{figure}[h]
+    \centering
+
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/be_slo/be_slo_y3y2.png}
+        \caption{Projeção no plano $(y_3, y_2)$.}
+        \label{fig:ch01-be-slo-y3-y2}
+    \end{subfigure}
+
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/be_slo/be_slo_y1y2.png}
+        \caption{Projeção no plano $(y_1, y_2)$.}
+        \label{fig:ch01-be-slo-y1-y2}
+    \end{subfigure}
+
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/be_slo/be_slo_y1y3.png}
+        \caption{Projeção no plano $(y_1, y_3)$.}
+        \label{fig:ch01-be-slo-y1-y3}
+    \end{subfigure}
+
+    \caption{Projeções do modelo BE-SLO para $f_1 = 0.3027$.}
+    \label{fig:ch01-be-slo-proj}
+\end{figure}
+
+\newpage
+\subsection{Comparação com o modelo PE}
+\begin{figure}[htbp]
+    \centering
+    % --- Linha 1 ---
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/PE/pe_y3y2.png}
+        \caption*{(a) PE: projeção no plano $(y_3, y_2)$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/be_slo/be_slo_y3y2.png}
+        \caption*{(b) BE-SLO: projeção no plano $(y_3, y_2)$.}
+    \end{subfigure}
+
+    \vspace{0.4cm}
+    % --- Linha 2 ---
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/PE/pe_y1y2.png}
+        \caption*{(c) PE: projeção no plano $(y_1, y_2)$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/be_slo/be_slo_y1y2.png}
+        \caption*{(d) BE-SLO: projeção no plano $(y_1, y_2)$.}
+    \end{subfigure}
+
+    \vspace{0.4cm}
+    % --- Linha 3 ---
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch01_lorenz_80/PE/pe_y1y3.png}
+        \caption*{(e) PE: projeção no plano $(y_1, y_3)$.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{00_TCC/01_LATEX/figuras/ch03_approx_sis_det/be_slo/be_slo_y1y3.png}
+        \caption*{(f) BE-SLO: projeção no plano $(y_1, y_3)$.}
+    \end{subfigure}
+
+    \caption{Comparação das projeções dos modelos PE (à esquerda) e BE-SLO (à direita) para $f_1 = 0.3027$.}
+    \label{fig:ch03-comp-pe-be-slo}
+\end{figure}
