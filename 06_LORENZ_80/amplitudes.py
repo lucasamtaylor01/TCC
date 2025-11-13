@@ -4,6 +4,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 
+# ---- MATPLOTLIB CONFIG ----
+plt.rcParams.update({
+    "font.size": 14,
+    "axes.titlesize": 22,
+    "axes.labelsize": 18,
+    "xtick.labelsize": 14,
+    "ytick.labelsize": 14,
+    "legend.fontsize": 14,
+    "lines.linewidth": 1.5,
+    "savefig.dpi": 300,
+    "figure.autolayout": True,
+    "axes.grid": True
+})
+
 # ---- CONFIG ----
 DATA_DIR = Path("data")
 OUTDIR   = Path("img")
@@ -32,12 +46,9 @@ def main():
     # Lê CSVs
     D = {m: read_df(DATA_DIR / f) for m, f in CSV_FILES.items()}
 
-    # Intervalo comum de tempo (interseção)
-    t0 = max(D[m]["time"].iloc[0] for m in D)
-    t1 = min(D[m]["time"].iloc[-1] for m in D)
-    if t1 <= t0:
-        t0 = min(D[m]["time"].iloc[0] for m in D)
-        t1 = max(D[m]["time"].iloc[-1] for m in D)
+    # Intervalo de tempo fixo
+    t0 = 200
+    t1 = 300
 
     # Limites comuns por variável
     ylims = {}
@@ -63,16 +74,16 @@ def main():
             ax.grid(True, linewidth=0.4, alpha=0.35)
             ax.set_ylim(*ylims[v])
             ax.set_xlim(t0, t1)
-            ax.text(0.005, 0.88, v, transform=ax.transAxes, fontsize=10, weight="bold")
-            ax.text(0.995, 0.88, m, transform=ax.transAxes, fontsize=10,
+            ax.text(0.02, 0.80, v, transform=ax.transAxes, fontsize=10, weight="bold")
+            ax.text(0.98, 0.80, m, transform=ax.transAxes, fontsize=10,
                     ha="right", color=COLORS[m])
             ax.tick_params(axis="y", labelsize=8, length=3)
             if row < nrows - 1:
                 ax.tick_params(axis="x", labelbottom=False)
             row += 1
 
-    axes[0].set_title("Séries temporais de $y$ para os modelos PE, QG e BE", pad=8, fontsize=12)
-    axes[-1].set_xlabel("time")
+    axes[0].set_title("Séries temporais de $y$ para os modelos PE, QG e BE", pad=8)
+    axes[-1].set_xlabel("Tempo")
     plt.subplots_adjust(hspace=0.12, top=0.95, bottom=0.07, left=0.07, right=0.985)
     fig.savefig(OUTFILE)
     plt.close(fig)

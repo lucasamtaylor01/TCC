@@ -57,7 +57,7 @@ def pe_simulate(x0, y0, z0, days):
     t_final = days * TIMESCALE_FACTOR
     t_span = (0.0, t_final)
 
-    print("Iniciando integração numérica para o modelo PE (não escalado)...")
+    print("Iniciando integração numérica para o modelo PE...")
     sol = solve_ivp(pe_model, t_span, initial_u, method="RK45", atol=1e-8, rtol=1e-6)
     print("Aguarde...")
 
