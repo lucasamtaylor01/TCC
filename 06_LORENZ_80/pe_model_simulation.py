@@ -139,6 +139,9 @@ def pe_simulate(x0, y0, z0, n_steps, dt):
 
 
 if __name__ == "__main__":
+    # Calcular e exibir informações sobre a simulação
+    t_total = N_STEPS * DT
+    dias_equivalentes = t_total / TIMESCALE_FACTOR
     
     df_pe = pe_simulate(x0, y0, z0, N_STEPS, DT)
     
