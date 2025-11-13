@@ -1,11 +1,13 @@
 using DifferentialEquations, DataFrames, CSV, Random
 
-eps = 0.1
+eps = 0.05
 # Valores calculados previamente
 if eps == 0.2
     sigma = 205.05745681770404
 elseif eps == 0.1
     sigma = 142.6677313864854
+elseif eps == 0.05
+    sigma = 65.23411940491583
 elseif eps == 0.01
     sigma = 5.754046294922591
 else
@@ -29,6 +31,8 @@ elseif eps == 0.2
     eps_suffix = "_02"
 elseif eps == 0.1
     eps_suffix = "_01"
+elseif eps == 0.05
+    eps_suffix = "_005"
 elseif eps == 0.01
     eps_suffix = "_001"
 end

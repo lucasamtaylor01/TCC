@@ -7,7 +7,7 @@ from matplotlib.patches import Patch
 BASE = Path(__file__).resolve().parent
 DATADIR = BASE / "data"
 
-eps = 0.01
+eps = 0.05
 eps_str = str(eps).replace(".", "")
 
 # Criar pasta específica para o valor de eps

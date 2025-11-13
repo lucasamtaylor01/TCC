@@ -4,7 +4,7 @@ from scipy.integrate import solve_ivp
 from pathlib import Path
 import time
 
-eps = 0.1
+eps = 0.025
 lam = 1.0
 
 def rhs(t, u):
