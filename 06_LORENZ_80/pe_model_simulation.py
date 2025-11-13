@@ -16,7 +16,7 @@ TIMESCALE_FACTOR = 8.0
 
 # Parâmetros de simulação
 N_STEPS = int(5e5)  
-DT = 4.2e-3 
+DT = 0.004166666666667
 
 # Criar diretório de saída
 DATA_DIR = Path("data")
