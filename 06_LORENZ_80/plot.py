@@ -53,6 +53,7 @@ def plot_y2y3(df, model_type):
     plt.figure(figsize=(12, 5))
     plt.plot(y3, y2, color="#0910aa")
     plt.title("Projeção bidimensional $y_3$ x $y_2$")
+    plt.ylim(-1.5, 1.5)
     plt.xlabel("$y_3$")
     plt.ylabel("$y_2$")
     plt.grid(True)
@@ -71,6 +72,8 @@ def plot_y1y3(df, model_type):
     plt.figure(figsize=(12, 5))
     plt.plot(y1, y3, color="#0910aa")
     plt.title("Projeção bidimensional $y_1$ x $y_3$")
+    # plt.ylim(-0.6, 0.6) #PE MODEL
+    plt.ylim(-0.3, 0.3) #QG / BE MODEL
     plt.xlabel("$y_1$")
     plt.ylabel("$y_3$")
     plt.grid(True)
@@ -89,6 +92,7 @@ def plot_y1y2(df, model_type):
     plt.figure(figsize=(12, 5))
     plt.plot(y1, y2, color="#0910aa")
     plt.title("Projeção bidimensional $y_1$ x $y_2$")
+    plt.ylim(-1.5, 1.5)
     plt.xlabel("$y_1$")
     plt.ylabel("$y_2$")
     plt.grid(True)
