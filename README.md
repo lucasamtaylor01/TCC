@@ -1,31 +1,12 @@
 # Uma abordagem estocástica para modelos rápidos-lentos 🔀
 
 ## 📝 Descrição
+
+O presente trabalho tem como objetivo estudar a aproximação de sistemas dinâmicos rápidos-lentos por meio de equações diferenciais estocásticas, com ênfase no modelo de Lorenz 80. A análise inclui a formulação determinística do modelo, a introdução de incertezas através de ruídos estocásticos e a comparação entre simulações determinísticas e estocásticas. Como principal referência metodológica, este trabalho segue a abordagem proposta no artigo ``_Stochastic rectification of fast oscillations on slow manifold closures_''
+
 Este repositório tem o objetivo de organizar todos os arquivos e materiais relacionados ao desenvolvimento do meu Trabalho de Conclusão de Curso (TCC).
 
-## 📁 Estrutura do Repositório
 
-```
-Lorenz80_SDE/
-├── 01_DOCUMENTOS/
-│   ├── 02_PROJETO/          # Documentos do projeto
-│   └── 03_RELATORIOS/       # Relatórios periódicos
-├── 02_CODIGOS/
-│   ├── 01_LORENZ_80/        # Implementação do modelo Lorenz-80
-│   ├── 02_STOCK_MARKET_EXEMPLE/ # Exemplo de EDE aplicado em mercado de ações
-│   ├── 03_FAST_CAOTIC_NOISE/# Estudos sobre ruído caótico rápido
-│   └── 03_STUART_LANDAU/    # Simulações do oscilador estcástico de Stuart-Landau
-└── requirements.txt         # Dependências Python
-```
-
-### Descrição das Pastas
-
-- **01_DOCUMENTOS/**: Contém projeto, relatórios e monografia do TCC 
-- **02_CODIGOS/**: Códigos de simulação e análise
-  - `01_LORENZ_80/`: Simulações do modelo Lorenz-80 com abordagens determinística
-  - `02_STOCK_MARKET_EXEMPLE/`: Exemplo de aplicação de EDE de mercado financeiro
-  - `03_FAST_CAOTIC_NOISE/`: Estudos aproximação de sistemas determinísticos usando ruído estocástico
-  - `03_STUART_LANDAU/`: Implementação e análise do oscilador de Stuart-Landau estocástico
 
 ## ⚙️ Instalação
    1. Clone o repositório:
