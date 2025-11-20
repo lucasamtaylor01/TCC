@@ -5,6 +5,30 @@ Este repositório tem o objetivo de organizar todos os arquivos e materiais rela
 
    > 🔍 Aqui serão encontrados documentos, códigos, anotações e quaisquer recursos utilizados durante o projeto.
 
+## 📁 Estrutura do Repositório
+
+```
+Lorenz80_SDE/
+├── 01_DOCUMENTOS/
+│   ├── 02_PROJETO/          # Documentos do projeto
+│   └── 03_RELATORIOS/       # Relatórios periódicos
+├── 02_CODIGOS/
+│   ├── 01_LORENZ_80/        # Implementação do modelo Lorenz-80
+│   ├── 02_STOCK_MARKET_EXEMPLE/ # Exemplo de EDE aplicado em mercado de ações
+│   ├── 03_FAST_CAOTIC_NOISE/# Estudos sobre ruído caótico rápido
+│   └── 03_STUART_LANDAU/    # Simulações do oscilador estcástico de Stuart-Landau
+└── requirements.txt         # Dependências Python
+```
+
+### Descrição das Pastas
+
+- **01_DOCUMENTOS/**: Contém projeto, relatórios e monografia do TCC 
+- **02_CODIGOS/**: Códigos de simulação e análise
+  - `01_LORENZ_80/`: Simulações do modelo Lorenz-80 com abordagens determinística
+  - `02_STOCK_MARKET_EXEMPLE/`: Exemplo de aplicação de EDE de mercado financeiro
+  - `03_FAST_CAOTIC_NOISE/`: Estudos aproximação de sistemas determinísticos usando ruído estocástico
+  - `03_STUART_LANDAU/`: Implementação e análise do oscilador de Stuart-Landau estocástico
+
 ## ⚙️ Instalação
    1. Clone o repositório:
       ```bash
@@ -15,10 +39,3 @@ Este repositório tem o objetivo de organizar todos os arquivos e materiais rela
 
 ## 🤝 Contribuição
 As contribuições são bem-vindas! Sinta-se à vontade para abrir um problema ou enviar uma solicitação pull através do GitHub se você tiver sugestões, melhorias ou feedback.
-
-## ⚠️ Aviso
-Todos os .csv estão sendo ignorados pelo .gitignore, dado que alguns excedem a capacidade do github. Caso queira verificá-los, apeanas rode os códigos.
-
-## 📄 Licença
-Este projeto está atualmente licenciado sob a [MIT License](LICENSE), mas a licença pode mudar no futuro.
-

@@ -1,25 +1,13 @@
-# Ambiente virtual
-.venv/
-
-# Cache do Python
+# Python
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-
-# Checkpoints do Jupyter
+.venv/
 .ipynb_checkpoints/
 
-# Arquivos de build
-build/
-dist/
-*.egg-info/
+# Julia
+Manifest.toml
 
-# Dados grandes
-*.h5
-*.npz
+# Arquivos de dados
 *.csv
-
-# Configurações locais
-.env
+*.png
 
