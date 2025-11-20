@@ -3,8 +3,6 @@
 ## 📝 Descrição
 Este repositório tem o objetivo de organizar todos os arquivos e materiais relacionados ao desenvolvimento do meu Trabalho de Conclusão de Curso (TCC).
 
-   > 🔍 Aqui serão encontrados documentos, códigos, anotações e quaisquer recursos utilizados durante o projeto.
-
 ## 📁 Estrutura do Repositório
 
 ```
