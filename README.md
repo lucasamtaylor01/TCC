@@ -35,5 +35,3 @@ Lorenz80_SDE/
    2. Instale as dependências necessárias (se houver).
    3. Executar o programa principal ou abrir os ficheiros relevantes, conforme necessário.
 
-## 🤝 Contribuição
-As contribuições são bem-vindas! Sinta-se à vontade para abrir um problema ou enviar uma solicitação pull através do GitHub se você tiver sugestões, melhorias ou feedback.
