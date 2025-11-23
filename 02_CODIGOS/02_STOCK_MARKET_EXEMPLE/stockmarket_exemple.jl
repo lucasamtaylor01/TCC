@@ -11,7 +11,6 @@ u0= 12
 prob = SDEProblem(f,g,u0,tspan, seed=13865062)
 sol = SDE.solve(prob, EM(), dt = dt);
 
-# Salvar dados em CSV
 df = DataFrame(t = sol.t, x = sol.u)
 
 outfile = joinpath(@__DIR__, "stockmarket.csv")
