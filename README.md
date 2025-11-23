@@ -13,6 +13,14 @@ Este repositório tem o objetivo de organizar todos os arquivos e materiais rela
       ```bash
       git clone https://github.com/lucasamtaylor01/Lorenz80_SDE.git
       ```
-   2. Instale as dependências necessárias (se houver).
-   3. Executar o programa principal ou abrir os ficheiros relevantes, conforme necessário.
+   2. Instale as dependências necessárias
+      ```bash
+      python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements_python.txt
+      ```
+
+      ```bash
+      julia -e 'using Pkg; Pkg.add.(readlines("requirements_julia.txt"))'
+      ```
+   3. Executar programa selecionado
+
 
