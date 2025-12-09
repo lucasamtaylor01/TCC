@@ -25,4 +25,4 @@ Este repositório tem o objetivo de organizar todos os arquivos e materiais rela
 
 # 📹 Vídeo de divugação
 
-[Divulgação TCC: Uma abordagem estocástica para modelos rápidos-lentos](https://youtu.be/KnpaK2REErE?si=Z3FjLvyAioy-mtbh)
+Disponível no [Youtube](https://youtu.be/KnpaK2REErE?si=Z3FjLvyAioy-mtbh)
