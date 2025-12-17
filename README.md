@@ -14,10 +14,18 @@ Este repositório tem o objetivo de organizar todos os arquivos e materiais rela
       git clone https://github.com/lucasamtaylor01/Lorenz80_SDE.git
       ```
    2. Instale as dependências necessárias
+
+      **Linux/macOS:**
       ```bash
       python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements_python.txt
       ```
 
+      **Windows:**
+      ```bash
+      python -m venv .venv && .\.venv\Scripts\activate && pip install -r requirements_python.txt
+      ```
+
+      Depois, para Julia:
       ```bash
       julia -e 'using Pkg; Pkg.add.(readlines("requirements_julia.txt"))'
       ```
